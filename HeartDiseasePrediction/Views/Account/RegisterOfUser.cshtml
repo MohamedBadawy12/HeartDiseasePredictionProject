@@ -1,0 +1,108 @@
+﻿@using Database.Enums;
+@model HeartDiseasePrediction.ViewModel.RegisterUserVM
+
+@{
+	ViewData["Title"] = "Register User Page";
+}
+
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form asp-action="RegisterOfUser">
+                    <h4>
+                        Register <span>User</span>
+                    </h4>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-row ">
+                        <div class="form-group col-lg-3">
+                            <label asp-for="@Model.FirstName"></label>
+                            <input asp-for="@Model.FirstName" type="text" class="form-control" id="inputFirstname" placeholder="Enter First Name">
+                            <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label asp-for="@Model.LastName"></label>
+                            <input asp-for="@Model.LastName" type="text" class="form-control" id="inputLastName" placeholder="Enter Last Name">
+                            <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label asp-for="@Model.Gender"></label>
+                            <select asp-for="@Model.Gender" class="form-control wide" id="inputGender" asp-items="Html.GetEnumSelectList<Gender>()">
+                                <option value="NoSelected ">--Please Select Gender-- </option>
+                            </select>
+                            <span asp-validation-for="@Model.Gender" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label asp-for="@Model.Insurance_No">Insurance Number</label>
+                            <input asp-for="@Model.Insurance_No" type="number" class="form-control" id="inputInsuranceNo" placeholder="Enter Insurance Number">
+                            <span asp-validation-for="@Model.Insurance_No" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.PhoneNumber"></label>
+                            <input asp-for="@Model.PhoneNumber" type="number" class="form-control" id="inputPhone" placeholder="Enter Phone Number">
+                            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.SSN">National Id</label>
+                            <input asp-for="@Model.SSN" type="number" class="form-control" id="inputSSN" placeholder="Enter National Id">
+                            <span asp-validation-for="@Model.SSN" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.BirthDate"></label>
+                            <div class="input-group date" id="inputDate" data-date-format="mm-dd-yyyy">
+                                <input asp-for="@Model.BirthDate" type="text" class="form-control" readonly>
+                                <span class="input-group-addon date_icon">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <span asp-validation-for="@Model.BirthDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.Email"></label>
+                            <input asp-for="@Model.Email" type="text" class="form-control" id="Email" placeholder="Enter Email">
+                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.Password">Password</label>
+                            <input asp-for="@Model.Password" type="password" class="form-control" id="Password" placeholder="Enter Password">
+                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.ConfirmPassword">Confirm Password</label>
+                            <input asp-for="@Model.ConfirmPassword" type="password" class="form-control" id="ConfirmPassword" placeholder="Enter Confirm Password">
+                            <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="btn-box">
+                        <button type="submit" class="btn ">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(function () {
+            $('input, select').on('focus', function () {
+                $(this).parent().find('.input-group-text').css('border-color', '#80bdff');
+            });
+            $('input, select').on('blur', function () {
+                $(this).parent().find('.input-group-text').css('border-color', '#ced4da');
+            });
+        });
+    </script>
+}
+@*@section Scripts{
+    <script>
+        $("#ImageUrl").on("change", function () {
+            var output = document.getElementById("ImageUrlPreview");
+            output.src = $(this).val();
+        })
+    </script>
+}*@

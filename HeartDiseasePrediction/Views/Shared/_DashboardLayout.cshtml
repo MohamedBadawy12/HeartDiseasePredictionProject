@@ -1,0 +1,332 @@
+﻿@using Database.Entities;
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
+    <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css"/>
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/css/style2.css" rel="stylesheet">
+   @* <script>
+        window.onload = function () {
+            document.getElementById('loader').style.display = "none";
+            document.getElementById('content').style.display = "block";
+        }
+    </script>*@
+    <style>
+        #content {
+            display: none
+        }
+
+        #loader {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+        }
+
+        #loader img {
+            width: 100px;
+        }
+    </style>
+
+</head>
+<body>
+    @*<div id="loader">
+        <img src="/images/image_processing20191002-6429-tbqgfv.gif" />
+    </div>*@
+   @* <div id="loader">
+        <img src="https://assets.materialup.com/uploads/518165c7-66a8-4494-b954-c12e31373256/preview.gif" />
+    </div>*@
+    <div class="wrapper" id="contant">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <i class="lni lni-grid-alt"></i>
+                </button>
+                <div class="sidebar-logo">
+                    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                        <img src="~/images//460bec2777fe7d4a4fec0dde54fdabde.png" alt="">
+                    </a>
+                    @*<a asp-controller="Home" asp-action="Index"><i class="fa fa-h-square" aria-hidden="true"></i> Heart Hospital</a>*@
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a asp-controller="Account" asp-action="Update" class="sidebar-link">
+                        <i class="lni lni-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="Index" asp-controller="Prescription" class="sidebar-link">
+                            <i class="lni lni-agenda"></i>
+                            <span>Prescriptions</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                       @* <a asp-action="GetAppointmentByEmail" asp-controller="Appointment" class="sidebar-link">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <span>Appointments</span>
+                        </a>*@
+                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                           data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            @* <i class="fa fa-gear"></i>*@
+                            <span>Appointments</span>
+                        </a>
+                        <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                                   data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
+                                    List Of Appointments
+                                </a>
+                                <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+                                    <li class="sidebar-item">
+                                        <a asp-action="GetAppointmentByEmail" asp-controller="Appointment" class="sidebar-link"><i class="fa fa-hourglass-half" aria-hidden="true"></i> Waiting Appointment</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a asp-controller="Appointment" asp-action="GetAcceptAppointments" class="sidebar-link"><i class="fa fa-check-circle" aria-hidden="true"></i> Accepted Appointment</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                   @* <li class="sidebar-item">
+                        <a asp-action="GetMessageById" asp-controller="Appointment" class="sidebar-link">
+                            <i class="lni lni-popup"></i>
+                            <span>Messages</span>
+                        </a>
+                    </li>*@
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-action="GetPrescriptions" asp-controller="Prescription" class="sidebar-link">
+                            <i class="lni lni-agenda"></i>
+                            <span>Prescriptions</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                      @*  <a asp-action="Index" asp-controller="Appointment" class="sidebar-link">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <span>Appointments</span>
+                        </a>*@
+                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                           data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            @* <i class="fa fa-gear"></i>*@
+                            <span>Appointments</span>
+                        </a>
+                        <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                                   data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
+                                    List Of Appointments
+                                </a>
+                                <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+                                    <li class="sidebar-item">
+                                        <a asp-action="Index" asp-controller="Appointment" class="sidebar-link"><i class="fa fa-hourglass-half" aria-hidden="true"></i> Waiting Appointment</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a asp-controller="Appointment" asp-action="GetAcceptAndCancelAppointments" class="sidebar-link"> <i class="fa fa-calendar" aria-hidden="true"></i> Appointments</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="sidebar-item">
+                        <a asp-action="GetMessagetByEmail" asp-controller="Appointment" class="sidebar-link">
+                            <i class="fa fa-bell-o" aria-hidden="true"></i>
+                            <span>Notifications</span>
+                        </a>
+                    </li>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("MedicalAnalyst"))
+                {
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                           data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+                            <i class="lni lni-clipboard"></i>
+                            <span>Medical Tests</span>
+                        </a>
+                        <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a asp-controller="MedicalTests" asp-action="Index" class="sidebar-link"><i class="lni lni-menu"></i> Medical Tests</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a asp-controller="MedicalTests" asp-action="Create" class="sidebar-link"><i class="lni lni-clipboard"></i> Add Medical Test</a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                @*<li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                        <i class="lni lni-protection"></i>
+                        <span>Auth</span>
+                    </a>
+                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">Login</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">Register</a>
+                        </li>
+                    </ul>
+                </li>*@
+                @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                           data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+                            <i class="lni lni-cog"></i>
+                            @* <i class="fa fa-gear"></i>*@
+                            <span>Management</span>
+                        </a>
+                        <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                                   data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
+                                    Add Staff
+                                </a>
+                                <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+                                    <li class="sidebar-item">
+                                        <a asp-controller="Account" asp-action="RegisterOfDoctor" class="sidebar-link"><i class="fa fa-user-md"></i> Doctor</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a asp-controller="Account" asp-action="RegisterOfMedicalAnalyst" class="sidebar-link"><i class="fa fa-user"></i> Medical Analyst</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a asp-controller="Account" asp-action="RegisterOfReciptionist" class="sidebar-link"><i class="fa fa-user"></i> Reciptionist</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                                   data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
+                                    List Of Staff
+                                </a>
+                                <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+                                    <li class="sidebar-item">
+                                        <a asp-controller="Doctor" asp-action="Index" class="sidebar-link"><i class="fa fa-address-book-o"></i> Doctor</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a asp-controller="MedicalAnalyst" asp-action="Index" class="sidebar-link"><i class="fa fa-address-book"></i>Medical Analyst</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a asp-controller="Reciptionist" asp-action="Index" class="sidebar-link"><i class="fa fa-address-book"></i> Reciptionist</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a asp-controller="Patient" asp-action="Index" class="sidebar-link"><i class="fa fa-address-book"></i> Patient</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="Index" asp-controller="Lab" class="sidebar-link">
+                            <i class="lni lni-sthethoscope"></i>
+                            <span>Laboratory</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+            @*<div class="sidebar-footer">
+                <a href="#" class="sidebar-link">
+                    <i class="lni lni-exit"></i>
+                    <span>Logout</span>
+                </a>
+            </div>*@
+        </aside>
+        <div class="container">
+            <header class="header_section navbar-dark" style="background-color:#00c6a9">
+                <div class="container-fluid">
+                    <nav class="navbar navbar-expand-lg custom_nav-container">
+                        <a class="navbar-brand text-black" asp-controller="Home" asp-action="Index"><strong><i class="fa fa-h-square" aria-hidden="true"></i> Heart Hospital</strong></a>
+                        @*<a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                            <img src="~/images//460bec2777fe7d4a4fec0dde54fdabde.png" alt="">
+                        </a>*@
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav px-3">
+                                <li class="nav-item text-nowrap">
+                                    <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        @*<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>*@
+                        @*<input class="form-control form-control-dark w-50" type="text" placeholder="Search" aria-label="Search">*@
+                        <div class="quote_btn-container">
+                            <a role="button">
+                                <img src="~/images/istockphoto-1223671392-612x612-1.jpg"
+                                class="rounded-circle"
+                                height="24"
+                                alt="Portrait of a User"
+                                     loading="lazy" /> <span>Hello @(User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value)</span>
+                            </a>
+                            <a asp-controller="Account" asp-action="Logout" onclick="ConfirmLogout()">
+                                <i class="lni lni-exit"></i>
+                                <span>
+                                    Log Out
+                                </span>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        
+    </div>
+    <script src="~/js/script.js"></script>
+    <script src="~/js/jquery-3.4.1.min.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"
+            integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+	<script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/js/custom.js"></script>
+	<script src="~/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+    <script>
+        function ConfirmLogout() {
+            document.getElementsByClassName("");
+            var accept = confirm("Are You Sure to Log Out?");
+            if (accept == false) {
+                event.preventDefault();
+            }
+        }        
+    </script>
+</body>
+</html>

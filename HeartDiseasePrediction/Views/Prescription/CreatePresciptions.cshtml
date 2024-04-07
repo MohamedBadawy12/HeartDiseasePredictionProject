@@ -1,0 +1,34 @@
+﻿@model Repositories.ViewModel.PrescriptionViewModel
+
+@{
+    ViewData["Title"] = "Create Prescription Page";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form asp-action="CreatePresciptions">
+                    <h4>
+                        Create <span>Prescription</span>
+                    </h4>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-row ">
+                        <div class="form-group col-lg-6">
+                            <label asp-for="@Model.MedicineName" class="control-label"></label>
+                            <textarea asp-for="@Model.MedicineName" class="form-control-range" rows="4" cols="30" placeholder="Enter Medician"></textarea>
+                            <span asp-validation-for="@Model.MedicineName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="btn-box">
+                        <button type="submit" class="btn ">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,72 @@
+﻿@model HeartDiseasePrediction.ViewModel.LoginVM
+
+@{
+    ViewData["Title"] = "Login Page";
+}
+<style>
+    .card {
+        box-shadow: 0px 4px 8px 0px #7986CB;
+    }
+</style>
+<div class="content">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-5 " style="margin-right:100px">
+                <img src="~/images/slider-img.jpg" alt="Image" class="img-fluid">
+            </div>
+            <div class="col-md-5 contents" style="padding-top:30px;padding-bottom:30px; margin-left:70px;">
+                <div class="row ">
+                    <div class="card card-body col-md-10 offset-0">
+                        <div class="mb-4" style="text-align:center;">
+                            <h2><strong>Sign In</strong></h2>
+                            <img src="~/images/istockphoto-1223671392-612x612-1.jpg" style="padding-top:3px;" alt="Admin" class="rounded-circle" width="150">
+                        </div>
+                        <form asp-action="Login">
+                            @Html.AntiForgeryToken()
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group first">
+                                <i class="fa fa-envelope "></i> <label asp-for="@Model.Email"></label>
+                                 <input asp-for="@Model.Email" type="text" class="form-control" id="Email" placeholder="Enter Your Email">
+                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group last mb-4">
+                                <i class="fa fa-lock"></i> <label asp-for="@Model.Password">Password</label>
+                                <input asp-for="@Model.Password" type="password" class="form-control" id="password" placeholder="Enter Password">
+                                <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                            </div>
+                            <div class="d-flex mb-4 align-items-center">
+                                <label class="control control--checkbox mb-0">
+                                    <span class="caption">Remember me</span>
+                                    <input type="checkbox" checked="checked" />
+                                    <div class="control__indicator"></div>
+                                    @*<span class="ml-auto"><a asp-controller="Account" asp-action="RegisterOfUser" class="forgot-pass">Sign Up</a></span>*@
+                                </label>
+                                <span class="ml-auto"><a asp-controller="Account" asp-action="ForgotPassword" class="forgot-pass">Forgot Password</a></span>
+                            </div>
+                            <input type="submit" value="Log In" class="btn text-white btn-block btn-info">
+                            <div class="text-center mt-2">
+                                <p>Not a member? <a asp-controller="Account" asp-action="RegisterOfUser">Register</a></p>
+                            </div>
+                            @*<span class="d-block text-left my-4 text-muted"> or sign in with</span>
+
+                            <div class="social-login">
+                                <a href="#" class="facebook">
+                                    <span class="icon-facebook mr-3"></span>
+                                </a>
+                                <a href="#" class="twitter">
+                                    <span class="icon-twitter mr-3"></span>
+                                </a>
+                                <a href="#" class="google">
+                                    <span class="icon-google mr-3"></span>
+                                </a>
+                            </div>*@
+                        </form>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

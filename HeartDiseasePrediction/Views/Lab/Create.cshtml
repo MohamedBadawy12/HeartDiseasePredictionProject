@@ -1,0 +1,39 @@
+﻿@model Database.Entities.Lab
+
+@{
+    ViewData["Title"] = "Create Lab Page";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form asp-action="Create" method="post">
+                    <h4>
+                        Create <span>Lab</span>
+                    </h4>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-row ">
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.Name" class="control-label"></label>
+                            <input asp-for="@Model.Name" type="text" class="form-control" id="inputFullName" placeholder="Lab Name">
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.PhoneNumber" class="control-label"></label>
+                            <input asp-for="@Model.PhoneNumber" type="number" class="form-control" id="inputFullName" placeholder="Lab Phone">
+                            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="btn-box">
+                        <button type="submit" class="btn ">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

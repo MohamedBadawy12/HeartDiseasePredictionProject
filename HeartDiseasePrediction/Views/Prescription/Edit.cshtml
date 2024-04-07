@@ -1,0 +1,70 @@
+﻿@model Database.Entities.Prescription
+
+@{
+    ViewData["Title"] = "Prescription Update Page";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form asp-action="Edit">
+                    <h4>
+                        Update <span>Prescription</span>
+                    </h4>
+                    <div class="form-row ">
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.PatientSSN" class="control-label"></label>
+                            <input asp-for="@Model.PatientSSN" type="text" class="form-control" id="inputPatientSSN">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label asp-for="@Model.date"></label>
+                            <input asp-for="@Model.date" type="datetime" class="form-control">
+                        </div>
+                       
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.DoctorId" hidden class="control-label"></label>
+                            <input asp-for="@Model.DoctorId" hidden type="text" class="form-control" id="inputDoctorId">
+                        </div><div class="form-group col-lg-4">
+                            <label asp-for="@Model.DoctorEmail" hidden class="control-label"></label>
+                            <input asp-for="@Model.DoctorEmail" hidden type="text" class="form-control" id="inputDoctorEmail">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.ApDoctorId" hidden class="control-label"></label>
+                            <input asp-for="@Model.ApDoctorId" hidden type="text" class="form-control" id="inputApDoctorId">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.PatientEmail" class="control-label"></label>
+                            <input asp-for="@Model.PatientEmail" type="text" class="form-control" id="inputPatientEmail">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.DoctorId">Doctor Name</label>
+                            <select asp-for="@Model.DoctorId" class="form-control wide" id="inputDoctor" asp-items="ViewBag.Doctor">
+                                <option value="NoSelected ">--Please Select Doctor-- </option>
+                            </select>
+                            <span asp-validation-for="@Model.DoctorId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label asp-for="@Model.MedicineName" class="control-label"></label>
+                            <textarea asp-for="@Model.MedicineName" class="form-control-range"
+                                      rows="4"
+                                      cols="30"></textarea>
+                        </div>
+                    </div>
+                    <div class="btn-box">
+                        <button type="submit" class="btn ">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

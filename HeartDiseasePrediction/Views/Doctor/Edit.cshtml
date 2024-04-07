@@ -1,0 +1,133 @@
+﻿@using Database.Enums;
+@model HeartDiseasePrediction.ViewModel.DoctorVM
+
+@{
+    ViewData["Title"] = "Doctors Update Page";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <h4>
+                        Update <span>Doctor</span>
+                    </h4>
+                    <div class="form-row ">
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.FirstName" class="control-label"></label>
+                            <input asp-for="@Model.FirstName" type="text" class="form-control" id="inputFirstname">
+                            <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.LastName" class="control-label"></label>
+                            <input asp-for="@Model.LastName" type="text" class="form-control" id="inputLastName">
+                            <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.PhoneNumber" class="control-label"></label>
+                            <input asp-for="@Model.PhoneNumber" type="number" class="form-control" id="inputPhone">
+                            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row ">
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.Name">Name</label>
+                            <input asp-for="@Model.Name" type="text" class="form-control" id="Name" placeholder="Enter Name">
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.Gender"></label>
+                            <select asp-for="@Model.Gender" class="form-control wide" id="inputGender" asp-items="Html.GetEnumSelectList<Gender>()">
+                                <option value="NoSelected ">--Please Select Gender-- </option>
+                            </select>
+                            <span asp-validation-for="@Model.Gender" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.BirthDate"></label>
+                            <input asp-for="@Model.BirthDate" type="datetime" class="form-control">
+                            <span asp-validation-for="@Model.BirthDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row ">
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.Email"></label>
+                            <input asp-for="@Model.Email" type="text" class="form-control" id="Email">
+                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.Location">Location</label>
+                            <input asp-for="@Model.Location" type="text" class="form-control" id="Location" placeholder="Enter Location">
+                            <span asp-validation-for="@Model.Location" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.Price">Price</label>
+                            <input asp-for="@Model.Price" type="number" class="form-control" id="Price" placeholder="Enter Price">
+                            <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="">
+                            <div class="form-group col-lg-10">
+                                <img id="profilePicture" class="border-info rounded-circle" style="max-width:150px" />
+                                <label asp-for="ProfileImg" class="w-100"></label>
+                                <input accept="image/*" asp-for="ImageFile"
+                                       onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
+                                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                @*@if (@Model.ImageFile != null)
+                                {
+                                <img id="profilePicture" alt="profile" class="profile-picture" style="height:255px; width:255px; object-fit:cover" src="data:image/*;base64)" />
+                                }
+                                else
+                                {
+                                <img id="profilePicture" alt="profile" class="profile-picture" style="height:255px; width:255px; object-fit:cover" src="~/images/avater.png" />
+                                }
+                                <div class="custom-file mt-2">
+                                <input type="file"
+                                accept="image/*"
+                                asp-for="ImageFile"
+                                class="" onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
+                                <label class="custom-file-label" asp-for="ImageFile"></label>
+                                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                </div>*@
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4" hidden>
+                            <label asp-for="@Model.Id"></label>
+                            <input asp-for="@Model.Id" type="text" class="form-control" id="Id">
+                        </div>
+                    </div>
+                    <div class="btn-box">
+                        <button type="submit" class="btn ">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+@*@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ProfilePictureId');
+            output.src = $("#ImageFile").val();
+        })
+
+        $("#ImageFile").on("change", function () {
+            var output = document.getElementById('ProfilePictureId');
+            output.src = $(this).val();
+        })
+    </script>
+}*@
+@*@section Scripts{
+    <script>
+        $("#ImageUrl").on("change", function () {
+            var output = document.getElementById("ImageUrlPreview");
+            output.src = $(this).val();
+        })
+    </script>
+    onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])"
+}*@
