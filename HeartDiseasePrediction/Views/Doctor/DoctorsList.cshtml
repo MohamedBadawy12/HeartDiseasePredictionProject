@@ -277,7 +277,14 @@
                             <div class="job-box d-md-flex align-items-center justify-content-between mb-30">
                                 <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
                                     <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-md-none d-lg-flex">
-                                        <img src="~/images/doctor.png" class="rounded-circle" width="50px">
+                                        @if (item.User.ProfileImg == null)
+                                        {
+                                            <img src="~/images/doctor.png" class="rounded-circle" width="50px">
+                                        }
+                                        else
+                                        {
+                                            <img src="@item.User.ProfileImg" class="rounded-circle" width="60px">
+                                        }
                                     </div>
                                     <div class="job-content">
                                         <h5 class="text-center text-md-left">@item.Name</h5>

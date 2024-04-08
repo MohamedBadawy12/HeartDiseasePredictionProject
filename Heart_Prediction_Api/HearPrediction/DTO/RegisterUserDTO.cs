@@ -1,6 +1,8 @@
 ﻿using Database.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HearPrediction.Api.DTO
 {
@@ -26,6 +28,11 @@ namespace HearPrediction.Api.DTO
         [Required(ErrorMessage = "Birth Date Is Required")]
         [Display(Name = "Birth Date")]
         public DateTime BirthDate { get; set; }
+        [Display(Name = "Profile Image")]
+        public string? ProfileImg { get; set; }
+        [NotMapped]
+        [Display(Name = "Upload File")]
+        public IFormFile? ImageFile { get; set; }
         [Display(Name = "Email"), StringLength(200)]
         [Required(ErrorMessage = "Email Is Required")]
         public string Email { get; set; }

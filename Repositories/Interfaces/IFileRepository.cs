@@ -2,9 +2,10 @@
 
 namespace Repositories.Interfaces
 {
-    public interface IFileRepository
+    public interface IFileService
     {
         Tuple<int, string> SaveImage(IFormFile imageFile);
+        public Task<string> UploadAsync(IFormFile imageFile, string location);
         public bool DeleteImage(string imageFileName);
     }
 }

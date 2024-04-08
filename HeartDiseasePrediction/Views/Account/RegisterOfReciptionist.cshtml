@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <form asp-action="RegisterOfReciptionist">
+                <form asp-action="RegisterOfReciptionist" enctype="multipart/form-data">
                     <h4>
                         Add <span>Reciptionist</span>
                     </h4>
@@ -66,6 +66,11 @@
                             <label asp-for="@Model.ConfirmPassword">Confirm Password</label>
                             <input asp-for="@Model.ConfirmPassword" type="password" class="form-control" id="ConfirmPassword" placeholder="Enter Confirm Password">
                             <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.ImageFile">Image Profile</label>
+                            <input type="file" asp-for="@Model.ImageFile" value="0" class="form-control" style="padding:8px;">
+                            <span asp-validation-for="@Model.ImageFile" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="btn-box">

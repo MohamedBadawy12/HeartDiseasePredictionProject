@@ -43,7 +43,7 @@ namespace HeartDiseasePrediction
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IFileRepository, FileRepository>();
+            services.AddTransient<IFileService, FileService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
             services.AddDistributedMemoryCache();
 

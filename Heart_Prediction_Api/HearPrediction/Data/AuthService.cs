@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
+using Repositories.Interfaces;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -26,11 +27,12 @@ namespace Services
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMailService _mailServices;
+        private readonly IFileService _fileRepository;
         private readonly JWT _jwt;
         private readonly AppDbContext _context;
         public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager
-            , IOptions<JWT> jwt, IUnitOfWork unitOfWork, AppDbContext context, IMailService mailServices)
+            , IOptions<JWT> jwt, IUnitOfWork unitOfWork, AppDbContext context, IMailService mailServices, IFileService fileRepository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -38,6 +40,7 @@ namespace Services
             _jwt = jwt.Value;
             _unitOfWork = unitOfWork;
             _mailServices = mailServices;
+            _fileRepository = fileRepository;
             _context = context;
         }
         public async Task<AuthModel> LoginTokenAsync(TokenRequestModel model)
@@ -140,6 +143,17 @@ namespace Services
             if (await _userManager.FindByEmailAsync(registerDoctorDTO.Email) is not null)
                 return new AuthModel { Message = "Email is already exist" };
 
+            var path = "";
+            if (registerDoctorDTO.ImageFile?.Length > 0)
+            {
+                path = await _fileRepository.UploadAsync(registerDoctorDTO.ImageFile, "/Upload/");
+                if (path == "An Problem occured when creating file")
+                {
+                    return new AuthModel { Message = "An Problem occured when creating file" };
+                }
+            }
+            registerDoctorDTO.ProfileImg = path;
+
             var user = new ApplicationUser
             {
                 Email = registerDoctorDTO.Email,
@@ -152,6 +166,7 @@ namespace Services
                 Location = registerDoctorDTO.Location,
                 Name = registerDoctorDTO.Name,
                 Price = registerDoctorDTO.Price,
+                ProfileImg = registerDoctorDTO.ProfileImg,
                 //TwoFactorEnabled = true,
             };
             var result = await _userManager.CreateAsync(user, registerDoctorDTO.Password);
@@ -196,6 +211,17 @@ namespace Services
             if (await _userManager.FindByEmailAsync(registerMedicalAnalystDTO.Email) is not null)
                 return new AuthModel { Message = "Email is already exist" };
 
+            var path = "";
+            if (registerMedicalAnalystDTO.ImageFile?.Length > 0)
+            {
+                path = await _fileRepository.UploadAsync(registerMedicalAnalystDTO.ImageFile, "/Upload/");
+                if (path == "An Problem occured when creating file")
+                {
+                    return new AuthModel { Message = "An Problem occured when creating file" };
+                }
+            }
+            registerMedicalAnalystDTO.ProfileImg = path;
+
             var user = new ApplicationUser
             {
                 Email = registerMedicalAnalystDTO.Email,
@@ -205,6 +231,7 @@ namespace Services
                 Gender = registerMedicalAnalystDTO.Gender,
                 BirthDate = registerMedicalAnalystDTO.BirthDate,
                 PhoneNumber = registerMedicalAnalystDTO.PhoneNumber,
+                ProfileImg = registerMedicalAnalystDTO.ProfileImg,
                 //TwoFactorEnabled = true,
             };
             var result = await _userManager.CreateAsync(user, registerMedicalAnalystDTO.Password);
@@ -246,6 +273,17 @@ namespace Services
             if (await _userManager.FindByEmailAsync(registerReciptionistDTO.Email) is not null)
                 return new AuthModel { Message = "Email is already exist" };
 
+            var path = "";
+            if (registerReciptionistDTO.ImageFile?.Length > 0)
+            {
+                path = await _fileRepository.UploadAsync(registerReciptionistDTO.ImageFile, "/Upload/");
+                if (path == "An Problem occured when creating file")
+                {
+                    return new AuthModel { Message = "An Problem occured when creating file" };
+                }
+            }
+            registerReciptionistDTO.ProfileImg = path;
+
             var user = new ApplicationUser
             {
                 Email = registerReciptionistDTO.Email,
@@ -255,6 +293,7 @@ namespace Services
                 Gender = registerReciptionistDTO.Gender,
                 BirthDate = registerReciptionistDTO.BirthDate,
                 PhoneNumber = registerReciptionistDTO.PhoneNumber,
+                ProfileImg = registerReciptionistDTO?.ProfileImg,
                 //TwoFactorEnabled = true,
             };
             var result = await _userManager.CreateAsync(user, registerReciptionistDTO.Password);
@@ -295,6 +334,17 @@ namespace Services
             if (await _userManager.FindByEmailAsync(registerUserDTO.Email) is not null)
                 return new AuthModel { Message = "Email is already exist" };
 
+            var path = "";
+            if (registerUserDTO.ImageFile?.Length > 0)
+            {
+                path = await _fileRepository.UploadAsync(registerUserDTO.ImageFile, "/Upload/");
+                if (path == "An Problem occured when creating file")
+                {
+                    return new AuthModel { Message = "An Problem occured when creating file" };
+                }
+            }
+            registerUserDTO.ProfileImg = path;
+
             var user = new ApplicationUser
             {
                 SecurityStamp = Guid.NewGuid().ToString(),
@@ -307,6 +357,7 @@ namespace Services
                 PhoneNumber = registerUserDTO.PhoneNumber,
                 SSN = registerUserDTO.SSN,
                 Insurance_No = registerUserDTO.Insurance_No,
+                ProfileImg = registerUserDTO.ProfileImg,
                 //TwoFactorEnabled = true,
             };
             var result = await _userManager.CreateAsync(user, registerUserDTO.Password);

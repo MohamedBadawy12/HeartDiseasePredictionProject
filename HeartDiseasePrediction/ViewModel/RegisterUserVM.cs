@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HeartDiseasePrediction.ViewModel
 {
@@ -25,6 +27,11 @@ namespace HeartDiseasePrediction.ViewModel
         [Required(ErrorMessage = "Birth Date Is Required")]
         [Display(Name = "Birth Date")]
         public DateTime BirthDate { get; set; }
+        [Display(Name = "Profile Image")]
+        public string? ProfileImg { get; set; }
+        [NotMapped]
+        [Display(Name = "Upload File")]
+        public IFormFile? ImageFile { get; set; }
         [Display(Name = "Email"), StringLength(200)]
         [Required(ErrorMessage = "Email Is Required")]
         [EmailAddress]

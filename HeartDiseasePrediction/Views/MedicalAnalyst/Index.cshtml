@@ -46,8 +46,8 @@
 						<thead>
 							<tr class="text-center bg-dark text-light">
 								<th>Id</th>
-								<th>FirstName</th>
-								<th>LastName</th>
+								<th>Image</th>
+								<th>Name</th>
 								<th>Email</th>
 								<th>Lab</th>
 								@*<th>Gender</th>*@
@@ -75,10 +75,10 @@
 									<td class="align-middle text-center counterColumn">
 									</td>
 									<td class="align-middle text-center">
-										@item.User.FirstName
+										<img src="@item.User.ProfileImg" alt="No Image" height="50" width="50">
 									</td>
 									<td class="align-middle text-center">
-										@item.User.LastName
+										@item.User.FirstName @item.User.LastName
 									</td>
 									<td class="align-middle text-center">
 										@item.User.Email

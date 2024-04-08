@@ -48,11 +48,12 @@
 								<th>Id</th>
 								@*<th>SSN</th>*@
 								@*<th>InsuranceNo</th>*@
+								<th>Image</th>
 								<th>Email</th>
 								<th>Name</th>
 								@*<th>LastName</th>*@
 								<th>Age</th>
-								<th>Gender</th>
+								@*<th>Gender</th>*@
 								@*<th>Phone</th>*@
 								<th>
 								</th>
@@ -74,6 +75,9 @@
 									@*<td class="align-middle text-center">
 							@item.Insurance_No
 							</td>*@
+									<td class="align-middle text-center">
+										<img src="@item.User.ProfileImg" alt="No Image" height="50" width="50">
+									</td>
 									<td class="align-middle text-center">
 										@item.User.Email
 									</td>

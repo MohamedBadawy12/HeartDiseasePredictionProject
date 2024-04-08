@@ -46,12 +46,12 @@
 						<thead>
 							<tr class="text-center bg-dark text-light">
 								<th>Id</th>
+								<th>Image</th>
 								<th>Email</th>
-								<th>FirstName</th>
-								<th>LastName</th>
+								<th>Name</th>
 								@*<th>Gender</th>*@
 								<th>Age</th>
-								<th>Phone</th>
+								@*<th>Phone</th>*@
 								<th>
 								</th>
 							</tr>
@@ -66,13 +66,13 @@
 									<td class="align-middle text-center counterColumn">
 									</td>
 									<td class="align-middle text-center">
+										<img src="@item.User.ProfileImg" alt="No Image" height="50" width="50">
+									</td>
+									<td class="align-middle text-center">
 										@item.User.Email
 									</td>
 									<td class="align-middle text-center">
-										@item.User.FirstName
-									</td>
-									<td class="align-middle text-center">
-										@item.User.LastName
+										@item.User.FirstName @item.User.LastName
 									</td>
 									@*<td class="align-middle text-center">
 										@item.User.Gender
@@ -80,9 +80,9 @@
 									<td class="align-middle text-center">
 										@item.User.Age
 									</td>
-									<td class="align-middle text-center">
+								@*	<td class="align-middle text-center">
 										@item.User.PhoneNumber
-									</td>
+									</td>*@
 									<td class="align-middle text-center">
 										<a class="btn btn-outline-primary" asp-controller="Reciptionist" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-square"></i> Edit</a> |
 										<a class="btn btn-outline-info" asp-controller="Reciptionist" asp-action="ReciptionistDetails" asp-route-id="@item.Id"><i class="fa fa-eye"></i> Details</a> |

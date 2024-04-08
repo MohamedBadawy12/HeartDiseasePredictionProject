@@ -20,7 +20,7 @@ namespace HeartDiseasePrediction.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppDbContext _context;
         public AppointmentController(IUnitOfWork unitOfWork, IToastNotification toastNotification,
-            IFileRepository fileRepository, AppDbContext context, UserManager<ApplicationUser> userManager)
+            IFileService fileRepository, AppDbContext context, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _toastNotification = toastNotification;

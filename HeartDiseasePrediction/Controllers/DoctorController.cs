@@ -17,10 +17,10 @@ namespace HeartDiseasePrediction.Controllers
 		private readonly IToastNotification _toastNotification;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly AppDbContext _context;
-		private readonly IFileRepository _fileRepository;
+		private readonly IFileService _fileRepository;
 		private readonly IWebHostEnvironment _webHostEnvironment;
 		public DoctorController(IToastNotification toastNotification, AppDbContext context
-			, IWebHostEnvironment webHostEnvironment, IUnitOfWork unitOfWork, IFileRepository fileRepository)
+			, IWebHostEnvironment webHostEnvironment, IUnitOfWork unitOfWork, IFileService fileRepository)
 		{
 			_toastNotification = toastNotification;
 			_unitOfWork = unitOfWork;
@@ -112,7 +112,7 @@ namespace HeartDiseasePrediction.Controllers
 					Name = doctor.Name,
 					Location = doctor.Location,
 					Price = doctor.Price,
-					//ProfileImg = doctor.User.ProfileImg,
+					ProfileImg = doctor.User.ProfileImg,
 				};
 				return View(DoctorDetail);
 			}
@@ -132,16 +132,18 @@ namespace HeartDiseasePrediction.Controllers
 				if (doctor == null)
 					return View("NotFound");
 
-				//string wwwRootPath = _webHostEnvironment.WebRootPath;
-				//string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
-				//string extension = Path.GetExtension(model.ImageFile.FileName);
-				//model.ProfileImg = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-				//string path = Path.Combine(wwwRootPath + "/Upload", fileName);
+				var path = model.ProfileImg;
+				if (model.ImageFile?.Length > 0)
+				{
+					_fileRepository.DeleteImage(path);
+					path = await _fileRepository.UploadAsync(model.ImageFile, "/Uploads/");
+					if (path == "An Problem occured when creating file")
+					{
+						return BadRequest();
+					}
+				}
+				model.ProfileImg = path;
 
-				//using (var fileStream = new FileStream(path, FileMode.Create))
-				//{
-				//    await model.ImageFile.CopyToAsync(fileStream);
-				//}
 				doctor.User.PhoneNumber = model.PhoneNumber;
 				doctor.User.Email = model.Email;
 				doctor.User.FirstName = model.FirstName;
@@ -154,7 +156,7 @@ namespace HeartDiseasePrediction.Controllers
 				doctor.Name = model.Name;
 				doctor.Location = model.Location;
 				doctor.Price = model.Price;
-				//doctor.User.ProfileImg = model.ProfileImg;
+				doctor.User.ProfileImg = model.ProfileImg;
 
 				_context.Doctors.Update(doctor);
 				await _unitOfWork.Complete();
@@ -174,13 +176,12 @@ namespace HeartDiseasePrediction.Controllers
 			var doctor = _unitOfWork.Doctors.Get_Doctor(id);
 			if (doctor == null)
 				return View("NotFound");
-			//var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "Upload", doctor.User.ProfileImg);
 			try
 			{
-				//if (System.IO.File.Exists(imagePath))
-				//    System.IO.File.Delete(imagePath);
-				//_doctorService.Delete(doctor);
+				string path = "";
+				path = doctor.User.ProfileImg;
 				_unitOfWork.Doctors.Delete(doctor);
+				_fileRepository.DeleteImage(path);
 				await _unitOfWork.Complete();
 				_toastNotification.AddSuccessToastMessage($"Doctor with ID {id} removed successfully");
 				return RedirectToAction("Index");

@@ -55,11 +55,21 @@
                         </div>
                         <div class="">
                             <div class="form-group col-lg-5">
-                                <img id="profilePicture" class="border-info rounded-circle" style="max-width:150px" />
+                                <div>
+                                    <label>Current Image</label>
+                                    <img src="@Model.ProfileImg" height="50" width="50" />
+                                    <input asp-for="@Model.ProfileImg" type="hidden" />
+                                </div>
+                                <label asp-for="@Model.ImageFile">Image Profile</label>
+                                <input type="file" asp-for="@Model.ImageFile" value="0" class="form-control" style="padding:8px;">
+                                <span asp-validation-for="@Model.ImageFile" class="text-danger"></span>
+
+                                @*<img id="profilePicture" class="border-info rounded-circle" style="max-width:150px" />
                                 <label asp-for="ProfileImg" class="w-100"></label>
                                 <input accept="image/*" asp-for="ImageFile"
                                        onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
-                                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                <span asp-validation-for="ImageFile" class="text-danger"></span>*@
+
                                 @*@if (@Model.ProfileImg != null)
                                 {
                                 <img id="profilePicture" alt="profile" class="profile-picture" style="height:255px; width:255px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(Model.ProfileImg))" />
