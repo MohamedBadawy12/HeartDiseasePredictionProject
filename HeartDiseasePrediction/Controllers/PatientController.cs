@@ -38,19 +38,6 @@ namespace HeartDiseasePrediction.Controllers
             return View(patients);
         }
 
-        //public async Task<ActionResult> Details(int id)
-        //{
-        //	var viewModel = new PatientDetailViewModel()
-        //	{
-        //		Patient = await _unitOfWork.Patients.GetPatient(id),
-        //		Appointments = await _unitOfWork.appointments.GetAppointmentWithPatient(id),
-        //		Attendances = await _unitOfWork.attendances.GetAttendance(id),
-        //		CountAppointments = await _unitOfWork.appointments.CountAppointments(id),
-        //		CountAttendance = await _unitOfWork.attendances.CountAttendances(id)
-        //	};
-        //	return View("Details", viewModel);
-        //}
-
         //get Patient details
         public async Task<IActionResult> PatientDetails(long ssn)
         {

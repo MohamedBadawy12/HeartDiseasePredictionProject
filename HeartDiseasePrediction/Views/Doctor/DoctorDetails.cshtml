@@ -83,11 +83,18 @@
                     <div class="d-flex flex-column align-items-center text-center">
                         @if (Model.ProfileImg == null)
                         {
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                            if (Model.Gender == 0)
+                            {
+                                <img src="~/images/194915.png" alt="Admin" class="rounded-circle" width="150">
+                            }
+                            else
+                            {
+                                <img src="~/images/FemaleDoctor.jpg" alt="Admin" class="rounded-circle" width="150">
+                            }
                         }
                         else
                         {
-                            <img src="@("~/Upload/"+Model.ProfileImg)" alt="Doctor" class="rounded-circle" width="150">
+                            <img src="@Model.ProfileImg" alt="Doctor" class="rounded-circle" width="150">
                         }
                         <div class="mt-3">
                             <h4><strong>@Model.FirstName</strong> <strong>@Model.LastName</strong></h4>

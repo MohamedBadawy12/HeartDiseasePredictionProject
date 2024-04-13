@@ -48,13 +48,24 @@ namespace HeartDiseasePrediction.Controllers
             return View(appointments);
         }
 
-        //Get All Appointments by Email
+        //Get All messages by Email
         [Authorize(Roles = "User")]
         public async Task<IActionResult> GetMessagetByEmail()
         {
             string patientEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
             var messages = await _unitOfWork.appointments.GetMessageByEmail(patientEmail, userRole);
+            return View(messages);
+        }
+
+        //Search for message by Email
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        public async Task<IActionResult> GetMessagetByEmail(DateTime? date)
+        {
+            string patientEmail = User.FindFirstValue(ClaimTypes.Email);
+            string userRole = User.FindFirstValue(ClaimTypes.Role);
+            var messages = await _unitOfWork.appointments.SearchMessages(patientEmail, userRole, date);
             return View(messages);
         }
 
@@ -67,6 +78,15 @@ namespace HeartDiseasePrediction.Controllers
             var appointments = await _unitOfWork.appointments.GetAcceptAndCancelAppointment(userId, userRole);
             return View(appointments);
         }
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        public async Task<IActionResult> GetAcceptAndCancelAppointments(DateTime? date)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userRole = User.FindFirstValue(ClaimTypes.Role);
+            var appointments = await _unitOfWork.appointments.SearchAcceptAndCancelAppointment(userId, userRole, date);
+            return View(appointments);
+        }
 
         //Get All Accept Appointments By Doctor
         [Authorize(Roles = "Doctor")]
@@ -74,7 +94,16 @@ namespace HeartDiseasePrediction.Controllers
         {
             string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var appointments = await _unitOfWork.appointments.GetAcceptAndCancelAppointmentByDoctor(doctorEmail, userRole);
+            var appointments = await _unitOfWork.appointments.GetAcceptAppointmentByDoctor(doctorEmail, userRole);
+            return View(appointments);
+        }
+        [Authorize(Roles = "Doctor")]
+        [HttpPost]
+        public async Task<IActionResult> GetAcceptAppointments(DateTime? date, long? ssn)
+        {
+            string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
+            string userRole = User.FindFirstValue(ClaimTypes.Role);
+            var appointments = await _unitOfWork.appointments.SearchAcceptAppointments(doctorEmail, userRole, date, ssn);
             return View(appointments);
         }
 
@@ -154,7 +183,7 @@ namespace HeartDiseasePrediction.Controllers
                 Name = doctor.Name,
                 Location = doctor.Location,
                 Price = doctor.Price,
-                //ProfileImg = doctor.User.ProfileImg,
+                ProfileImg = doctor.User.ProfileImg,
             };
             return View(DoctorDetail);
         }

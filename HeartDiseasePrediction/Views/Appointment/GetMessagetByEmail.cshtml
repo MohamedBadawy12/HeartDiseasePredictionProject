@@ -22,15 +22,24 @@
 						</ol>
 					</nav>
 				</div>
-				@*	<div class="form-inline justify-content-end my-2 my-lg-1 d-flex">
-				<div>
-				@using (Html.BeginForm("Index", "Appointment", FormMethod.Post))
-				{
-				@Html.TextBox("search",null,new{@class="form-control",placeholder="Search here...",style="margin:5px 0px 5px 5px"})
-				<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
-				}
+					<div class="form-inline justify-content-end my-2 my-lg-1 d-flex">
+						<div>
+						@using (Html.BeginForm("GetMessagetByEmail", "Appointment", FormMethod.Post))
+						{
+							@Html.TextBox("date",null,new{@class="form-control",type = "date",style="margin:5px 0px 5px 5px"})
+							@*<div class="form-group col-lg-4">
+								<div class="input-group date" id="inputDate" data-date-format="dd-mm-yyyy">
+									<input value="date" id="displayYear" type="text" class="form-control" readonly>
+									<span class="input-group-addon date_icon">
+										<i class="fa fa-calendar" aria-hidden="true"></i>
+									</span>
+								</div>
+							</div>*@
+							<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
+						}
+						</div>
+					
 				</div>
-				</div>*@
 				@if (!Model.Any())
 				{
 					<div class="alert alert-warning" role="alert">
@@ -68,12 +77,17 @@
 		</div>
 	</div>
 </section>
-<script>
-	document.addEventListener("DOMContentLoaded", function () {
-		var counterCells = document.querySelectorAll(".counterColumn");
-		var counter = 1;
-		counterCells.forEach(function (cell) {
-			cell.textContent = counter++;
+@section Scripts{
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var counterCells = document.querySelectorAll(".counterColumn");
+			var counter = 1;
+			counterCells.forEach(function (cell) {
+				cell.textContent = counter++;
+			});
 		});
-	});
-</script>
+	</script>
+}

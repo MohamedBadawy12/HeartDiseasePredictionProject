@@ -52,7 +52,7 @@
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.BirthDate"></label>
                             <div class="input-group date" id="inputDate" data-date-format="mm-dd-yyyy">
-                                <input asp-for="@Model.BirthDate" type="text" class="form-control" readonly>
+                                <input asp-for="@Model.BirthDate" id="displayYear" type="text" class="form-control" readonly>
                                 <span class="input-group-addon date_icon">
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </span>

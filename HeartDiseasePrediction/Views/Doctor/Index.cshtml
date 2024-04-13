@@ -9,7 +9,7 @@
 		box-shadow: 0px 4px 8px 0px #7986CB;
 	}
 </style>
-<section class="card card-body bg-light " style="margin:20px">
+<section class="card card-body bg-light " style="margin:30px">
 	<div class="container mt-4">
 		<div class="row">
 			<div class="col-md-12 offset-md-0">
@@ -57,7 +57,7 @@
 								@*<th>Doctor Name</th>*@
 								<th>Name</th>
 								<th>Email</th>
-								@*<th>Gender</th>*@
+								<th>Gender</th>
 								<th>Age</th>
 								@*<th>Phone</th>*@
 								<th></th>
@@ -84,7 +84,21 @@
 										@item.Name
 									</td>*@
 									<td class="align-middle text-center">
-										<img src="@item.User.ProfileImg" alt="No Image" height="50" width="50">
+										@if (item.User.ProfileImg==null)
+										{
+											if (item.User.Gender == 0)
+											{
+												<img src="~/images/194915.png" alt="Admin" class="rounded-circle" height="50" width="50">
+											}
+											else
+											{
+												<img src="~/images/FemaleDoctor.jpg" alt="Admin" class="rounded-circle" height="50" width="50">
+											}
+										}
+										else
+										{
+											<img src="@item.User.ProfileImg" alt="No Image" class="rounded-circle" height="50" width="50">
+										}
 									</td>
 									<td class="align-middle text-center">
 										@item.User.FirstName @item.User.LastName
@@ -92,9 +106,9 @@
 									<td class="align-middle text-center">
 										@item.User.Email
 									</td>
-									@*<td class="align-middle text-center">
+									<td class="align-middle text-center">
 										@item.User.Gender
-									</td>*@
+									</td>
 									<td class="align-middle text-center">
 										@item.User.Age
 									</td>

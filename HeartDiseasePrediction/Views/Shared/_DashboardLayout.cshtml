@@ -282,11 +282,32 @@
                         @*<input class="form-control form-control-dark w-50" type="text" placeholder="Search" aria-label="Search">*@
                         <div class="quote_btn-container">
                             <a role="button">
-                                <img src="~/images/istockphoto-1223671392-612x612-1.jpg"
+                                @if (User.FindFirst("UserProfileImage").Value.Equals(""))
+                                {
+                                    <img src="~/images/istockphoto-1223671392-612x612-1.jpg"
+                                         class="rounded-circle"
+                                         height="24"
+                                         alt="Portrait of a User"
+                                         loading="lazy" />
+                                }
+                                else
+                                {
+                                    <img src="@User.FindFirst("UserProfileImage").Value"
+                                         class="rounded-circle"
+                                         height="24"
+                                         alt="Portrait of a User"
+                                         loading="lazy" />
+
+                                }
+                                <span>
+                                     @(
+                                    User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value
+                                    )</span>
+               @*                 <img src="~/images/istockphoto-1223671392-612x612-1.jpg"
                                 class="rounded-circle"
                                 height="24"
                                 alt="Portrait of a User"
-                                     loading="lazy" /> <span>Hello @(User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value)</span>
+                                     loading="lazy" /> <span>Hello @(User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value)</span>*@
                             </a>
                             <a asp-controller="Account" asp-action="Logout" onclick="ConfirmLogout()">
                                 <i class="lni lni-exit"></i>

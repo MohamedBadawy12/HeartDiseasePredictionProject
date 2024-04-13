@@ -279,7 +279,16 @@
                                     <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-md-none d-lg-flex">
                                         @if (item.User.ProfileImg == null)
                                         {
-                                            <img src="~/images/doctor.png" class="rounded-circle" width="50px">
+                                            if (item.User.Gender == 0)
+                                            {
+                                                <img src="~/images/194915.png" width="60px" class="rounded-circle" alt="@item.Name">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/FemaleDoctor.jpg" width="60px" class="rounded-circle" alt="@item.Name">
+                                            }
+
+                                            @*<img src="~/images/doctor.png" class="rounded-circle" width="50px">*@
                                         }
                                         else
                                         {
