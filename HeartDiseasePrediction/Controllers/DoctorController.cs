@@ -7,6 +7,7 @@ using NToastNotify;
 using Repositories;
 using Repositories.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HeartDiseasePrediction.Controllers
@@ -30,29 +31,61 @@ namespace HeartDiseasePrediction.Controllers
 		}
 
 		//get all doctors in list
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(int currentPage = 1)
 		{
 			var doctors = await _unitOfWork.Doctors.GetDoctors();
+			int totalRecords = doctors.Count();
+			int pageSize = 5;
+			int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+			doctors = doctors.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+			ViewBag.CurrentPage = currentPage;
+			ViewBag.TotalPages = totalPages;
+			ViewBag.HasPrevious = currentPage > 1;
+			ViewBag.HasNext = currentPage < totalPages;
 			return View(doctors);
 		}
 		//Search 
 		[HttpPost]
-		public async Task<IActionResult> Index(string search)
+		public async Task<IActionResult> Index(string search, int currentPage = 1)
 		{
 			var doctorViewModel = await _unitOfWork.Doctors.FilterDoctors(search);
+			int totalRecords = doctorViewModel.Count();
+			int pageSize = 5;
+			int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+			doctorViewModel = doctorViewModel.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+			ViewBag.CurrentPage = currentPage;
+			ViewBag.TotalPages = totalPages;
+			ViewBag.HasPrevious = currentPage > 1;
+			ViewBag.HasNext = currentPage < totalPages;
 			return View(doctorViewModel);
 		}
 		[AllowAnonymous]
-		public async Task<IActionResult> DoctorsList()
+		public async Task<IActionResult> DoctorsList(int currentPage = 1)
 		{
 			var doctors = await _unitOfWork.Doctors.GetDoctors();
+			int totalRecords = doctors.Count();
+			int pageSize = 5;
+			int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+			doctors = doctors.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+			ViewBag.CurrentPage = currentPage;
+			ViewBag.TotalPages = totalPages;
+			ViewBag.HasPrevious = currentPage > 1;
+			ViewBag.HasNext = currentPage < totalPages;
 			return View(doctors);
 		}
 		[AllowAnonymous]
 		[HttpPost]
-		public async Task<IActionResult> DoctorsList(string search)
+		public async Task<IActionResult> DoctorsList(string search, int currentPage = 1)
 		{
 			var doctors = await _unitOfWork.Doctors.FilterDoctors(search);
+			int totalRecords = doctors.Count();
+			int pageSize = 5;
+			int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+			doctors = doctors.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+			ViewBag.CurrentPage = currentPage;
+			ViewBag.TotalPages = totalPages;
+			ViewBag.HasPrevious = currentPage > 1;
+			ViewBag.HasNext = currentPage < totalPages;
 			return View(doctors);
 		}
 		//get doctor details

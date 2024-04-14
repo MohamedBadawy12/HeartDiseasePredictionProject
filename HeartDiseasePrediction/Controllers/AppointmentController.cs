@@ -30,80 +30,144 @@ namespace HeartDiseasePrediction.Controllers
 
         //Get All Appointments by User ID
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage = 1)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
             var appointments = await _unitOfWork.appointments.GetAppointmentsByPatientId(userId, userRole);
+            int totalRecords = appointments.Count();
+            int pageSize = 5;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            appointments = appointments.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
             return View(appointments);
         }
 
         //Get All Appointments by Email
         [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> GetAppointmentByEmail()
+        public async Task<IActionResult> GetAppointmentByEmail(int currentPage = 1)
         {
             string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var appointments = await _unitOfWork.appointments.GetAppointmentByEmail(doctorEmail, userRole);
+            var appointments = await _unitOfWork.appointments.GetWaitingAppointmentByEmail(doctorEmail, userRole);
+            int totalRecords = appointments.Count();
+            int pageSize = 8;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            appointments = appointments.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
             return View(appointments);
         }
 
         //Get All messages by Email
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> GetMessagetByEmail()
+        public async Task<IActionResult> GetMessagetByEmail(int currentPage = 1)
         {
             string patientEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
             var messages = await _unitOfWork.appointments.GetMessageByEmail(patientEmail, userRole);
+            int totalRecords = messages.Count();
+            int pageSize = 8;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            messages = messages.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
             return View(messages);
         }
 
         //Search for message by Email
         [Authorize(Roles = "User")]
         [HttpPost]
-        public async Task<IActionResult> GetMessagetByEmail(DateTime? date)
+        public async Task<IActionResult> GetMessagetByEmail(DateTime? date, int currentPage = 1)
         {
             string patientEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
             var messages = await _unitOfWork.appointments.SearchMessages(patientEmail, userRole, date);
+            int totalRecords = messages.Count();
+            int pageSize = 5;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            messages = messages.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
             return View(messages);
         }
 
         //Get All Accept and Cancel Appointments By Patient
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> GetAcceptAndCancelAppointments()
+        public async Task<IActionResult> GetAcceptAndCancelAppointments(int currentPage = 1)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
             var appointments = await _unitOfWork.appointments.GetAcceptAndCancelAppointment(userId, userRole);
+            int totalRecords = appointments.Count();
+            int pageSize = 8;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            appointments = appointments.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
             return View(appointments);
         }
         [Authorize(Roles = "User")]
         [HttpPost]
-        public async Task<IActionResult> GetAcceptAndCancelAppointments(DateTime? date)
+        public async Task<IActionResult> GetAcceptAndCancelAppointments(DateTime? date, int currentPage = 1)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
             var appointments = await _unitOfWork.appointments.SearchAcceptAndCancelAppointment(userId, userRole, date);
+            int totalRecords = appointments.Count();
+            int pageSize = 8;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            appointments = appointments.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
             return View(appointments);
         }
 
         //Get All Accept Appointments By Doctor
         [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> GetAcceptAppointments()
+        public async Task<IActionResult> GetAcceptAppointments(int currentPage = 1)
         {
             string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
             var appointments = await _unitOfWork.appointments.GetAcceptAppointmentByDoctor(doctorEmail, userRole);
+            int totalRecords = appointments.Count();
+            int pageSize = 10;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            appointments = appointments.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
             return View(appointments);
         }
         [Authorize(Roles = "Doctor")]
         [HttpPost]
-        public async Task<IActionResult> GetAcceptAppointments(DateTime? date, long? ssn)
+        public async Task<IActionResult> GetAcceptAppointments(DateTime? date, long? ssn, int currentPage = 1)
         {
             string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
             var appointments = await _unitOfWork.appointments.SearchAcceptAppointments(doctorEmail, userRole, date, ssn);
+            int totalRecords = appointments.Count();
+            int pageSize = 10;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            appointments = appointments.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
             return View(appointments);
         }
 
