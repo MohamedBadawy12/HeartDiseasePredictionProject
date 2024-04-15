@@ -120,6 +120,35 @@ namespace HeartDiseasePrediction.Controllers
 			ViewBag.HasNext = currentPage < totalPages;
 			return View(prescriptions);
 		}
+		[Authorize(Roles = "Doctor")]
+		[HttpPost]
+		public async Task<IActionResult> GetPatientPrescriptions(int id, DateTime? date, int currentPage = 1)
+		{
+			var appointment = await _unitOfWork.appointments.GetAcceptAppointment(id);
+			if (appointment == null)
+				return View("NotFound");
+			string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
+			var prescriptionss = await _context.Prescriptions.Where(x => x.PatientSSN == appointment.PatientSSN &&
+			x.DoctorEmail == doctorEmail && x.ApDoctorId == userId).ToListAsync();
+			if ((date.HasValue && date != null) || date == DateTime.MinValue)
+			{
+				var prescriptions = await _context.Prescriptions.Where(x => date.HasValue && x.date.Year == date.Value.Year && x.date.Month == date.Value.Month && x.date.Day == date.Value.Day &&
+				  x.PatientSSN == appointment.PatientSSN &&
+				  x.DoctorEmail == doctorEmail && x.ApDoctorId == userId)
+				  .Include(d => d.Doctor).Include(p => p.Patient).ToListAsync();
+				int totalRecords = prescriptions.Count();
+				int pageSize = 8;
+				int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+				prescriptions = prescriptions.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+				ViewBag.CurrentPage = currentPage;
+				ViewBag.TotalPages = totalPages;
+				ViewBag.HasPrevious = currentPage > 1;
+				ViewBag.HasNext = currentPage < totalPages;
+				return View(prescriptions);
+			}
+			return View(prescriptionss);
+		}
 
 		//Search for Prescriptions
 		//[HttpPost]

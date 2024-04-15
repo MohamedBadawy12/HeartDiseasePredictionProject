@@ -32,5 +32,8 @@ namespace HeartDiseasePrediction.ViewModel
         public float BMI { get; set; }
         [Required, Display(Name = "Glucose Level")]
         public float GlucoseLevel { get; set; }
+        public long PatientSSN { get; set; }
+        public string PatientName { get; set; }
+        public string PatientEmail { get; set; }
     }
 }

@@ -9,7 +9,7 @@
 		box-shadow: 0px 4px 8px 0px #7986CB;
 	}
 </style>
-<section class="card card-body bg-light " style="margin:25px 80px">
+<section class="card card-body bg-light " style="margin:25px 105px">
 	<div class="container mt-4">
 		<div class="row">
 			<div class="col-md-12 offset-md-0">
@@ -79,7 +79,7 @@
 										@item.MedicineName
 									</td>*@
 									<td class="align-middle text-center">
-										@item.date.ToString("dd MMM yy")
+										@item.date.ToString("dd MMM yyyy")
 									</td>
 									@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
 									{
@@ -89,12 +89,12 @@
 									}
 									@if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
 									{
-										<td class="align-middle text-center">
-											@item.PatientEmail
-										</td>
 										@*<td class="align-middle text-center">
-											@item.Patient.User.FirstName 
+											@item.PatientEmail
 										</td>*@
+										<td class="align-middle text-center">
+											@item.Patient.User.FirstName @item.Patient.User.LastName
+										</td>
 									}
 									<td class="align-middle text-center">
 										@item.PatientSSN
