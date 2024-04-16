@@ -17,7 +17,7 @@
 		display: none;
 	}*/
 </style>
-<section class="card card-body bg-light " style="margin:30px 35px">
+<section class="card card-body bg-light " style="margin:30px 70px">
 	<div class="container mt-4">
 		<div class="row">
 			<div class="col-md-10 offset-md-1">
@@ -98,8 +98,8 @@
 									@if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
 									{
 										<td class="align-middle text-center">
-											<a class="btn btn-success" id="myButton" asp-controller="Appointment" asp-action="AcceptsAppointment" asp-route-id="@item.Id" onclick="hideButton()"><i class="fa fa-check" aria-hidden="true"></i> Accept</a> |
-											@*<a class="btn btn-danger" asp-controller="Appointment" asp-action="CancelAppointment" asp-route-id="@item.Id" onclick="ConfirmDelete()"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>*@
+											@*<a class="btn btn-success" id="myButton" asp-controller="Appointment" asp-action="AcceptsAppointment" asp-route-id="@item.Id" onclick="hideButton()"><i class="fa fa-check" aria-hidden="true"></i> Accept</a> |*@
+											<a href="javascript:;" class="btn btn-success rounded rounded-3 js-accept" data-id="@item.Id"><i class="fa fa-check" aria-hidden="true"></i> Accept</a> |
 											<a href="javascript:;" class="btn btn-danger rounded rounded-3 js-delete" data-id="@item.Id"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
 											@*<a class="btn btn-outline-info" asp-controller="Appointment" asp-action="GetAppointment" asp-route-id="@item.Id"><i class="fa fa-eye"></i> Details</a>*@
 										</td>
@@ -198,6 +198,52 @@
 			});
 		});
 
+		$(document).ready(function () {
+			$('.js-accept').on('click', function () {
+				var btn = $(this);
+
+				const swal = Swal.mixin({
+					customClass: {
+						confirmButton: 'btn btn-success mx-2',
+						cancelButton: 'btn btn-light'
+					},
+					buttonsStyling: false
+				});
+
+				swal.fire({
+					title: 'Are you sure that you need to Accept this appointment?',
+					text: "You won't be able to revert this!",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Yes, accept it!',
+					cancelButtonText: 'No',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.isConfirmed) {
+						$.ajax({
+							url: `/Appointment/AcceptsAppointment/${btn.data('id')}`,
+							method: 'POST',
+							success: function () {
+								swal.fire(
+									'Accepted!',
+									'Appointment has been Accepted.',
+									'success'
+								);
+
+								btn.parents('tr').fadeOut();
+							},
+							error: function () {
+								swal.fire(
+									'Oooops...',
+									'Something went wrong.',
+									'error'
+								);
+							}
+						});
+					}
+				});
+			});
+		});
 
 		document.addEventListener("DOMContentLoaded", function () {
 			var counterCells = document.querySelectorAll(".counterColumn");

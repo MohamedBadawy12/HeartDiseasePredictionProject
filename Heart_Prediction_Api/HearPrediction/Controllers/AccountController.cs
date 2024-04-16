@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
+using Repositories.Interfaces;
 using Services.Interfaces;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace HearPrediction.Api.Controllers
@@ -21,18 +23,20 @@ namespace HearPrediction.Api.Controllers
 		private readonly IAuthService _authService;
 		private readonly SignInManager<ApplicationUser> _signInManager;
 		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly IFileService _fileRepository;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly JWT _jwt;
 		private readonly IMailService _mailServices;
 
 		public AccountController(IAuthService authService, SignInManager<ApplicationUser> signInManager,
-			 IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, IMailService mailServices, JWT jwt)
+			 IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, IMailService mailServices, JWT jwt, IFileService fileRepository)
 		{
 			_authService = authService;
 			_signInManager = signInManager;
 			_unitOfWork = unitOfWork;
 			_userManager = userManager;
 			_mailServices = mailServices;
+			_fileRepository = fileRepository;
 			_jwt = jwt;
 		}
 
@@ -130,41 +134,76 @@ namespace HearPrediction.Api.Controllers
 			return Ok(result);
 		}
 
+		//Get Profile Details of users
+		[HttpGet("GetProfileDetails")]
+		[AllowAnonymous]
+		public async Task<IActionResult> Profile()
+		{
+			string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			if (userName == null)
+				return BadRequest("Register Or Login Please");
+			var user = await _userManager.FindByNameAsync(userName);
+			if (user != null)
+			{
+				ProfileUpdateDto model = new ProfileUpdateDto()
+				{
+					FirstName = user.FirstName,
+					LastName = user.LastName,
+					Email = user.Email,
+					BirthDate = user.BirthDate,
+					ProfileImg = user.ProfileImg,
+					Gender = user.Gender,
+					PhoneNumber = user.PhoneNumber,
+				};
+				return Ok(model);
+			}
+			return BadRequest("Please Login to get your profile");
+		}
+
+		//Update profile of user
 		[HttpPut("Update")]
-		public async Task<IActionResult> UpdateProfile([FromBody] ProfileUpdateDto model)
+		[AllowAnonymous]
+		public async Task<IActionResult> UpdateProfile([FromQuery] ProfileUpdateDto model)
 		{
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
 			}
 
-			var user = await _userManager.GetUserAsync(User);
-			if (user == null)
+			string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			if (userName == null)
+				return BadRequest("Register Or Login Please");
+			var user = await _userManager.FindByNameAsync(userName);
+
+			var path = model.ProfileImg;
+			if (model.ImageFile?.Length > 0)
 			{
-				return NotFound("User not found.");
+				_fileRepository.DeleteImage(path);
+				path = await _fileRepository.UploadAsync(model.ImageFile, "/Uploads/");
+				if (path == "An Problem occured when creating file")
+				{
+					return BadRequest();
+				}
 			}
-
-			// Update the user's profile properties
-			user.Email = model.Email;
-			user.FirstName = model.FirstName;
-			user.LastName = model.LastName;
-			user.BirthDate = model.BirthDate;
-			user.SSN = model.SSN;
-			user.Insurance_No = model.Insurance_No;
-			user.Gender = model.Gender;
-			user.ProfileImg = model.ProfileImg;
-			user.Location = model.Location;
-			user.Name = model.Name;
-			user.Price = model.Price;
-
-			// Update user in the database
-			var result = await _userManager.UpdateAsync(user);
-			if (!result.Succeeded)
+			model.ProfileImg = path;
+			if (user != null)
 			{
-				return StatusCode(500, "Failed to update user profile.");
-			}
+				user.Email = model.Email;
+				user.FirstName = model.FirstName;
+				user.LastName = model.LastName;
+				user.BirthDate = model.BirthDate;
+				user.Gender = model.Gender;
+				user.ProfileImg = model.ProfileImg;
 
-			return Ok("Profile updated successfully");
+				var result = await _userManager.UpdateAsync(user);
+				if (!result.Succeeded)
+				{
+					return StatusCode(500, "Failed to update user profile.");
+				}
+				return Ok("Profile updated successfully");
+			}
+			return NotFound("User not found.");
+
 		}
 		//[HttpGet("TestEmail")]
 		//[AllowAnonymous]

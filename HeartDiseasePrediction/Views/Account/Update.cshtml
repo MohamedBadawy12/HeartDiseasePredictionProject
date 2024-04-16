@@ -1,34 +1,111 @@
 ﻿@using Database.Enums;
-@model Database.Entities.ApplicationUser;
+@*@model Database.Entities.ApplicationUser;*@
+@model HeartDiseasePrediction.ViewModel.EditAccountProfile;
 @*@model HeartDiseasePrediction.ViewModel.EditAccountProfile;*@
 @{
     ViewData["Title"] = "Profile";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h3>@ViewData["Title"]</h3>
-<div class="row">
-    @if (!string.IsNullOrEmpty(Model.ProfileImg))
-    {
-        <div class="col-md-4">
-            <img src="/uploads/@Model.ProfileImg" style="width:250px;height:300px" />
-        </div>
-    }
+@*<h3>@ViewData["Title"]</h3>*@
+<div class="main-body" style="margin:20px 0px">
+    <nav aria-label="breadcrumb" class="main-breadcrumb ">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Profile</li>
+            <li class="breadcrumb-item">Page</li>
+            <li class="breadcrumb-item active" aria-current="page">Update Profile</li>
+        </ol>
+    </nav>
+</div>
+<div class="row justify-content-between">
+    <div class="col-md-4">
+        <form asp-action="Update" id="profile-form" method="post" enctype="multipart/form-data">
+            @if (Model.ProfileImg != null)
+            {
+                <div>
+                    <img src="@Model.ProfileImg" style="width:300px;height:350px" />
+                    <input asp-for="@Model.ProfileImg" type="hidden" />
+                </div>
+            }
+            else
+            {
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
+                {
+                    <div>
+                        @if (Model.Gender == 0)
+                        {
+                            <img src="~/images/194915.png" alt="Admin" style="width:350px;height:350px">
+                        }
+                        else
+                        {
+                            <img src="~/images/FemaleDoctor.jpg" alt="Admin" style="width:350px;height:350px">
+                        }
+                    </div>
+                }
+                else if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                {
+                    <div>
+                        @if (Model.Gender == 0)
+                        {
+                            <img src="~/images/romi.png" alt="Admin" style="width:300px;height:350px">
+                        }
+                        else
+                        {
+                            <img src="~/images/avatar-transparent.png" alt="Admin" style="width:350px;height:350px">
+                        }
+                    </div>
+                }
+                else if (User.Identity.IsAuthenticated && User.IsInRole("MedicalAnalyst"))
+                {
+                    <div>
+                        @if (Model.Gender == 0)
+                        {
+                            <img src="~/images/OIP (2).jpg" alt="Admin" style="width:350px;height:350px">
+                        }
+                        else
+                        {
+                            <img src="~/images/OIP (3).jpg" alt="Admin" style="width:350px;height:350px">
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        @if (Model.Gender == 0)
+                        {
+                            <img src="~/images/romi.png" alt="Admin" style="width:350px;height:350px">
+                        }
+                        else
+                        {
+                            <img src="~/images/avatar-transparent.png" alt="Admin" style="width:350px;height:350px">
+                        }
+                    </div>
+                }
+
+            }
+            @*<label asp-for="@Model.ImageFile">Image Profile</label>*@
+           <div style="margin:10px 0px">
+                <input type="file" asp-for="@Model.ImageFile" value="0" class="form-control">
+                <span asp-validation-for="@Model.ImageFile" class="text-danger"></span>
+           </div>
+
+            <div hidden>
+                <input asp-for="@Model.Email" type="text" class="form-control" placeholder="Enter your Email" hidden />
+                <input asp-for="@Model.FirstName" type="text" class="form-control" placeholder="Enter your FirstName " hidden />
+                <input asp-for="@Model.LastName" type="text" class="form-control" placeholder="Enter your LastName " hidden />
+                <input asp-for="@Model.PhoneNumber" type="number" class="form-control" placeholder="Enter your phone number." hidden />
+                <input asp-for="@Model.BirthDate" type="text" class="form-control" hidden>
+                <select asp-for="@Model.Gender" class="form-control wide" id="inputGender" asp-items="Html.GetEnumSelectList<Gender>()" hidden>
+                    <option value="NoSelected ">--Please Select Gender-- </option>
+                </select>
+            </div>
+            <button id="update-profile-button" type="submit" class="btn btn-primary" style="margin:10px 0px">Save image</button>
+        </form>
+       
+    </div>
+  
     <div class="col-md-6">
         <form asp-action="Update" id="profile-form" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <input asp-for="@Model.Id" type="text" class="form-control" hidden />
-            <input asp-for="@Model.PasswordHash" type="text" class="form-control" hidden />
-            <input asp-for="@Model.SecurityStamp" type="text" class="form-control" hidden />
-            <input asp-for="@Model.UserName" type="text" class="form-control" hidden />
-            <input asp-for="@Model.NormalizedEmail" type="text" class="form-control" hidden />
-            <input asp-for="@Model.NormalizedUserName" type="text" class="form-control" hidden />
-            <input asp-for="@Model.ConcurrencyStamp" type="text" class="form-control" hidden />
-            <input asp-for="@Model.TwoFactorEnabled" type="text" class="form-control" hidden />
-            <input asp-for="@Model.LockoutEnabled" type="text" class="form-control" hidden />
-            <input asp-for="@Model.LockoutEnd" type="text" class="form-control" hidden />
-            <input asp-for="@Model.PhoneNumberConfirmed" type="text" class="form-control" hidden />
-            <input asp-for="@Model.EmailConfirmed" type="text" class="form-control" hidden />
             <div class="form-floating mb-3">
                 <input asp-for="@Model.Email" type="text" class="form-control" placeholder="Enter your Email" />
                 <label asp-for="@Model.Email" class="form-label"></label>
@@ -43,7 +120,7 @@
                 <label asp-for="@Model.LastName" class="form-label"></label>
                 <span asp-validation-for="@Model.LastName" class="text-danger"></span>
             </div>
-            @if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
+          @*  @if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
             {
                 <div class="form-floating mb-3">
                     <input asp-for="@Model.Name" type="text" class="form-control" placeholder="Enter your Name " />
@@ -60,8 +137,8 @@
                     <label asp-for="@Model.Price" class="form-label"></label>
                     <span asp-validation-for="@Model.Price" class="text-danger"></span>
                 </div>
-            }
-            @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+            }*@
+          @*  @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
             {
                 <div class="form-floating mb-3">
                     <input asp-for="@Model.SSN" type="number" class="form-control" placeholder="Enter your SSN " />
@@ -73,16 +150,25 @@
                     <label asp-for="@Model.Insurance_No" class="form-label"></label>
                     <span asp-validation-for="@Model.Insurance_No" class="text-danger"></span>
                 </div>
-            }
+            }*@
             <div class="form-floating mb-3">
                 <input asp-for="@Model.PhoneNumber" type="number" class="form-control" placeholder="Enter your phone number." />
                 <label asp-for="@Model.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="BirthDate" class="form-label"></label>
+              @*  <label asp-for="BirthDate" class="form-label"></label>
                 <div class="input-group date" id="inputDate" data-date-format="mm-dd-yyyy">
                     <input asp-for="@Model.BirthDate" type="date" class="form-control" readonly>
+                    <span class="input-group-addon date_icon">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <span asp-validation-for="@Model.BirthDate" class="text-danger"></span>*@
+
+                <label asp-for="@Model.BirthDate"></label>
+                <div class="input-group date" id="inputDate" data-date-format="mm-dd-yyyy">
+                    <input asp-for="@Model.BirthDate"  type="text" class="form-control" >
                     <span class="input-group-addon date_icon">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                     </span>
@@ -96,9 +182,8 @@
                 </select>
                 <span asp-validation-for="@Model.Gender" class="text-danger"></span>
             </div>
-            <div class="m-2">
-                <label class="form-label" asp-for="@Model.ProfileImg">Profile picture</label>
-                <input asp-for="@Model.ImageFile" />
+            <div class="m-2" hidden>
+                <input asp-for="@Model.ProfileImg" type="hidden" />
             </div>
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-success">Save</button>
         </form>
