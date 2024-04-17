@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace HearPrediction.Api.DTO
+namespace HeartDiseasePrediction.ViewModel
 {
-	public class EditAppointmentDto
+	public class EditAppointmentViewModel
 	{
 		[Required, Display(Name = "Date")]
 		public DateTime Date { get; set; }
@@ -12,6 +12,6 @@ namespace HearPrediction.Api.DTO
 		public string PatientPhone { get; set; }
 		public string PateintName { get; set; }
 		public int DoctorId { get; set; }
-		public long PatientSSN { get; set; }
+		//public long PatientSSN { get; set; }
 	}
 }

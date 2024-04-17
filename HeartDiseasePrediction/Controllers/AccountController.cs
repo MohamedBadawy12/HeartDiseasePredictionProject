@@ -1,4 +1,5 @@
 ﻿using Database.Entities;
+using HeartDiseasePrediction.Helper;
 using HeartDiseasePrediction.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -23,11 +24,12 @@ namespace HeartDiseasePrediction.Controllers
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
 		private readonly IFileService _fileRepository;
+		private readonly IMailService _mailService;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly AppDbContext _context;
 		public AccountController(IToastNotification toastNotification, UserManager<ApplicationUser> userManger,
 			SignInManager<ApplicationUser> signInManager, AppDbContext context, IFileService fileRepository,
-			IUnitOfWork unitOfWork)
+			IUnitOfWork unitOfWork, IMailService mailService)
 		{
 			_toastNotification = toastNotification;
 			_client = new HttpClient();
@@ -37,6 +39,7 @@ namespace HeartDiseasePrediction.Controllers
 			_fileRepository = fileRepository;
 			_unitOfWork = unitOfWork;
 			_context = context;
+			_mailService = mailService;
 		}
 		//Login
 		public async Task<IActionResult> Login()
@@ -392,16 +395,23 @@ namespace HeartDiseasePrediction.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var user = await _userManager.FindByNameAsync(model.Email);
+				var user = await _userManager.FindByEmailAsync(model.Email);
 				if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
 				{
 					return View("ForgotPasswordConfirmation");
 				}
 
-				// string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-				// var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-				// await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-				// return RedirectToAction("ForgotPasswordConfirmation", "Account");
+				var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+				var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Scheme);
+				var message = new MailRequestViewModel(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+				_mailService.SendEmail(message);
+				return RedirectToAction("ForgotPasswordConfirmation", "Account");
+				//await _userManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+				//return RedirectToAction("ForgotPasswordConfirmation", "Account");
+
+				//var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+				//var confirmationLink = Url.Action(nameof(Resetpassword), "Authentication", new ConfirmEmailDto { Token = token, Email = user.Email });
+
 			}
 			return View(model);
 		}

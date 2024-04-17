@@ -52,6 +52,8 @@ namespace Database.Entities
 		public float GlucoseLevel { get; set; }
 		//[LoadColumn(15)]
 		//public bool Label { get; set; }
+		[Required, Display(Name = "Patient Name")]
+		public string PatientName { get; set; }
 		public string UserId { get; set; }
 		[ForeignKey(nameof(UserId))]
 		public ApplicationUser MedicalAnalayst { get; set; }

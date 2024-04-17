@@ -1,22 +1,22 @@
-﻿@model HeartDiseasePrediction.ViewModel.BookAppointmentViewModel
+﻿@model HeartDiseasePrediction.ViewModel.EditAppointmentViewModel
 
 @{
-    ViewData["Title"] = "Book Appointment";
+    ViewData["Title"] = "Update Appointment";
 }
 <style type="text/css">
     /* body {
-            color: #000;
-            overflow-x: hidden;
-            height: 100%;
-            background-color: #C5CAE9 !important;
-            background-repeat: no-repeat;
-            padding: 0px !important;
-        }*/
+                color: #000;
+                overflow-x: hidden;
+                height: 100%;
+                background-color: #C5CAE9 !important;
+                background-repeat: no-repeat;
+                padding: 0px !important;
+            }*/
 
     /*.container-fluid {
-            padding-top: 120px !important;
-            padding-bottom: 120px !important;
-        }*/
+                padding-top: 120px !important;
+                padding-bottom: 120px !important;
+            }*/
 
     .card {
         box-shadow: 0px 4px 8px 0px #7986CB;
@@ -28,7 +28,7 @@
         border-radius: 10px;
         box-sizing: border-box;
         /* background-color: white !important;
-            color: #fff !important;*/
+                color: #fff !important;*/
         font-size: 16px;
         letter-spacing: 1px;
         width: 180px;
@@ -93,10 +93,10 @@
         }
 
     /*.active {
-            border-radius: 6px !important;
-            background-image: linear-gradient(#90CAF9, #64B5F6) !important;
-            color: #000 !important;
-        }*/
+                border-radius: 6px !important;
+                background-image: linear-gradient(#90CAF9, #64B5F6) !important;
+                color: #000 !important;
+            }*/
 
     .disabled {
         color: #616161 !important;
@@ -117,7 +117,7 @@
         }
 
     .cell {
-        border: 1px solid ;
+        border: 1px solid;
         margin: 2px;
         cursor: pointer;
     }
@@ -129,7 +129,7 @@
         .cell.select {
             background-color: #3D5AFE;
             color: #fff;
-            cursor:not-allowed;
+            cursor: not-allowed;
         }
 
     .fa-calendar {
@@ -146,95 +146,11 @@
     }
 
 </style>
-
-<div class="card card-body" style="margin:20px 100px 0px 100px">
-    <div class="main-body">
-        <nav aria-label="breadcrumb" class="main-breadcrumb ">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">Doctor</li>
-                <li class="breadcrumb-item">Details</li>
-                <li class="breadcrumb-item active" aria-current="page">Doctor Details</li>
-            </ol>
-        </nav>
-    </div>
-    <div class="container">
-        <div class="row align-items-center position-relative">
-            <div class="col-xl-3 col-lg-4">
-                @if (Model.ProfileImg == null)
-                {
-                    if (Model.Gender == 0)
-                    {
-                        <img src="~/images/194915.png" width="170px" class="rounded-circle" alt="@Model.Name">
-                    }
-                    else
-                    {
-                        <img src="~/images/FemaleDoctor.jpg" width="170px" class="rounded-circle" alt="@Model.Name">
-                    }
-                }
-                else
-                {
-                    <img src="@Model.ProfileImg" width="160px" class="rounded-circle" alt="@Model.Name">
-                }
-            </div>
-            <div class="col-xl-6 col-lg-8">
-                <h2 style="color:royalblue"><strong>Doctor Details</strong></h2>
-                <h2>
-                    @Model.FirstName @Model.LastName
-                </h2>
-                <div class="d-flex flex-row align-items-center mb-3">
-                    <div style="padding-right:10px">
-                        @*<span class="badge bg-success text-white">AVAILABLE</span>*@
-                        @if (Model.IsAvailable != true)
-                        {
-                            <span class="badge bg-success text-white">AVAILABLE</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-danger text-white">Pending</span>
-                        }
-                    </div>
-                    <div style="padding-right:10px;">
-                        <i class="fa fa-user-md"></i>
-                        <span>@Model.Name</span>
-                    </div>
-                    <div style="padding-right:10px">
-                        @* <i class="fa fa-usd" aria-hidden="true"></i>*@
-                        <span style="text-decoration:none;">
-                            @Model.Gender
-                        </span>
-                    </div>
-                </div>
-                <div class="align-items-center mb-6">
-                    <div style="padding-right:15px">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                        <span style="text-decoration:none; color:royalblue">
-                            @Model.Location
-                        </span>
-                    </div>
-                    <div style="padding-right:15px">
-                        <i class="fa fa-usd" aria-hidden="true"></i> Fee:
-                        <span style="text-decoration:none; color:royalblue">
-                            @Model.Price EGP
-                        </span>
-                    </div>
-                    <div style="padding-right:10px">
-                        <i class="fa fa-calendar" aria-hidden="true" style="color:limegreen"></i>
-                        @Model.BirthDate.ToString("dd MMMM yyyy")
-                    </div>
-                    <div>
-                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                        <span>@Model.Email</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="card card-body" style="margin:20px 100px 10px 100px">
     <div class="main-body">
         <div aria-label="breadcrumb" class="main-breadcrumb ">
             <div class="breadcrumb" style="background-color:#00c6a9">
-                <div class="justify-content-center text-white" aria-current="page"><h4>Book Appointment</h4></div>
+                <div class="justify-content-center text-white" aria-current="page"><h4>Update Your Appointment</h4></div>
             </div>
         </div>
     </div>
@@ -248,7 +164,7 @@
                                 <div class="card-header bg-secondary">
                                     <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1">
                                         <div class="form-group col-lg-12">
-                                           @* <label asp-for="@Model.Date"></label>*@
+                                            @* <label asp-for="@Model.Date"></label>*@
                                             <div class="input-group date" id="inputDate" data-date-format="mm-dd-yyyy">
                                                 Date: <input asp-for="@Model.Date" id="displayYear" type="text" class="form-control" style="margin:0px 10px" readonly>
                                                 <span class="input-group-addon date_icon">
@@ -260,23 +176,26 @@
                                     </div>
                                 </div>
                                 <div class="card-body p-3 p-sm-5">
-                                    <div class="row text-center mx-0" >
+                                    <div class="row text-center mx-0">
                                         @{
                                             var times = new List<string> { "9:00AM", "9:30AM", "10:00AM", "10:30AM", "11:00AM",
                                         "11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM","2:00PM", "2:30PM","3:00PM","3:30PM","4:00PM"}; // Add more times as needed
                                         }
 
-                                        @foreach(var time in times)
+                                        @foreach (var time in times)
                                         {
                                             <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
                                         }
                                         <input asp-for="Time" id="selectedTime" type="hidden" name="Time" />
+                                        <input asp-for="DoctorId" type="text" hidden/>
+                                        <input asp-for="PateintName" type="text" hidden/>
+                                        <input asp-for="PatientPhone" type="text" hidden/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="btn btn-success " style="margin:20px 230px 10px; padding:0px 50px">
-                            <button type="submit" class="btn text-white"><strong>Book Appointment</strong></button>
+                            <button type="submit" class="btn text-white"><strong>Update Appointment</strong></button>
                         </div>
                     </form>
                 </div>

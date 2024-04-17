@@ -81,6 +81,7 @@
 									@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
 									{
 										<td class="align-middle text-center">
+											<a class="btn btn-outline-primary" asp-controller="Appointment" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-square"></i> Edit</a> |
 											<a href="javascript:;" class="btn btn-danger rounded rounded-3 js-delete" data-id="@item.Id"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
 										</td>
 									}
