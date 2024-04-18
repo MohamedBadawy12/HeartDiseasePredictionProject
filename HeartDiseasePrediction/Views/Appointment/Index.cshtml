@@ -9,7 +9,7 @@
 		box-shadow: 0px 4px 8px 0px #7986CB;
 	}
 </style>
-<section class="card card-body bg-light " style="margin:30px 140px">
+<section class="card card-body bg-light " style="margin:30px 80px">
 	<div class="container mt-4">
 		<div class="row">
 			<div class="col-md-10 offset-md-1">
@@ -81,7 +81,7 @@
 									@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
 									{
 										<td class="align-middle text-center">
-											<a class="btn btn-outline-primary" asp-controller="Appointment" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-square"></i> Edit</a> |
+											<a class="btn btn-primary" asp-controller="Appointment" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-square"></i> Edit</a> |
 											<a href="javascript:;" class="btn btn-danger rounded rounded-3 js-delete" data-id="@item.Id"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
 										</td>
 									}

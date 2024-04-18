@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using NToastNotify;
 using Repositories;
 using Repositories.Interfaces;
+using SendGrid.Helpers.Mail;
 using System;
 
 namespace HeartDiseasePrediction
@@ -38,12 +39,13 @@ namespace HeartDiseasePrediction
                 CloseButton = true
             });
             services.AddMvc().AddRazorRuntimeCompilation();
-
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IFileService, FileService>();
+            //services.AddScoped<IMailService, MailService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
             services.AddDistributedMemoryCache();
 

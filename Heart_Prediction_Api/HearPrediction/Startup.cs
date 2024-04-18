@@ -1,6 +1,5 @@
 using Database.Entities;
 using HearPrediction.Api.Helpers;
-using HearPrediction.Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -60,7 +59,7 @@ namespace HearPrediction.Api
             //var emailSetting = Configuration.GetSection("MailSettings").Get<MailSettings>();
             //services.AddSingleton(emailSetting);
 
-            services.AddScoped<IMailService, MailService>();
+            //services.AddScoped<Repositories.IMailService, Repositories.MailService>();
 
             //services.Configure<IdentityOptions>(options =>
             //    options.SignIn.RequireConfirmedEmail = true

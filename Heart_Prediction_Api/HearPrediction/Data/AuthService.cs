@@ -1,7 +1,6 @@
 ﻿using Database.Entities;
 using HearPrediction.Api.DTO;
 using HearPrediction.Api.Helpers;
-using HearPrediction.Api.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -26,13 +25,13 @@ namespace Services
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMailService _mailServices;
+        private readonly Repositories.IMailService _mailServices;
         private readonly IFileService _fileRepository;
         private readonly JWT _jwt;
         private readonly AppDbContext _context;
         public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager
-            , IOptions<JWT> jwt, IUnitOfWork unitOfWork, AppDbContext context, IMailService mailServices, IFileService fileRepository)
+            , IOptions<JWT> jwt, IUnitOfWork unitOfWork, AppDbContext context, Repositories.IMailService mailServices, IFileService fileRepository)
         {
             _userManager = userManager;
             _roleManager = roleManager;

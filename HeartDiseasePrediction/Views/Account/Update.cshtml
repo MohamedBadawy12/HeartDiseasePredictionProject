@@ -6,7 +6,11 @@
     ViewData["Title"] = "Profile";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
-
+<style>
+    .card {
+        box-shadow: 0px 4px 8px 0px #7986CB;
+    }
+</style>
 @*<h3>@ViewData["Title"]</h3>*@
 <div class="main-body" style="margin:20px 0px">
     <nav aria-label="breadcrumb" class="main-breadcrumb ">
@@ -18,12 +22,12 @@
     </nav>
 </div>
 <div class="row justify-content-between">
-    <div class="col-md-4">
+    <div class="col-md-4 card card-body bg-light">
         <form asp-action="Update" id="profile-form" method="post" enctype="multipart/form-data">
             @if (Model.ProfileImg != null)
             {
                 <div>
-                    <img src="@Model.ProfileImg" style="width:300px;height:350px" />
+                    <img src="@Model.ProfileImg" style="width:300px;height:350px; margin-left:20px" />
                     <input asp-for="@Model.ProfileImg" type="hidden" />
                 </div>
             }
@@ -104,7 +108,7 @@
        
     </div>
   
-    <div class="col-md-6">
+    <div class="col-md-6 ">
         <form asp-action="Update" id="profile-form" method="post" enctype="multipart/form-data">
             <div class="form-floating mb-3">
                 <input asp-for="@Model.Email" type="text" class="form-control" placeholder="Enter your Email" />

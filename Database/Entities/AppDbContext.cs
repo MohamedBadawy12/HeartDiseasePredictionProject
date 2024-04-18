@@ -36,6 +36,11 @@ namespace Database.Entities
                .WithMany(p => p.Prescriptions)
                .HasForeignKey(a => a.PatientSSN)
                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<MedicalTest>()
+            .HasOne(p => p.Prediction)
+            .WithOne(mt => mt.MedicalTest)
+            .HasForeignKey<Prediction>(p => p.MedicalTestId);
         }
     }
 }
