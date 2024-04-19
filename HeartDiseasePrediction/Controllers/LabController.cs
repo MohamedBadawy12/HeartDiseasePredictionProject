@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using Repositories;
+using Repositories.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HeartDiseasePrediction.Controllers
@@ -14,17 +16,43 @@ namespace HeartDiseasePrediction.Controllers
         private readonly IToastNotification _toastNotification;
         private readonly IUnitOfWork _unitOfWork;
         private readonly AppDbContext _context;
+        private readonly IFileService _fileRepository;
         public LabController(IToastNotification toastNotification, AppDbContext context
-            , IUnitOfWork unitOfWork)
+            , IUnitOfWork unitOfWork, IFileService fileRepository)
         {
             _toastNotification = toastNotification;
             _unitOfWork = unitOfWork;
             _context = context;
+            _fileRepository = fileRepository;
         }
         //Lab List
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage = 1)
         {
             var labs = await _unitOfWork.labs.GetLabs();
+            int totalRecords = labs.Count();
+            int pageSize = 5;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            labs = labs.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
+            ViewBag.msg = TempData["msg"] as string;
+            return View(labs);
+        }
+
+        //Lab List
+        public async Task<IActionResult> GetAllLabs(int currentPage = 1)
+        {
+            var labs = await _unitOfWork.labs.GetLabs();
+            int totalRecords = labs.Count();
+            int pageSize = 5;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            labs = labs.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
             ViewBag.msg = TempData["msg"] as string;
             return View(labs);
         }
@@ -42,6 +70,9 @@ namespace HeartDiseasePrediction.Controllers
                     Id = id,
                     Name = lab.Name,
                     PhoneNumber = lab.PhoneNumber,
+                    Location = lab.Location,
+                    Price = lab.Price,
+                    LabImage = lab.LabImage,
                 };
                 return View(labVM);
             }
@@ -64,7 +95,17 @@ namespace HeartDiseasePrediction.Controllers
                 return View(model);
             try
             {
-                //await _labService.AddAsync(model);
+                var path = "";
+                if (model.ImageFile?.Length > 0)
+                {
+                    path = await _fileRepository.UploadAsync(model.ImageFile, "/Uploads/");
+                    if (path == "An Problem occured when creating file")
+                    {
+                        return BadRequest();
+                    }
+                }
+                model.LabImage = path;
+
                 await _unitOfWork.labs.AddAsync(model);
                 await _unitOfWork.Complete();
                 TempData["msg"] = "Lab Created successfully";
@@ -81,7 +122,6 @@ namespace HeartDiseasePrediction.Controllers
 
 
         //Edit Lab
-        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             try
@@ -89,11 +129,15 @@ namespace HeartDiseasePrediction.Controllers
                 var lab = await _unitOfWork.labs.GetLab(id);
                 if (lab == null)
                     return View("NotFound");
+
                 var labVM = new Lab
                 {
                     Id = id,
                     Name = lab.Name,
                     PhoneNumber = lab.PhoneNumber,
+                    Location = lab.Location,
+                    Price = lab.Price,
+                    LabImage = lab.LabImage,
                 };
                 return View(labVM);
             }
@@ -112,8 +156,23 @@ namespace HeartDiseasePrediction.Controllers
                 if (lab == null)
                     return View("NotFound");
 
+                var path = model.LabImage;
+                if (model.ImageFile?.Length > 0)
+                {
+                    _fileRepository.DeleteImage(path);
+                    path = await _fileRepository.UploadAsync(model.ImageFile, "/Uploads/");
+                    if (path == "An Problem occured when creating file")
+                    {
+                        return BadRequest();
+                    }
+                }
+                model.LabImage = path;
+
                 lab.Name = model.Name;
                 lab.PhoneNumber = model.PhoneNumber;
+                lab.Location = model.Location;
+                lab.Price = model.Price;
+                lab.LabImage = model.LabImage;
 
                 _context.Labs.Update(lab);
                 await _unitOfWork.Complete();

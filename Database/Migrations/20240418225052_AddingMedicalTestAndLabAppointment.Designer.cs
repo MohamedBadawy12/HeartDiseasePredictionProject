@@ -4,6 +4,7 @@ using Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240418225052_AddingMedicalTestAndLabAppointment")]
+    partial class AddingMedicalTestAndLabAppointment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -259,21 +262,12 @@ namespace Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("LabImage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("PhoneNumber")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Price")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -493,6 +487,27 @@ namespace Database.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("Database.Entities.Prediction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MedicalTestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicalTestId");
+
+                    b.ToTable("Predictions");
                 });
 
             modelBuilder.Entity("Database.Entities.Prescription", b =>
@@ -867,6 +882,17 @@ namespace Database.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Database.Entities.Prediction", b =>
+                {
+                    b.HasOne("Database.Entities.MedicalTest", "MedicalTest")
+                        .WithMany()
+                        .HasForeignKey("MedicalTestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MedicalTest");
                 });
 
             modelBuilder.Entity("Database.Entities.Prescription", b =>
