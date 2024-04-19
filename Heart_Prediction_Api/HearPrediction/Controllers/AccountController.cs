@@ -115,6 +115,24 @@ namespace HearPrediction.Api.Controllers
             return Ok(result);
         }
 
+        //Register of Lab
+        [HttpPost("AddLab")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddLabAsync([FromBody] RegisterLabtDTO model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.RegisterLabAsync(model);
+
+            if (!result.IsAuthenticated)
+                return BadRequest(result.Message);
+
+            SetRefreshTokenInCookie(result.RefreshToken, result.RefreshTokenExpiration);
+
+            return Ok(result);
+        }
+
         //Login  
         [HttpPost("Login")]
         [AllowAnonymous]

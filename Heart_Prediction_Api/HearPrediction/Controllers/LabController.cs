@@ -1,4 +1,5 @@
 ﻿using Database.Entities;
+using HearPrediction.Api.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -42,48 +43,28 @@ namespace HearPrediction.Api.Controllers
             var lab = await _unitOfWork.labs.GetLab(id);
             if (lab == null)
                 return NotFound($"No lab was found with Id: {id}");
-            var labVM = new Lab
+            var labVM = new LabDTO
             {
                 Id = id,
+                Email = lab.User.Email,
                 Name = lab.Name,
                 PhoneNumber = lab.PhoneNumber,
                 Location = lab.Location,
                 Price = lab.Price,
-                LabImage = lab.LabImage,
+                ProfileImg = lab.LabImage,
             };
             return Ok(labVM);
         }
 
-        //Create Lab
-        [HttpPost("CreateLab")]
-        public async Task<IActionResult> Create(Lab model)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(model);
-            var path = "";
-            if (model.ImageFile?.Length > 0)
-            {
-                path = await _fileRepository.UploadAsync(model.ImageFile, "/Upload/");
-                if (path == "An Problem occured when creating file")
-                {
-                    return BadRequest("Error on adding image");
-                }
-            }
-            model.LabImage = path;
-            await _unitOfWork.labs.AddAsync(model);
-            await _unitOfWork.Complete();
-            return Ok(model);
-        }
-
         //Edit Lab
         [HttpPut("EditLab")]
-        public async Task<IActionResult> Edit(int id, Lab model)
+        public async Task<IActionResult> Edit(int id, LabDTO model)
         {
             var lab = await _unitOfWork.labs.GetLab(id);
             if (lab == null)
                 return NotFound($"No lab was found with Id: {id}");
 
-            var path = model.LabImage;
+            var path = model.ProfileImg;
             if (model.ImageFile?.Length > 0)
             {
                 _fileRepository.DeleteImage(path);
@@ -93,13 +74,19 @@ namespace HearPrediction.Api.Controllers
                     return BadRequest("An Problem occured when creating file");
                 }
             }
-            model.LabImage = path;
+            model.ProfileImg = path;
 
+            lab.User.Name = model.Name;
+            lab.User.PhoneNumber = model.PhoneNumber;
+            lab.User.Location = model.Location;
+            lab.User.Price = model.Price;
+            lab.User.Email = model.Email;
+            lab.User.ProfileImg = model.ProfileImg;
             lab.Name = model.Name;
             lab.PhoneNumber = model.PhoneNumber;
             lab.Location = model.Location;
             lab.Price = model.Price;
-            lab.LabImage = model.LabImage;
+            lab.LabImage = model.ProfileImg;
 
             await _unitOfWork.Complete();
             return Ok(model);
