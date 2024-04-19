@@ -13,6 +13,7 @@ namespace Repositories
         ILabRepository labs { get; }
         IAccountRepository accounts { get; }
         IMedicalTestRepository medicalTest { get; }
+        ILabAppointmentRepository labAppointment { get; }
         Task Complete();
     }
 }

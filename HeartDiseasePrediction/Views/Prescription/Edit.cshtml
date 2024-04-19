@@ -13,14 +13,22 @@
                     <h4>
                         Update <span>Prescription</span>
                     </h4>
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label asp-for="@Model.MedicineName" class="control-label"></label>
+                            <textarea asp-for="@Model.MedicineName" class="form-control-range"
+                                      rows="4"
+                                      cols="30"></textarea>
+                        </div>
+                    </div>
                     <div class="form-row ">
                         <div class="form-group col-lg-4">
-                            <label asp-for="@Model.PatientSSN" class="control-label"></label>
-                            <input asp-for="@Model.PatientSSN" type="text" class="form-control" id="inputPatientSSN">
+                            <label asp-for="@Model.PatientSSN" class="control-label" hidden></label>
+                            <input asp-for="@Model.PatientSSN" type="text" class="form-control" id="inputPatientSSN" hidden>
                         </div>
                         <div class="form-group col-lg-3">
-                            <label asp-for="@Model.date"></label>
-                            <input asp-for="@Model.date" type="datetime" class="form-control">
+                            <label asp-for="@Model.date" hidden></label>
+                            <input asp-for="@Model.date" type="datetime" class="form-control" hidden>
                         </div>
                        
                         <div class="form-group col-lg-4">
@@ -37,25 +45,18 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-lg-4">
-                            <label asp-for="@Model.PatientEmail" class="control-label"></label>
-                            <input asp-for="@Model.PatientEmail" type="text" class="form-control" id="inputPatientEmail">
+                            <label asp-for="@Model.PatientEmail" hidden class="control-label"></label>
+                            <input asp-for="@Model.PatientEmail" hidden type="text" class="form-control" id="inputPatientEmail">
                         </div>
                         <div class="form-group col-lg-4">
-                            <label asp-for="@Model.DoctorId">Doctor Name</label>
-                            <select asp-for="@Model.DoctorId" class="form-control wide" id="inputDoctor" asp-items="ViewBag.Doctor">
+                            <label asp-for="@Model.DoctorId" hidden>Doctor Name</label>
+                            <select asp-for="@Model.DoctorId" class="form-control wide" id="inputDoctor" asp-items="ViewBag.Doctor" hidden>
                                 <option value="NoSelected ">--Please Select Doctor-- </option>
                             </select>
-                            <span asp-validation-for="@Model.DoctorId" class="text-danger"></span>
+                            <span asp-validation-for="@Model.DoctorId" hidden class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-lg-6">
-                            <label asp-for="@Model.MedicineName" class="control-label"></label>
-                            <textarea asp-for="@Model.MedicineName" class="form-control-range"
-                                      rows="4"
-                                      cols="30"></textarea>
-                        </div>
-                    </div>
+                 
                     <div class="btn-box">
                         <button type="submit" class="btn ">Save</button>
                     </div>

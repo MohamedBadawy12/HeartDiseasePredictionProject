@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace HeartDiseasePrediction.Controllers
 {
-    public class AppointmentController : Controller
+    public class LabAppointmentController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IToastNotification _toastNotification;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppDbContext _context;
-        public AppointmentController(IUnitOfWork unitOfWork, IToastNotification toastNotification,
+        public LabAppointmentController(IUnitOfWork unitOfWork, IToastNotification toastNotification,
             IFileService fileRepository, AppDbContext context, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
@@ -28,13 +28,13 @@ namespace HeartDiseasePrediction.Controllers
             _userManager = userManager;
         }
 
-        //Get All Appointments by User ID
+        //Get All Lab Appointments by User ID
         [Authorize(Roles = "User")]
         public async Task<IActionResult> Index(int currentPage = 1)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var appointments = await _unitOfWork.appointments.GetAppointmentsByPatientId(userId, userRole);
+            var appointments = await _unitOfWork.labAppointment.GetLabAppointmentByUserId(userId, userRole);
             int totalRecords = appointments.Count();
             int pageSize = 5;
             int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
@@ -47,12 +47,12 @@ namespace HeartDiseasePrediction.Controllers
         }
 
         //Get All Appointments by Email
-        [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> GetAppointmentByEmail(int currentPage = 1)
+        [Authorize(Roles = "MedicalAnalyst")]
+        public async Task<IActionResult> GetLabAppointmentByEmail(int currentPage = 1)
         {
-            string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
+            string labEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var appointments = await _unitOfWork.appointments.GetWaitingAppointmentByEmail(doctorEmail, userRole);
+            var appointments = await _unitOfWork.labAppointment.GetWaitingLabAppointmentByEmail(labEmail, userRole);
             int totalRecords = appointments.Count();
             int pageSize = 8;
             int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
@@ -62,54 +62,17 @@ namespace HeartDiseasePrediction.Controllers
             ViewBag.HasPrevious = currentPage > 1;
             ViewBag.HasNext = currentPage < totalPages;
             return View(appointments);
-        }
-
-        //Get All messages by Email
-        [Authorize(Roles = "User")]
-        public async Task<IActionResult> GetMessagetByEmail(int currentPage = 1)
-        {
-            string patientEmail = User.FindFirstValue(ClaimTypes.Email);
-            string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var messages = await _unitOfWork.appointments.GetMessageByEmail(patientEmail, userRole);
-            int totalRecords = messages.Count();
-            int pageSize = 8;
-            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
-            messages = messages.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-            ViewBag.CurrentPage = currentPage;
-            ViewBag.TotalPages = totalPages;
-            ViewBag.HasPrevious = currentPage > 1;
-            ViewBag.HasNext = currentPage < totalPages;
-            return View(messages);
-        }
-
-        //Search for message by Email
-        [Authorize(Roles = "User")]
-        [HttpPost]
-        public async Task<IActionResult> GetMessagetByEmail(DateTime? date, int currentPage = 1)
-        {
-            string patientEmail = User.FindFirstValue(ClaimTypes.Email);
-            string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var messages = await _unitOfWork.appointments.SearchMessages(patientEmail, userRole, date);
-            int totalRecords = messages.Count();
-            int pageSize = 5;
-            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
-            messages = messages.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-            ViewBag.CurrentPage = currentPage;
-            ViewBag.TotalPages = totalPages;
-            ViewBag.HasPrevious = currentPage > 1;
-            ViewBag.HasNext = currentPage < totalPages;
-            return View(messages);
         }
 
         //Get All Accept and Cancel Appointments By Patient
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> GetAcceptAndCancelAppointments(int currentPage = 1)
+        public async Task<IActionResult> GetAcceptAndCancelLabAppointments(int currentPage = 1)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var appointments = await _unitOfWork.appointments.GetAcceptAndCancelAppointment(userId, userRole);
+            var appointments = await _unitOfWork.labAppointment.GetAcceptAndCancelLabAppointment(userId, userRole);
             int totalRecords = appointments.Count();
-            int pageSize = 8;
+            int pageSize = 5;
             int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
             appointments = appointments.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
             ViewBag.CurrentPage = currentPage;
@@ -120,13 +83,13 @@ namespace HeartDiseasePrediction.Controllers
         }
         [Authorize(Roles = "User")]
         [HttpPost]
-        public async Task<IActionResult> GetAcceptAndCancelAppointments(DateTime? date, int currentPage = 1)
+        public async Task<IActionResult> GetAcceptAndCancelLabAppointments(DateTime? date, int currentPage = 1)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var appointments = await _unitOfWork.appointments.SearchAcceptAndCancelAppointment(userId, userRole, date);
+            var appointments = await _unitOfWork.labAppointment.SearchAcceptAndCancelLabAppointment(userId, userRole, date);
             int totalRecords = appointments.Count();
-            int pageSize = 8;
+            int pageSize = 5;
             int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
             appointments = appointments.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
             ViewBag.CurrentPage = currentPage;
@@ -136,13 +99,14 @@ namespace HeartDiseasePrediction.Controllers
             return View(appointments);
         }
 
-        //Get All Accept Appointments By Doctor
-        [Authorize(Roles = "Doctor")]
+
+        //Get All Accept Appointments By MedicalAnalyst
+        [Authorize(Roles = "MedicalAnalyst")]
         public async Task<IActionResult> GetAcceptAppointments(int currentPage = 1)
         {
-            string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
+            string labEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var appointments = await _unitOfWork.appointments.GetAcceptAppointmentByDoctor(doctorEmail, userRole);
+            var appointments = await _unitOfWork.labAppointment.GetAcceptLabAppointmentByMedical(labEmail, userRole);
             int totalRecords = appointments.Count();
             int pageSize = 20;
             int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
@@ -153,13 +117,13 @@ namespace HeartDiseasePrediction.Controllers
             ViewBag.HasNext = currentPage < totalPages;
             return View(appointments);
         }
-        [Authorize(Roles = "Doctor")]
+        [Authorize(Roles = "MedicalAnalyst")]
         [HttpPost]
         public async Task<IActionResult> GetAcceptAppointments(DateTime? date, long? ssn, int currentPage = 1)
         {
-            string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
+            string labEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var appointments = await _unitOfWork.appointments.SearchAcceptAppointments(doctorEmail, userRole, date, ssn);
+            var appointments = await _unitOfWork.labAppointment.SearchAcceptLabAppointments(labEmail, userRole, date, ssn);
             int totalRecords = appointments.Count();
             int pageSize = 20;
             int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
@@ -171,19 +135,19 @@ namespace HeartDiseasePrediction.Controllers
             return View(appointments);
         }
 
-        [Authorize(Roles = "Doctor")]
+        [Authorize(Roles = "MedicalAnalyst")]
         public async Task<IActionResult> GetAcceptAppointment(int id)
         {
-            var appointment = await _unitOfWork.appointments.GetAcceptAppointment(id);
+            var appointment = await _unitOfWork.labAppointment.GetAcceptAppointment(id);
             if (appointment == null)
                 return View("NotFound");
 
-            var app = new AppointmentVM
+            var app = new LabAppointmentViewModel
             {
                 Id = id,
                 PateintName = appointment.PateintName,
                 PatientEmail = appointment.PatientEmail,
-                DoctorEmail = appointment.DoctorEmail,
+                LabEmail = appointment.LabEmail,
                 Date = appointment.Date,
                 Time = appointment.Time,
                 PatientSSN = appointment.PatientSSN,
@@ -192,27 +156,28 @@ namespace HeartDiseasePrediction.Controllers
                 BirthDate = appointment.Patientt.BirthDate,
                 Gender = appointment.Patientt.Gender,
                 PhoneNumber = appointment.Patientt.PhoneNumber,
-                DoctorId = appointment.DoctorId,
-                Location = appointment.Doctor.Location,
-                Price = appointment.Doctor.Price,
-                Name = appointment.Doctor.Name,
+                LabId = appointment.LabId,
+                Location = appointment.Lab.Location,
+                Price = appointment.Lab.Price,
+                Name = appointment.Lab.Name,
+                LabPhoneNumber = appointment.Lab.PhoneNumber,
             };
             return View(app);
         }
 
-        [Authorize(Roles = "Doctor")]
+        [Authorize(Roles = "MedicalAnalyst")]
         public async Task<IActionResult> GetAppointment(int id)
         {
-            var appointment = await _unitOfWork.appointments.GetAppointment(id);
+            var appointment = await _unitOfWork.labAppointment.GetAppointment(id);
             if (appointment == null)
                 return View("NotFound");
 
-            var app = new AppointmentVM
+            var app = new LabAppointmentViewModel
             {
                 Id = id,
                 PateintName = appointment.PateintName,
                 PatientEmail = appointment.PatientEmail,
-                DoctorEmail = appointment.DoctorEmail,
+                LabEmail = appointment.LabEmail,
                 Date = appointment.date,
                 Time = appointment.Time,
                 PatientSSN = appointment.PatientSSN,
@@ -221,43 +186,41 @@ namespace HeartDiseasePrediction.Controllers
                 BirthDate = appointment.Patientt.BirthDate,
                 Gender = appointment.Patientt.Gender,
                 PhoneNumber = appointment.Patientt.PhoneNumber,
-                DoctorId = appointment.DoctorId,
-                Location = appointment.Doctor.Location,
-                Price = appointment.Doctor.Price,
-                Name = appointment.Doctor.Name,
+                LabId = appointment.LabId,
+                Location = appointment.Lab.Location,
+                Price = appointment.Lab.Price,
+                Name = appointment.Lab.Name,
+                LabPhoneNumber = appointment.Lab.PhoneNumber,
             };
             return View(app);
         }
 
+
         [Authorize(Roles = "User")]
-        //Create Appointment
+        //Create Lab Appointment
         public async Task<IActionResult> Create(int id)
         {
-            var doctor = await _unitOfWork.Doctors.GetDoctor(id);
-            if (doctor == null)
+            var lab = await _unitOfWork.labs.GetLab(id);
+            if (lab == null)
                 return View("NotFound");
-            var DoctorDetail = new BookAppointmentViewModel
+            var labDetails = new BookLabAppointmentViewModel
             {
-                FirstName = doctor.User.FirstName,
-                LastName = doctor.User.LastName,
-                BirthDate = doctor.User.BirthDate,
-                Email = doctor.User.Email,
-                Gender = doctor.User.Gender,
-                PhoneNumber = doctor.User.PhoneNumber,
-                Name = doctor.Name,
-                Location = doctor.Location,
-                Price = doctor.Price,
-                ProfileImg = doctor.User.ProfileImg,
+                LabPhoneNumber = lab.PhoneNumber,
+                LabEmail = lab.User.Email,
+                Name = lab.Name,
+                Location = lab.Location,
+                Price = lab.Price,
+                LabImage = lab.LabImage,
             };
-            return View(DoctorDetail);
+            return View(labDetails);
         }
         [Authorize(Roles = "User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int id, BookAppointmentViewModel model)
+        public async Task<IActionResult> Create(int id, BookLabAppointmentViewModel model)
         {
-            var doctor = await _unitOfWork.Doctors.GetDoctor(id);
-            if (doctor == null)
+            var lab = await _unitOfWork.labs.GetLab(id);
+            if (lab == null)
                 return View("NotFound");
 
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -268,36 +231,36 @@ namespace HeartDiseasePrediction.Controllers
             model.PatientID = userId;
             model.PatientEmail = patientEmail;
 
-            var dateWithTime = _context.Appointments.Where(x => x.date == model.Date && x.Time == model.Time &&
-            x.DoctorEmail == doctor.User.Email && x.PatientEmail == patientEmail).FirstOrDefault();
+            var dateWithTime = _context.LabAppointments.Where(x => x.date == model.Date && x.Time == model.Time &&
+             x.LabEmail == lab.User.Email && x.PatientEmail == patientEmail).FirstOrDefault();
             if (dateWithTime != null)
                 return View(model);
 
-            var appointment = new Appointment()
+            var appointment = new LabAppointment()
             {
                 PatientID = model.PatientID,
                 PateintName = $"{user.FirstName} {user.LastName}",
                 PatientEmail = model.PatientEmail,
-                DoctorEmail = doctor.User.Email,
+                LabEmail = lab.User.Email,
                 date = model.Date,
                 Time = model.Time,
                 PhoneNumber = user.PhoneNumber,
                 PatientSSN = (long)user.SSN,
                 IsAccepted = false,
-                DoctorId = doctor.Id,
+                LabId = lab.Id,
             };
 
-            await _unitOfWork.appointments.AddAsync(appointment);
+            await _unitOfWork.labAppointment.AddAsync(appointment);
             await _unitOfWork.Complete();
             _toastNotification.AddSuccessToastMessage("Appointment Created Successfully");
             return View("CompletedSuccessfully");
         }
 
         [Authorize(Roles = "User")]
-        //Edit Appointment
+        //Create Appointment
         public async Task<IActionResult> Edit(int id)
         {
-            var appointment = await _unitOfWork.appointments.GetAppointment(id);
+            var appointment = await _unitOfWork.labAppointment.GetAppointment(id);
             if (appointment == null)
                 return View("NotFound");
             var appointmentVM = new EditAppointmentViewModel
@@ -316,7 +279,7 @@ namespace HeartDiseasePrediction.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, EditAppointmentViewModel model)
         {
-            var appointment = await _unitOfWork.appointments.GetAppointment(id);
+            var appointment = await _unitOfWork.labAppointment.GetAppointment(id);
             if (appointment == null)
                 return View("NotFound");
 
@@ -327,8 +290,8 @@ namespace HeartDiseasePrediction.Controllers
             string patientEmail = User.FindFirstValue(ClaimTypes.Email);
             long patientSSN = (long)user.SSN;
 
-            var dateWithTime = _context.Appointments.Where(x => x.date == model.Date && x.Time == model.Time &&
-            x.DoctorEmail == appointment.DoctorEmail && x.PatientEmail == patientEmail).FirstOrDefault();
+            var dateWithTime = _context.LabAppointments.Where(x => x.date == model.Date && x.Time == model.Time &&
+             x.LabEmail == appointment.LabEmail && x.PatientEmail == patientEmail).FirstOrDefault();
             if (dateWithTime != null)
                 return BadRequest("This Date with this time is Booked");
             appointment.PatientID = userId;
@@ -347,98 +310,95 @@ namespace HeartDiseasePrediction.Controllers
         }
 
         //Accept Appointment
-        [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> AcceptsAppointment(int id, MessageViewModel model)
+        [Authorize(Roles = "MedicalAnalyst")]
+        public async Task<IActionResult> AcceptsLabAppointment(int id, MessageViewModel model)
         {
-            var appointment = await _unitOfWork.appointments.GetAppointment(id);
+            var appointment = await _unitOfWork.labAppointment.GetAppointment(id);
             if (appointment == null)
                 return View("NotFound");
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
-            model.DoctorId = userId;
-            model.DoctorEmail = doctorEmail;
+            string labEmail = User.FindFirstValue(ClaimTypes.Email);
 
             appointment.PatientEmail = appointment.PatientEmail;
             appointment.date = appointment.date;
             appointment.Time = appointment.Time;
             appointment.PhoneNumber = appointment.PhoneNumber;
-            appointment.DoctorEmail = appointment.DoctorEmail;
-            appointment.DoctorId = appointment.DoctorId;
+            appointment.LabEmail = appointment.LabEmail;
+            appointment.LabId = appointment.LabId;
             appointment.PatientSSN = appointment.PatientSSN;
             appointment.PateintName = appointment.PateintName;
             appointment.IsAccepted = true;
             appointment.PatientID = appointment.PatientID;
 
-            _context.Appointments.Update(appointment);
+            _context.LabAppointments.Update(appointment);
             await _unitOfWork.Complete();
 
-            var acceptAppointment = new AcceptAndCancelAppointment
+            var acceptAppointment = new AcceptAndCancelLabAppointment
             {
                 Date = appointment.date,
                 Time = appointment.Time,
                 PatientEmail = appointment.PatientEmail,
-                DoctorEmail = doctorEmail,
+                LabEmail = labEmail,
                 PateintName = appointment.PateintName,
                 PatientSSN = appointment.PatientSSN,
-                DoctorId = appointment.DoctorId,
+                LabId = appointment.LabId,
                 PhoneNumber = appointment.PhoneNumber,
                 IsAccepted = true,
                 PatientID = appointment.PatientID,
             };
-            await _unitOfWork.appointments.AddAcceptOrCancelAsync(acceptAppointment);
+            await _unitOfWork.labAppointment.AddAcceptOrCancelAsync(acceptAppointment);
             await _unitOfWork.Complete();
 
             var message = new Message
             {
-                Messages = $"From Doctor: ({appointment.Doctor.Name}). " +
-                $"Your Appointment with date ({appointment.date.ToString("dd MMMM yyyy")}) and time ({appointment.Time}) is Accepted",
+                Messages = $"From Lab:{appointment.Lab.Name}. " +
+                $" Your Appointment with date ({appointment.date.ToString("dd MMMM yyyy")}) and time ({appointment.Time}) is Accepted",
                 Date = DateTime.Now,
                 PatientEmail = appointment.PatientEmail,
-                DoctorEmail = doctorEmail,
+                DoctorEmail = labEmail,
                 DoctorId = userId,
             };
             await _unitOfWork.appointments.AddMessageAsync(message);
             await _unitOfWork.Complete();
             _toastNotification.AddSuccessToastMessage($"Message has sent successfully");
-            return RedirectToAction("GetAppointmentByEmail");
+            return RedirectToAction("GetLabAppointmentByEmail");
         }
 
         //Cancel Appointment by doctor
-        [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> CanceledAppointment(int id, MessageViewModel model)
+        [Authorize(Roles = "MedicalAnalyst")]
+        public async Task<IActionResult> CanceledLabAppointment(int id, MessageViewModel model)
         {
-            var appointment = _unitOfWork.appointments.Get_Appointment(id);
+            var appointment = _unitOfWork.labAppointment.Get_LabAppointment(id);
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
-            model.DoctorId = userId;
-            model.DoctorEmail = doctorEmail;
-            var cancelAppointment = new AcceptAndCancelAppointment
+            string labEmail = User.FindFirstValue(ClaimTypes.Email);
+
+            var cancelAppointment = new AcceptAndCancelLabAppointment
             {
                 Date = appointment.date,
                 Time = appointment.Time,
                 PatientEmail = appointment.PatientEmail,
-                DoctorEmail = doctorEmail,
+                LabEmail = labEmail,
                 PateintName = appointment.PateintName,
                 PatientSSN = appointment.PatientSSN,
-                DoctorId = appointment.DoctorId,
+                LabId = appointment.LabId,
                 PhoneNumber = appointment.PhoneNumber,
                 IsAccepted = false,
                 PatientID = appointment.PatientID,
             };
-            await _unitOfWork.appointments.AddAcceptOrCancelAsync(cancelAppointment);
+            await _unitOfWork.labAppointment.AddAcceptOrCancelAsync(cancelAppointment);
             await _unitOfWork.Complete();
             var message = new Message
             {
-                Messages = $"From Doctor: ({appointment.Doctor.Name}). " +
-                $"Sorry,Your Appointment with date ({appointment.date.ToString("dd MMMM yyyy")}) and time ({appointment.Time}) is Canceled because Doctor is busy in this time",
-                Date = model.Date,
+                Messages = $"From Lab: ({appointment.Lab.Name}). " +
+                $"Sorry,Your Appointment with date ({appointment.date.ToString("dd MMMM yyyy")}) and time ({appointment.Time}) is Canceled because Lab is busy in this time",
+                Date = DateTime.Now,
                 PatientEmail = appointment.PatientEmail,
-                DoctorEmail = doctorEmail,
+                DoctorEmail = labEmail,
                 DoctorId = userId,
             };
             await _unitOfWork.appointments.AddMessageAsync(message);
             await _unitOfWork.Complete();
-            var isDeleted = _unitOfWork.appointments.Canceled(id);
+            var isDeleted = _unitOfWork.labAppointment.Canceled(id);
             return isDeleted ? Ok() : BadRequest();
         }
 
@@ -446,25 +406,25 @@ namespace HeartDiseasePrediction.Controllers
         [Authorize(Roles = "User")]
         public async Task<IActionResult> Canceled(int id)
         {
-            var appointment = _unitOfWork.appointments.Get_Appointment(id);
+            var appointment = _unitOfWork.labAppointment.Get_LabAppointment(id);
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string patientEmail = User.FindFirstValue(ClaimTypes.Email);
-            var cancelAppointment = new AcceptAndCancelAppointment
+            var cancelAppointment = new AcceptAndCancelLabAppointment
             {
                 Date = appointment.date,
                 Time = appointment.Time,
                 PatientEmail = patientEmail,
-                DoctorEmail = appointment.DoctorEmail,
+                LabEmail = appointment.LabEmail,
                 PateintName = appointment.PateintName,
                 PatientSSN = appointment.PatientSSN,
-                DoctorId = appointment.DoctorId,
+                LabId = appointment.LabId,
                 PhoneNumber = appointment.PhoneNumber,
                 IsAccepted = false,
                 PatientID = userId,
             };
-            await _unitOfWork.appointments.AddAcceptOrCancelAsync(cancelAppointment);
+            await _unitOfWork.labAppointment.AddAcceptOrCancelAsync(cancelAppointment);
             await _unitOfWork.Complete();
-            var isDeleted = _unitOfWork.appointments.Canceled(id);
+            var isDeleted = _unitOfWork.labAppointment.Canceled(id);
             return isDeleted ? Ok() : BadRequest();
         }
     }

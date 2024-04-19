@@ -15,6 +15,8 @@ namespace Repositories
         public IAppointmentRepository appointments { get; private set; }
         public IAccountRepository accounts { get; private set; }
         public IMedicalTestRepository medicalTest { get; private set; }
+        public ILabAppointmentRepository labAppointment { get; private set; }
+
 
         public UnitOfWork(AppDbContext context)
         {
@@ -28,6 +30,7 @@ namespace Repositories
             labs = new LabRepository(context);
             prescriptions = new PrescriptionRepository(context);
             medicalTest = new MedicalTestRepository(context);
+            labAppointment = new LabAppointmentRepository(context);
         }
 
         public async Task Complete() => await _context.SaveChangesAsync();

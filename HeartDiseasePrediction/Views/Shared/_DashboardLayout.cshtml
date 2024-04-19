@@ -248,11 +248,26 @@
                         </ul>
                     </li>
                     <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                           data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+                            <i class="lni lni-sthethoscope"></i>
+                            <span>Laboratory</span>
+                        </a>
+                        <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a asp-controller="Lab" asp-action="Index" class="sidebar-link"><i class="lni lni-menu"></i> Labs</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a asp-controller="Account" asp-action="RegisterOfLab" class="sidebar-link"><i class="lni lni-clipboard"></i> Add Labs</a>
+                            </li>
+                        </ul>
+                    </li>
+               @*     <li class="sidebar-item">
                         <a asp-action="Index" asp-controller="Lab" class="sidebar-link">
                             <i class="lni lni-sthethoscope"></i>
                             <span>Laboratory</span>
                         </a>
-                    </li>
+                    </li>*@
                 }
             </ul>
             @*<div class="sidebar-footer">

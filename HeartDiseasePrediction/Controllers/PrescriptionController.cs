@@ -223,7 +223,7 @@ namespace HeartDiseasePrediction.Controllers
 
         //Create Prescriptions
         [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> CreatePresciptions(int id)
+        public async Task<IActionResult> CreatePresciptions()
         {
             return View();
         }

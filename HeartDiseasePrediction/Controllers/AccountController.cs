@@ -316,6 +316,64 @@ namespace HeartDiseasePrediction.Controllers
             _toastNotification.AddErrorToastMessage("Register Medical Analyst Failed");
             return View(model);
         }
+
+        public async Task<IActionResult> RegisterOfLab()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterOfLab(RegisterLabVM model)
+        {
+
+            if (await _userManager.FindByEmailAsync(model.Email) is not null)
+                return View(model);
+
+            var path = "";
+            if (model.ImageFile?.Length > 0)
+            {
+                path = await _fileRepository.UploadAsync(model.ImageFile, "/Uploads/");
+                if (path == "An Problem occured when creating file")
+                {
+                    return BadRequest();
+                }
+            }
+            model.ProfileImg = path;
+
+            var user = new ApplicationUser
+            {
+                Email = model.Email,
+                UserName = model.Email,
+                Name = model.Name,
+                Location = model.Location,
+                Price = model.Price,
+                PhoneNumber = model.PhoneNumber,
+                ProfileImg = model.ProfileImg,
+                //TwoFactorEnabled = true,
+            };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "MedicalAnalyst");
+                var lab = new Lab
+                {
+                    UserId = user.Id,
+                    Name = model.Name,
+                    Location = model.Location,
+                    Price = model.Price,
+                    PhoneNumber = model.PhoneNumber,
+                    LabImage = model.ProfileImg,
+                };
+
+                await _context.Labs.AddAsync(lab);
+                await _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Register Lab successfully.");
+                return View("CompletedSuccessfully");
+            }
+            _toastNotification.AddErrorToastMessage("Register Lab Failed");
+            return View(model);
+        }
+
         public async Task<IActionResult> RegisterOfReciptionist()
         {
             return View();

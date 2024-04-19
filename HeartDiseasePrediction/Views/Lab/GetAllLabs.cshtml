@@ -250,11 +250,14 @@
                                             <li class="mr-md-4">
                                                 <i class="zmdi zmdi-money mr-2"></i> @item.Price EGP
                                             </li>
+                                            <li class="mr-md-4">
+                                                <i class="zmdi zmdi-pin mr-2"></i> @item.PhoneNumber
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="job-right my-4 flex-shrink-0">
-                                    <a asp-controller="AppointmentLab" asp-action="Create" asp-route-id="@item.Id" class="btn btn-outline-primary">Book Now</a>
+                                    <a asp-controller="LabAppointment" asp-action="Create" asp-route-id="@item.Id" class="btn btn-outline-primary">Book Now</a>
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,5 @@
 ﻿using Database.Entities;
+using HeartDiseasePrediction.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
@@ -42,6 +43,7 @@ namespace HeartDiseasePrediction.Controllers
         }
 
         //Lab List
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllLabs(int currentPage = 1)
         {
             var labs = await _unitOfWork.labs.GetLabs();
@@ -65,14 +67,15 @@ namespace HeartDiseasePrediction.Controllers
                 var lab = await _unitOfWork.labs.GetLab(id);
                 if (lab == null)
                     return View("NotFound");
-                var labVM = new Lab
+                var labVM = new LabViewModel
                 {
                     Id = id,
                     Name = lab.Name,
-                    PhoneNumber = lab.PhoneNumber,
+                    Email = lab.User.Email,
+                    PhoneNumber = lab.User.PhoneNumber,
                     Location = lab.Location,
                     Price = lab.Price,
-                    LabImage = lab.LabImage,
+                    ProfileImg = lab.LabImage,
                 };
                 return View(labVM);
             }
@@ -82,44 +85,6 @@ namespace HeartDiseasePrediction.Controllers
                 return View();
             }
         }
-
-        //Create Lab
-        public async Task<IActionResult> Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Create(Lab model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-            try
-            {
-                var path = "";
-                if (model.ImageFile?.Length > 0)
-                {
-                    path = await _fileRepository.UploadAsync(model.ImageFile, "/Uploads/");
-                    if (path == "An Problem occured when creating file")
-                    {
-                        return BadRequest();
-                    }
-                }
-                model.LabImage = path;
-
-                await _unitOfWork.labs.AddAsync(model);
-                await _unitOfWork.Complete();
-                TempData["msg"] = "Lab Created successfully";
-                _toastNotification.AddSuccessToastMessage("Lab Created successfully");
-                return View("CompletedSuccessfully");
-            }
-            catch (Exception ex)
-            {
-                TempData["errorMessage"] = ex.Message;
-                _toastNotification.AddErrorToastMessage("An error occurred while saving the prescription.");
-                return View(model);
-            }
-        }
-
 
         //Edit Lab
         public async Task<IActionResult> Edit(int id)
@@ -130,14 +95,15 @@ namespace HeartDiseasePrediction.Controllers
                 if (lab == null)
                     return View("NotFound");
 
-                var labVM = new Lab
+                var labVM = new LabViewModel
                 {
                     Id = id,
                     Name = lab.Name,
-                    PhoneNumber = lab.PhoneNumber,
+                    Email = lab.User.Email,
+                    PhoneNumber = lab.User.PhoneNumber,
                     Location = lab.Location,
                     Price = lab.Price,
-                    LabImage = lab.LabImage,
+                    ProfileImg = lab.LabImage,
                 };
                 return View(labVM);
             }
@@ -148,7 +114,7 @@ namespace HeartDiseasePrediction.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, Lab model)
+        public async Task<IActionResult> Edit(int id, LabViewModel model)
         {
             try
             {
@@ -156,7 +122,7 @@ namespace HeartDiseasePrediction.Controllers
                 if (lab == null)
                     return View("NotFound");
 
-                var path = model.LabImage;
+                var path = model.ProfileImg;
                 if (model.ImageFile?.Length > 0)
                 {
                     _fileRepository.DeleteImage(path);
@@ -166,13 +132,19 @@ namespace HeartDiseasePrediction.Controllers
                         return BadRequest();
                     }
                 }
-                model.LabImage = path;
+                model.ProfileImg = path;
 
+                lab.User.Name = model.Name;
+                lab.User.PhoneNumber = model.PhoneNumber;
+                lab.User.Location = model.Location;
+                lab.User.Price = model.Price;
+                lab.User.Email = model.Email;
+                lab.User.ProfileImg = model.ProfileImg;
                 lab.Name = model.Name;
                 lab.PhoneNumber = model.PhoneNumber;
                 lab.Location = model.Location;
                 lab.Price = model.Price;
-                lab.LabImage = model.LabImage;
+                lab.LabImage = model.ProfileImg;
 
                 _context.Labs.Update(lab);
                 await _unitOfWork.Complete();

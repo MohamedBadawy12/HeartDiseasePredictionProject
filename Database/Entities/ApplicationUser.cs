@@ -10,10 +10,10 @@ namespace Database.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-        [Required, MaxLength(100)]
+        [MaxLength(100)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
-        [Required, MaxLength(100)]
+        [MaxLength(100)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [Display(Name = "Birth Date")]

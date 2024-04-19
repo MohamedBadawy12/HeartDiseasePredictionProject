@@ -14,7 +14,7 @@ namespace Database.Entities
         [MaxLength(100)]
         public string Name { get; set; }
         [Display(Name = "Phone Number")]
-        public long PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         [Display(Name = "Location")]
         public string Location { get; set; }
         [Display(Name = "Price")]
@@ -24,11 +24,12 @@ namespace Database.Entities
         [NotMapped]
         [Display(Name = "Upload File")]
         public IFormFile? ImageFile { get; set; }
-        //public virtual ICollection<Patient> Patients { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public virtual ApplicationUser User { get; set; }
         public virtual ICollection<MedicalAnalyst> MedicalAnalysts { get; set; }
         public Lab()
         {
-            //Patients = new Collection<Patient>();
             MedicalAnalysts = new Collection<MedicalAnalyst>();
         }
     }

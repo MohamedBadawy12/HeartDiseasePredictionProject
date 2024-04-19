@@ -4,6 +4,7 @@ using Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240419183120_AddUpdatesInLab")]
+    partial class AddUpdatesInLab
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,56 +73,6 @@ namespace Database.Migrations
                     b.HasIndex("PatientSSN");
 
                     b.ToTable("AcceptAndCancelAppointments");
-                });
-
-            modelBuilder.Entity("Database.Entities.AcceptAndCancelLabAppointment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LabEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LabId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PateintName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PatientEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PatientID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<long>("PatientSSN")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Time")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LabId");
-
-                    b.HasIndex("PatientID");
-
-                    b.HasIndex("PatientSSN");
-
-                    b.ToTable("AcceptAndCancelLabAppointments");
                 });
 
             modelBuilder.Entity("Database.Entities.ApplicationUser", b =>
@@ -317,8 +270,8 @@ namespace Database.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("PhoneNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Price")
                         .HasColumnType("nvarchar(max)");
@@ -771,31 +724,6 @@ namespace Database.Migrations
                         .IsRequired();
 
                     b.Navigation("Doctor");
-
-                    b.Navigation("Patient");
-
-                    b.Navigation("Patientt");
-                });
-
-            modelBuilder.Entity("Database.Entities.AcceptAndCancelLabAppointment", b =>
-                {
-                    b.HasOne("Database.Entities.Lab", "Lab")
-                        .WithMany()
-                        .HasForeignKey("LabId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Database.Entities.ApplicationUser", "Patientt")
-                        .WithMany()
-                        .HasForeignKey("PatientID");
-
-                    b.HasOne("Database.Entities.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientSSN")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lab");
 
                     b.Navigation("Patient");
 

@@ -1,9 +1,9 @@
 ﻿using Database.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace HeartDiseasePrediction.ViewModel
+namespace HearPrediction.Api.DTO
 {
-    public class MedicalTestViewModel
+    public class MedicalTestDto
     {
         public int Id { get; set; }
         [Required, Display(Name = "Age")]

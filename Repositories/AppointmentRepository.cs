@@ -191,6 +191,7 @@ namespace Repositories
                         Insurance_No = a.Patientt.Insurance_No,
                         BirthDate = a.Patientt.BirthDate,
                         Gender = a.Patientt.Gender,
+                        ProfileImg = a.Patientt.ProfileImg,
                     } : null
                 })
                 .ToListAsync();
@@ -233,6 +234,7 @@ namespace Repositories
                         Insurance_No = a.Patientt.Insurance_No,
                         BirthDate = a.Patientt.BirthDate,
                         Gender = a.Patientt.Gender,
+                        ProfileImg = a.Patientt.ProfileImg,
                     } : null
                 })
                 .ToListAsync();
@@ -375,6 +377,7 @@ namespace Repositories
                         Insurance_No = a.Patientt.Insurance_No,
                         BirthDate = a.Patientt.BirthDate,
                         Gender = a.Patientt.Gender,
+                        ProfileImg = a.Patientt.ProfileImg,
                     } : null
                 })
                 .ToListAsync();

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HeartDiseasePrediction.ViewModel
 {
-    public class EditMedicalTestViewModel
+    public class PredictionViewModel
     {
         public int Id { get; set; }
         [Required, Display(Name = "Age")]
@@ -33,10 +33,15 @@ namespace HeartDiseasePrediction.ViewModel
         public float BMI { get; set; }
         [Required, Display(Name = "Glucose Level")]
         public float GlucoseLevel { get; set; }
+        [Required, Display(Name = "Prediction")]
+        public float? Prediction { get; set; }
+        [Required, Display(Name = "Probability")]
+        public float? Probability { get; set; }
         public long PatientSSN { get; set; }
         public string PatientName { get; set; }
+        public string MedicalAnalystName { get; set; }
         public string PatientEmail { get; set; }
-        public string MedicalAnalystEmail { get; set; }
+        public string LabEmail { get; set; }
         public DateTime Date { get; set; }
     }
 }

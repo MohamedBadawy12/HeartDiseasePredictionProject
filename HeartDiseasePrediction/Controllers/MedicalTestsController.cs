@@ -106,13 +106,14 @@ namespace HeartDiseasePrediction.Controllers
                 if (medicalTest == null)
                     return View("NotFound");
 
-                var medicalTestView = new EditMedicalTestViewModel
+                var medicalTestView = new PredictionViewModel
                 {
                     Id = id,
                     PatientName = medicalTest.PatientName,
                     PatientEmail = medicalTest.PatientEmail,
-                    MedicalAnalystEmail = medicalTest.MedicalAnalystEmail,
-                    Date = medicalTest.date,
+                    MedicalAnalystName = medicalTest.MedicalAnalystName,
+                    LabEmail = medicalTest.LabEmail,
+                    Date = medicalTest.Date,
                     PatientSSN = medicalTest.PatientSSN,
                     BloodPressureMedicine = medicalTest.BloodPressureMedicine,
                     Prevalenthypertension = medicalTest.Prevalenthypertension,
@@ -145,21 +146,25 @@ namespace HeartDiseasePrediction.Controllers
         }
         [Authorize("MedicalAnalyst")]
         [HttpPost]
-        public async Task<IActionResult> Create(MedicalTestViewModel model)
+        public async Task<IActionResult> Create(int id, MedicalTestViewModel model)
         {
             try
             {
+                var appointment = await _unitOfWork.labAppointment.GetAppointment(id);
+                if (appointment == null)
+                    return View("NotFound");
                 string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                string medicalEmail = User.FindFirstValue(ClaimTypes.Email);
+                string labEmail = User.FindFirstValue(ClaimTypes.Email);
                 var user = await _userManager.FindByIdAsync(userId);
                 var medicalTest = new MedicalTest
                 {
                     UserId = userId,
-                    PatientName = model.PatientName,
-                    PatientEmail = model.PatientEmail,
-                    MedicalAnalystEmail = medicalEmail,
-                    date = DateTime.Now,
-                    PatientSSN = model.PatientSSN,
+                    PatientName = $"{appointment.Patientt.FirstName} {appointment.Patientt.FirstName}",
+                    PatientEmail = appointment.Patientt.Email,
+                    MedicalAnalystName = model.MedicalAnalystName,
+                    LabEmail = labEmail,
+                    Date = DateTime.Now,
+                    PatientSSN = (long)appointment.Patientt.SSN,
                     BloodPressureMedicine = model.BloodPressureMedicine,
                     Prevalenthypertension = model.Prevalenthypertension,
                     Age = model.Age,
@@ -188,7 +193,7 @@ namespace HeartDiseasePrediction.Controllers
         }
 
         [Authorize("MedicalAnalyst")]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Prediction(int id)
         {
             try
             {
@@ -196,13 +201,13 @@ namespace HeartDiseasePrediction.Controllers
                 if (medicalTest == null)
                     return View("NotFound");
 
-                var medicalTestView = new EditMedicalTestViewModel
+                var medicalTestView = new PredictionViewModel
                 {
                     Id = id,
                     PatientName = medicalTest.PatientName,
                     PatientEmail = medicalTest.PatientEmail,
-                    MedicalAnalystEmail = medicalTest.MedicalAnalystEmail,
-                    Date = medicalTest.date,
+                    LabEmail = medicalTest.LabEmail,
+                    Date = medicalTest.Date,
                     PatientSSN = medicalTest.PatientSSN,
                     BloodPressureMedicine = medicalTest.BloodPressureMedicine,
                     Prevalenthypertension = medicalTest.Prevalenthypertension,
@@ -228,7 +233,7 @@ namespace HeartDiseasePrediction.Controllers
         }
         [Authorize("MedicalAnalyst")]
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, EditMedicalTestViewModel model)
+        public async Task<IActionResult> Prediction(int id, PredictionViewModel model)
         {
             try
             {
@@ -241,8 +246,8 @@ namespace HeartDiseasePrediction.Controllers
                 medicalTest.PatientName = model.PatientName;
                 medicalTest.PatientSSN = model.PatientSSN;
                 medicalTest.PatientEmail = model.PatientEmail;
-                medicalTest.date = model.Date;
-                medicalTest.MedicalAnalystEmail = model.MedicalAnalystEmail;
+                medicalTest.Date = model.Date;
+                medicalTest.LabEmail = model.LabEmail;
                 medicalTest.Diabetes = model.Diabetes;
                 medicalTest.Smoking = model.Smoking;
                 medicalTest.CholesterolLevel = model.CholesterolLevel;
@@ -256,16 +261,18 @@ namespace HeartDiseasePrediction.Controllers
                 medicalTest.NumberOfCigarettes = model.NumberOfCigarettes;
                 medicalTest.SystolicBloodPressure = model.SystolicBloodPressure;
                 medicalTest.GlucoseLevel = model.GlucoseLevel;
+                medicalTest.Prediction = model.Prediction;
+                medicalTest.Probability = model.Probability;
 
                 _context.MedicalTests.Update(medicalTest);
                 await _unitOfWork.Complete();
-                _toastNotification.AddSuccessToastMessage("Medical Test Is Updated successfully");
+                _toastNotification.AddSuccessToastMessage("Predicted successfully");
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 TempData["errorMessage"] = ex.Message;
-                _toastNotification.AddErrorToastMessage("Medical Test  Updated Failed");
+                _toastNotification.AddErrorToastMessage("Predicted Failed");
                 return View();
             }
         }

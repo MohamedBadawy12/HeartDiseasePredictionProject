@@ -16,6 +16,7 @@ namespace Database.Entities
         public virtual DbSet<Lab> Labs { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<AcceptAndCancelAppointment> AcceptAndCancelAppointments { get; set; }
+        public virtual DbSet<AcceptAndCancelLabAppointment> AcceptAndCancelLabAppointments { get; set; }
         public virtual DbSet<LabAppointment> LabAppointments { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
