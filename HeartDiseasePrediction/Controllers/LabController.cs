@@ -58,6 +58,22 @@ namespace HeartDiseasePrediction.Controllers
             ViewBag.msg = TempData["msg"] as string;
             return View(labs);
         }
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> GetAllLabs(string name, string location, int currentPage = 1)
+        {
+            var labs = await _unitOfWork.labs.SearchForLab(name, location);
+            int totalRecords = labs.Count();
+            int pageSize = 5;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            labs = labs.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
+            ViewBag.msg = TempData["msg"] as string;
+            return View(labs);
+        }
 
         //Lab Details
         public async Task<IActionResult> Details(int id)

@@ -171,6 +171,9 @@ namespace HearPrediction.Api.Controllers
                     ProfileImg = user.ProfileImg,
                     Gender = user.Gender,
                     PhoneNumber = user.PhoneNumber,
+                    Name = user.Name,
+                    Location = user.Location,
+                    Price = user.Price,
                 };
                 return Ok(model);
             }
@@ -211,6 +214,9 @@ namespace HearPrediction.Api.Controllers
                 user.BirthDate = model.BirthDate;
                 user.Gender = model.Gender;
                 user.ProfileImg = model.ProfileImg;
+                user.Name = model.Name;
+                user.Location = model.Location;
+                user.Name = model.Name;
 
                 var result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)

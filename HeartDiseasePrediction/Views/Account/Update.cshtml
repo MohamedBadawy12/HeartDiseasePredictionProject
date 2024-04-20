@@ -87,7 +87,6 @@
                 }
 
             }
-            @*<label asp-for="@Model.ImageFile">Image Profile</label>*@
            <div style="margin:10px 0px">
                 <input type="file" asp-for="@Model.ImageFile" value="0" class="form-control">
                 <span asp-validation-for="@Model.ImageFile" class="text-danger"></span>
@@ -114,78 +113,62 @@
                 <input asp-for="@Model.Email" type="text" class="form-control" placeholder="Enter your Email" />
                 <label asp-for="@Model.Email" class="form-label"></label>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="@Model.FirstName" type="text" class="form-control" placeholder="Enter your FirstName " />
-                <label asp-for="@Model.FirstName" class="form-label"></label>
-                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="@Model.LastName" type="text" class="form-control" placeholder="Enter your LastName " />
-                <label asp-for="@Model.LastName" class="form-label"></label>
-                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
-            </div>
-          @*  @if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
+             @if(!User.IsInRole("MedicalAnalyst")){
+                    <div class="form-floating mb-3">
+                        <input asp-for="@Model.FirstName" type="text" class="form-control" placeholder="Enter your FirstName " />
+                        <label asp-for="@Model.FirstName" class="form-label"></label>
+                        <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="@Model.LastName" type="text" class="form-control" placeholder="Enter your LastName " />
+                        <label asp-for="@Model.LastName" class="form-label"></label>
+                        <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                    </div>
+             }
+            @if (User.IsInRole("MedicalAnalyst"))
             {
                 <div class="form-floating mb-3">
-                    <input asp-for="@Model.Name" type="text" class="form-control" placeholder="Enter your Name " />
+                    <input asp-for="@Model.Name" type="text" class="form-control" placeholder="Enter Name" />
                     <label asp-for="@Model.Name" class="form-label"></label>
                     <span asp-validation-for="@Model.Name" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="@Model.Location" type="text" class="form-control" placeholder="Enter your Location " />
+                    <input asp-for="@Model.Location" type="text" class="form-control" placeholder="Enter Location " />
                     <label asp-for="@Model.Location" class="form-label"></label>
                     <span asp-validation-for="@Model.Location" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="@Model.Price" type="text" class="form-control" placeholder="Enter your Price " />
+                    <input asp-for="@Model.Price" type="text" class="form-control" placeholder="Enter Price " />
                     <label asp-for="@Model.Price" class="form-label"></label>
                     <span asp-validation-for="@Model.Price" class="text-danger"></span>
                 </div>
-            }*@
-          @*  @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
-            {
-                <div class="form-floating mb-3">
-                    <input asp-for="@Model.SSN" type="number" class="form-control" placeholder="Enter your SSN " />
-                    <label asp-for="@Model.SSN" class="form-label"></label>
-                    <span asp-validation-for="@Model.SSN" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="@Model.Insurance_No" type="number" class="form-control" placeholder="Enter your Insurance " />
-                    <label asp-for="@Model.Insurance_No" class="form-label"></label>
-                    <span asp-validation-for="@Model.Insurance_No" class="text-danger"></span>
-                </div>
-            }*@
+            }
             <div class="form-floating mb-3">
                 <input asp-for="@Model.PhoneNumber" type="number" class="form-control" placeholder="Enter your phone number." />
                 <label asp-for="@Model.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-              @*  <label asp-for="BirthDate" class="form-label"></label>
-                <div class="input-group date" id="inputDate" data-date-format="mm-dd-yyyy">
-                    <input asp-for="@Model.BirthDate" type="date" class="form-control" readonly>
-                    <span class="input-group-addon date_icon">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <span asp-validation-for="@Model.BirthDate" class="text-danger"></span>*@
 
-                <label asp-for="@Model.BirthDate"></label>
-                <div class="input-group date" id="inputDate" data-date-format="mm-dd-yyyy">
-                    <input asp-for="@Model.BirthDate"  type="text" class="form-control" >
-                    <span class="input-group-addon date_icon">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <span asp-validation-for="@Model.BirthDate" class="text-danger"></span>
+                @if(!User.IsInRole("MedicalAnalyst")){
+                    <label asp-for="@Model.BirthDate"></label>
+                    <div class="input-group date" id="inputDate" data-date-format="mm-dd-yyyy">
+                        <input asp-for="@Model.BirthDate" type="text" class="form-control">
+                        <span class="input-group-addon date_icon">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="@Model.BirthDate" class="text-danger"></span>
+                    <div class="form-group mb-3">
+                        <label asp-for="@Model.Gender"></label>
+                        <select asp-for="@Model.Gender" class="form-control wide" id="inputGender" asp-items="Html.GetEnumSelectList<Gender>()">
+                            <option value="NoSelected ">--Please Select Gender-- </option>
+                        </select>
+                        <span asp-validation-for="@Model.Gender" class="text-danger"></span>
+                    </div>
+                }
             </div>
-            <div class="form-group mb-3">
-                <label asp-for="@Model.Gender"></label>
-                <select asp-for="@Model.Gender" class="form-control wide" id="inputGender" asp-items="Html.GetEnumSelectList<Gender>()">
-                    <option value="NoSelected ">--Please Select Gender-- </option>
-                </select>
-                <span asp-validation-for="@Model.Gender" class="text-danger"></span>
-            </div>
+          
             <div class="m-2" hidden>
                 <input asp-for="@Model.ProfileImg" type="hidden" />
             </div>

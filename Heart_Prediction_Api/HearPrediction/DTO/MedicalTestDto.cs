@@ -1,11 +1,12 @@
 ﻿using Database.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace HearPrediction.Api.DTO
 {
     public class MedicalTestDto
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         [Required, Display(Name = "Age")]
         public float Age { get; set; }
         [Required, Display(Name = "Gender")]
@@ -36,5 +37,10 @@ namespace HearPrediction.Api.DTO
         //public string PatientName { get; set; }
         public string MedicalAnalystName { get; set; }
         //public string PatientEmail { get; set; }
+        public DateTime Date { get; set; }
+        public MedicalTestDto()
+        {
+            Date = DateTime.Now;
+        }
     }
 }

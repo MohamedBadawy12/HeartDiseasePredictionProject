@@ -59,11 +59,11 @@ namespace HearPrediction.Api.Controllers
         //Search for doctor
         [HttpGet("Search")]
         [AllowAnonymous]
-        public async Task<IActionResult> SearchForDoctor([FromQuery] string search)
+        public async Task<IActionResult> SearchForDoctor([FromQuery] string search, string location)
         {
             try
             {
-                var result = await _unitOfWork.Doctors.FilterDoctors(search);
+                var result = await _unitOfWork.Doctors.FilterDoctors(search, location);
                 return Ok(result);
             }
             catch (Exception)

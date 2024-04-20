@@ -17,7 +17,7 @@ namespace HeartDiseasePrediction.Helper
 		{
 			var identity = await base.GenerateClaimsAsync(user);
 			identity.AddClaim(new Claim("UserFirstName", user.FirstName ?? ""));
-			identity.AddClaim(new Claim("LabName", user.Name.ToString() ?? ""));
+			identity.AddClaim(new Claim("LabName", user.Name ?? ""));
 			identity.AddClaim(new Claim("UserLastName", user.LastName ?? ""));
 			identity.AddClaim(new Claim("UserAge", user.Age.ToString() ?? ""));
 			identity.AddClaim(new Claim("UserPhoneNumber", user.PhoneNumber ?? ""));

@@ -1,5 +1,138 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model HeartDiseasePrediction.ViewModel.PredictionViewModel
 @{
+    ViewData["Title"] = "Medical Tests Details Page";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+    }
+
+    .containerr {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+<section>
+    <div class="containerr">
+        <h1>Medical Test Details</h1>
+        <table>
+            <tr>
+                <th>Test Name</th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>@Model.Gender</td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td>@Model.Age years</td>
+            </tr>
+            <tr>
+                <td>Diastolic Blood Pressure</td>
+                <td>@Model.DiastolicBloodPressure</td>
+            </tr>
+            <tr>
+                <td>Systolic Blood Pressure</td>
+                <td>@Model.SystolicBloodPressure</td>
+            </tr>
+            <tr>
+                <td>Blood Pressure Medicine</td>
+                @if (Model.BloodPressureMedicine == 1)
+                {
+                    <td>yes</td>
+                }
+                else
+                {
+                    <td>No</td>
+                }
+            </tr>
+            <tr>
+                <td>Diabetes</td>
+                @if (Model.Diabetes == 1)
+                {
+                    <td>yes</td>
+                }
+                else
+                {
+                    <td>No</td>
+                }
+            </tr>
+            <tr>
+                <td>BMI</td>
+                <td>@Model.BMI</td>
+            </tr>
+            <tr>
+                <td>Cholesterol Level</td>
+                <td>@Model.CholesterolLevel</td>
+            </tr>
+            <tr>
+                <td>Glucose Level</td>
+                <td>@Model.GlucoseLevel</td>
+            </tr>
+            <tr>
+                <td>Smoking</td>
+                @if (Model.Smoking == 1)
+                {
+                    <td>yes</td>
+                }
+                else
+                {
+                    <td>No</td>
+                }
+            </tr>
+            <tr>
+                <td>Number Of Cigarettes</td>
+                <td>@Model.NumberOfCigarettes per day</td>
+            </tr>
+            <tr>
+                <td>Prevalent hypertension</td>
+                <td>@Model.Prevalenthypertension</td>
+            </tr>
+            <tr>
+                <td>Prevalent Stroke</td>
+                <td>@Model.PrevalentStroke</td>
+            </tr>
+            <tr>
+                <td><strong>Prediction</strong></td>
+                <td>@Model.Prediction</td>
+            </tr>
+            <tr>
+                <td><strong>Probability</strong></td>
+                <td>@Model.Probability</td>
+            </tr>
+        </table>
+    </div>
+
+</section>

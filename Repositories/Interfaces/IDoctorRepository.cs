@@ -10,7 +10,7 @@ namespace Repositories.Interfaces
         //Task<Doctor> UpdateDoctor(Doctor doctor);
         Doctor FindDoctor(int id);
         //Task<NewDoctorDropDownViewModel> GetNewDoctorDropDownsValues();
-        Task<IEnumerable<Doctor>> FilterDoctors(string search);
+        Task<IEnumerable<Doctor>> FilterDoctors(string search, string location);
         Doctor Get_Doctor(int id);
         Task<Doctor> GetProfile(string userId);
         Task Add(Doctor doctor);

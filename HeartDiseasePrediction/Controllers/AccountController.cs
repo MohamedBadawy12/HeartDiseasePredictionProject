@@ -539,7 +539,9 @@ namespace HeartDiseasePrediction.Controllers
                     ProfileImg = user.ProfileImg,
                     Gender = user.Gender,
                     PhoneNumber = user.PhoneNumber,
-                    //ImageFile = user.ImageFile,
+                    Name = user.Name,
+                    Location = user.Location,
+                    Price = user.Price,
                 };
                 return View(model);
             }
@@ -574,6 +576,9 @@ namespace HeartDiseasePrediction.Controllers
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.Gender = model.Gender;
+                user.Price = model.Price;
+                user.Location = model.Location;
+                user.Name = model.Name;
                 user.ProfileImg = model.ProfileImg;
                 IdentityResult result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)

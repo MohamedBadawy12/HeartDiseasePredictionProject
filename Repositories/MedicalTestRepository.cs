@@ -16,6 +16,39 @@ namespace Repositories
             await _context.MedicalTests.AddAsync(medicalTest);
 
 
+        public async Task<List<MedicalTest>> GetMedicalTestsByMedicalId(string userId, string userRole)
+        {
+            IQueryable<MedicalTest> MedicalTestsQuery = _context.MedicalTests;
+
+            if (userRole == "MedicalAnalyst")
+            {
+                MedicalTestsQuery = MedicalTestsQuery.Include(a => a.Patient);
+            }
+            var medicalTests = await MedicalTestsQuery
+                 .Where(a => (userRole == "MedicalAnalyst" && a.UserId == userId))
+                .Select(a => new MedicalTest
+                {
+                    Id = a.Id,
+                    PatientEmail = a.PatientEmail,
+                    PatientName = a.PatientName,
+                    PatientSSN = a.PatientSSN,
+                    Date = a.Date,
+                    MedicalAnalystName = a.MedicalAnalystName,
+                    LabEmail = a.LabEmail,
+                    LabId = a.LabId,
+
+                    Patient = userRole == "MedicalAnalyst" ? new Patient
+                    {
+                        SSN = a.PatientSSN,
+                        Insurance_No = a.Patient.Insurance_No,
+                        User = a.Patient.User,
+                    } : null
+                })
+                .ToListAsync();
+
+            return medicalTests;
+        }
+
         public async Task<List<MedicalTest>> GetMedicalTestsByUserId(string userId, string userRole)
         {
             IQueryable<MedicalTest> MedicalTestsQuery = _context.MedicalTests;
@@ -29,7 +62,6 @@ namespace Repositories
                 .Select(a => new MedicalTest
                 {
                     Id = a.Id,
-                    Date = a.Date,
                     Gender = a.Gender,
                     GlucoseLevel = a.GlucoseLevel,
                     Diabetes = a.Diabetes,
@@ -44,7 +76,9 @@ namespace Repositories
                     Prevalenthypertension = a.Prevalenthypertension,
                     PrevalentStroke = a.PrevalentStroke,
                     PatientEmail = a.PatientEmail,
+                    PatientName = a.PatientName,
                     PatientSSN = a.PatientSSN,
+                    Date = a.Date,
                     MedicalAnalystName = a.MedicalAnalystName,
                     LabEmail = a.LabEmail,
                     LabId = a.LabId,
@@ -62,7 +96,8 @@ namespace Repositories
 
             return medicalTests;
         }
-        public async Task<List<MedicalTest>> GetMedicalTestsByEmail(string Email, string userRole)
+
+        public async Task<List<MedicalTest>> GetMedicalTestsByPatientEmail(string Email, string userRole)
         {
             IQueryable<MedicalTest> MedicalTestsQuery = _context.MedicalTests;
 
@@ -76,6 +111,52 @@ namespace Repositories
                 {
                     Id = a.Id,
                     Date = a.Date,
+                    PatientEmail = a.PatientEmail,
+                    PatientName = a.PatientName,
+                    PatientSSN = a.PatientSSN,
+                    MedicalAnalystName = a.MedicalAnalystName,
+                    LabEmail = a.LabEmail,
+                    LabId = a.LabId,
+
+                    Labb = userRole == "User" ? new ApplicationUser
+                    {
+                        Id = a.UserId,
+                        Name = a.Labb.Name,
+                        PhoneNumber = a.Labb.PhoneNumber,
+                        Location = a.Labb.Location,
+                        Price = a.Labb.Price,
+                        Email = a.Labb.Email,
+                        ProfileImg = a.Labb.ProfileImg,
+                    } : null,
+                    Lab = userRole == "User" ? new Lab
+                    {
+                        Id = a.Id,
+                        Location = a.Lab.Location,
+                        Price = a.Lab.Price,
+                        PhoneNumber = a.Lab.PhoneNumber,
+                        Name = a.Lab.Name,
+                        LabImage = a.Lab.LabImage,
+                        User = a.Labb,
+                    } : null,
+                })
+                .ToListAsync();
+
+            return medicalTests;
+        }
+
+        public async Task<List<MedicalTest>> GetMedicalTestsByEmail(string Email, string userRole)
+        {
+            IQueryable<MedicalTest> MedicalTestsQuery = _context.MedicalTests;
+
+            if (userRole == "User")
+            {
+                MedicalTestsQuery = MedicalTestsQuery.Include(a => a.Patient);
+            }
+            var medicalTests = await MedicalTestsQuery
+                 .Where(a => (userRole == "User" && a.PatientEmail == Email))
+                .Select(a => new MedicalTest
+                {
+                    Id = a.Id,
                     Gender = a.Gender,
                     GlucoseLevel = a.GlucoseLevel,
                     Diabetes = a.Diabetes,
@@ -89,7 +170,9 @@ namespace Repositories
                     SystolicBloodPressure = a.SystolicBloodPressure,
                     Prevalenthypertension = a.Prevalenthypertension,
                     PrevalentStroke = a.PrevalentStroke,
+                    Date = a.Date,
                     PatientEmail = a.PatientEmail,
+                    PatientName = a.PatientName,
                     PatientSSN = a.PatientSSN,
                     MedicalAnalystName = a.MedicalAnalystName,
                     LabEmail = a.LabEmail,

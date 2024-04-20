@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
-using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -31,7 +30,7 @@ namespace HearPrediction.Api.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var medicalTests = await _unitOfWork.medicalTest.GetMedicalTestsByUserId(userId, userRole);
+            var medicalTests = await _unitOfWork.medicalTest.GetMedicalTestsByMedicalId(userId, userRole);
             return Ok(medicalTests);
         }
 
@@ -41,7 +40,7 @@ namespace HearPrediction.Api.Controllers
         {
             string PatientEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var medicalTests = await _unitOfWork.medicalTest.GetMedicalTestsByEmail(PatientEmail, userRole);
+            var medicalTests = await _unitOfWork.medicalTest.GetMedicalTestsByPatientEmail(PatientEmail, userRole);
             return Ok(medicalTests);
         }
 
@@ -100,7 +99,7 @@ namespace HearPrediction.Api.Controllers
                 PatientEmail = appointment.Patientt.Email,
                 MedicalAnalystName = model.MedicalAnalystName,
                 LabEmail = labEmail,
-                Date = DateTime.Now,
+                Date = model.Date,
                 PatientSSN = (long)appointment.Patientt.SSN,
                 BloodPressureMedicine = model.BloodPressureMedicine,
                 Prevalenthypertension = model.Prevalenthypertension,

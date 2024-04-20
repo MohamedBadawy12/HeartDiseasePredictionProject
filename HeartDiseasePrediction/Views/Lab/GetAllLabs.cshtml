@@ -208,6 +208,7 @@
 
 <div class="container" style="margin:20px">
     <div class="row">
+        @*form-inline justify-content-between my-2 my-lg-0 d-flex*@
         <div class="col-lg-10 mx-auto">
             <div class="career-search mb-60">
                 @using (Html.BeginForm("GetAllLabs", "Lab", FormMethod.Post, new { @class = "career-form mb-60 " }))
@@ -215,13 +216,22 @@
                     <div class="row justify-content-end">
                         <div class="col-md-6 col-lg-4 my-3">
                             <div class="input-group position-relative">
-                                @Html.TextBox("search",null,new{@class="form-control",placeholder="Search for lab...",})
+                                @Html.TextBox("name",null,new{@class="form-control",placeholder="Search By Name...",})
                             </div>
                         </div>
-                        <button class="btn btn-primary" style="margin:15px; padding:5px 5px" type="submit"><i class="fa fa-search"></i> Search </button>
+                        <button class="btn btn-primary" style="margin:15px 5px; padding:5px 10px" type="submit"><i class="fa fa-search"></i></button>
                     </div>
-
-
+                }
+                @using (Html.BeginForm("GetAllLabs", "Lab", FormMethod.Post, new { @class = "career-form " }))
+                {
+                    <div class="row justify-content-end">
+                        <div class="col-md-6 col-lg-4 my-3">
+                            <div class="input-group position-relative">
+                                @Html.TextBox("location",null,new{@class="form-control",placeholder="Search By Location...",})
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" style="margin:15px 5px; padding:5px 10px" type="submit"><i class="fa fa-search"></i></button>
+                    </div>
                 }
                 <div style="margin-top:10px">
                     @foreach (var item in Model)
@@ -237,7 +247,7 @@
                                         }
                                         else
                                         {
-                                            <img src="@item.LabImage" class="rounded-circle" width="60px">
+                                            <img src="@item.LabImage" class="rounded-circle" width="65px">
                                         }
                                         @*<img src="~/images/FemaleDoctor.jpg" width="60px" class="rounded-circle" alt="@item.Name">*@
                                     </div>

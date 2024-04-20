@@ -56,5 +56,16 @@ namespace Repositories
 
             return isDeleted;
         }
+
+        public async Task<IEnumerable<Lab>> SearchForLab(string name, string location)
+        {
+            var labs = await GetLabs();
+            if (!string.IsNullOrEmpty(name) || !string.IsNullOrEmpty(location))
+            {
+                labs = await _context.Labs.
+                Where(x => x.Name.Contains(name) || x.Location.Contains(location)).ToListAsync();
+            }
+            return labs;
+        }
     }
 }

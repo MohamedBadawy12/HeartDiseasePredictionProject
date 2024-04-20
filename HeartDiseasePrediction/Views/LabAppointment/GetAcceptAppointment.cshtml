@@ -99,8 +99,8 @@
                             }
                             <p class="text-secondary mb-1">Patient</p>
                             <h4><strong>@Model.FirstName</strong> <strong>@Model.FirstName @Model.LastName</strong></h4>
-                            <a class="btn btn-outline-info" asp-controller="MedicalTests" asp-action="Index" asp-route-id="@Model.Id"><i class="fa fa-eye"></i> View</a>
-                            <a class="btn btn-outline-success" asp-controller="MedicalTests" asp-action="Create" asp-route-id="@Model.Id"><i class="fa fa-plus-circle"></i> Add</a>
+                            <a class="btn btn-outline-info" asp-controller="MedicalTests" asp-action="GetPatientMedicalTests" asp-route-id="@Model.Id"><i class="fa fa-eye"></i> View Tests</a>
+                            <a class="btn btn-outline-success" asp-controller="MedicalTests" asp-action="Create" asp-route-id="@Model.Id"><i class="fa fa-plus-circle"></i> Add Test</a>
                             @*<a class="btn btn-primary" asp-controller="Doctor" asp-action="Edit" asp-route-id="@Model.Id"><i class="fa fa-pencil-square"></i>  Edit</a>
                             <a class="btn btn-danger" asp-controller="Doctor" asp-action="DeleteDoctor" asp-route-id="@Model.Id" onclick="ConfirmDelete()"><i class="fa fa-trash"></i> Delete</a>*@
                         </div>
@@ -175,7 +175,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-sm-3">
-                            <h6 class="mb-0">Pathient Phone Number</h6>
+                            <h6 class="mb-0">Pathient Phone</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             @Model.PhoneNumber
