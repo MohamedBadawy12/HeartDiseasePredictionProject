@@ -134,15 +134,15 @@
                         </a>*@
                         <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                            data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
-                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <i class="fa fa-user-md" aria-hidden="true"></i>
                             @* <i class="fa fa-gear"></i>*@
-                            <span>Appointments</span>
+                            <span>Doctors Appointments</span>
                         </a>
                         <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
                                 <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
                                    data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
-                                    List Of Appointments
+                                     List Of Appointments
                                 </a>
                                 <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
                                     <li class="sidebar-item">
@@ -155,7 +155,40 @@
                             </li>
                         </ul>
                     </li>
-                    
+                    <li class="sidebar-item">
+                        @*  <a asp-action="Index" asp-controller="Appointment" class="sidebar-link">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <span>Appointments</span>
+                    </a>*@
+                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                           data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+                            <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                            @* <i class="fa fa-gear"></i>*@
+                            <span>Labs Appointments</span>
+                        </a>
+                        <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                                   data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
+                                    List Of Appointments
+                                </a>
+                                <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+                                    <li class="sidebar-item">
+                                        <a asp-action="Index" asp-controller="LabAppointment" class="sidebar-link"><i class="fa fa-hourglass-half" aria-hidden="true"></i> Waiting Appointment</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a asp-controller="LabAppointment" asp-action="GetAcceptAndCancelLabAppointments" class="sidebar-link"> <i class="fa fa-calendar" aria-hidden="true"></i> Appointments</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a asp-action="GetMedicalTests" asp-controller="MedicalTests" class="sidebar-link">
+                            <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                            <span>Medical Tests</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item">
                         <a asp-action="GetMessagetByEmail" asp-controller="Appointment" class="sidebar-link">
                             <i class="fa fa-bell-o" aria-hidden="true"></i>
@@ -168,15 +201,43 @@
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                            data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
-                            <i class="lni lni-clipboard"></i>
+                            <i class="fa fa-heartbeat" aria-hidden="true"></i>
                             <span>Medical Tests</span>
                         </a>
                         <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a asp-controller="MedicalTests" asp-action="Index" class="sidebar-link"><i class="lni lni-menu"></i> Medical Tests</a>
+                                <a asp-controller="MedicalTests" asp-action="Index" class="sidebar-link"><i class="lni lni-clipboard"></i> Medical Tests</a>
                             </li>
                             <li class="sidebar-item">
-                                <a asp-controller="MedicalTests" asp-action="Create" class="sidebar-link"><i class="lni lni-clipboard"></i> Add Medical Test</a>
+                                <a asp-controller="MedicalTests" asp-action="Create" class="sidebar-link"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Medical Test</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        @* <a asp-action="GetAppointmentByEmail" asp-controller="Appointment" class="sidebar-link">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <span>Appointments</span>
+                    </a>*@
+                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                           data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            @* <i class="fa fa-gear"></i>*@
+                            <span>Appointments</span>
+                        </a>
+                        <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
+                                   data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
+                                    List Of Appointments
+                                </a>
+                                <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+                                    <li class="sidebar-item">
+                                        <a asp-action="GetLabAppointmentByEmail" asp-controller="LabAppointment" class="sidebar-link"><i class="fa fa-hourglass-half" aria-hidden="true"></i> Waiting Appointment</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a asp-controller="LabAppointment" asp-action="GetAcceptAppointments" class="sidebar-link"><i class="fa fa-check-circle" aria-hidden="true"></i> Accepted Appointment</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>
@@ -315,10 +376,20 @@
 
                                 }
                                 <span>
-                                     @(
-                                    User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value
-                                    )</span>
-               @*                 <img src="~/images/istockphoto-1223671392-612x612-1.jpg"
+                                    @if (User.IsInRole("MedicalAnalyst"))
+                                    {
+
+                                        @(User.FindFirst("LabName")?.Value)
+
+                                    }
+                                    else
+                                    {
+                                        @(
+                                            User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value
+                                            )
+                                    }
+                                </span>
+                                  @* <img src="~/images/istockphoto-1223671392-612x612-1.jpg"
                                 class="rounded-circle"
                                 height="24"
                                 alt="Portrait of a User"

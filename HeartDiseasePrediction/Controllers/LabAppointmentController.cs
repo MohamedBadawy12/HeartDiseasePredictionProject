@@ -177,6 +177,7 @@ namespace HeartDiseasePrediction.Controllers
                 Id = id,
                 PateintName = appointment.PateintName,
                 PatientEmail = appointment.PatientEmail,
+                PatientImage = appointment.Patientt.ProfileImg,
                 LabEmail = appointment.LabEmail,
                 Date = appointment.date,
                 Time = appointment.Time,

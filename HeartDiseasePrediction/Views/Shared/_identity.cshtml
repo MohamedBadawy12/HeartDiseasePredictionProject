@@ -23,9 +23,18 @@
 				 loading="lazy" />
 			
 		}
-		 @(
-			User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value
-			)
+		@if (User.IsInRole("MedicalAnalyst"))
+		{
+
+			@(User.FindFirst("LabName")?.Value)
+
+		}
+		else
+		{
+			@(
+				User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value
+				)
+		}
 
 	</a>
 		<span style="padding-left:10px"></span>

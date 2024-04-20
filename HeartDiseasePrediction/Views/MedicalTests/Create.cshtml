@@ -16,19 +16,9 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-row">
                         <div class="form-group col-lg-4">
-                            <label asp-for="@Model.PatientSSN"></label>
-                            <input asp-for="@Model.PatientSSN" type="text" class="form-control" id="inputPatientSSN" placeholder="Enter Patient SSN">
-                            <span asp-validation-for="@Model.PatientSSN" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label asp-for="@Model.PatientEmail"></label>
-                            <input asp-for="@Model.PatientEmail" type="text" class="form-control" id="inputPatientEmail" placeholder="Enter Patient Email">
-                            <span asp-validation-for="@Model.PatientEmail" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label asp-for="@Model.PatientName"></label>
-                            <input asp-for="@Model.PatientName" type="text" class="form-control" id="inputPatientName" placeholder="Enter Patient Name">
-                            <span asp-validation-for="@Model.PatientName" class="text-danger"></span>
+                            <label asp-for="@Model.MedicalAnalystName">Name</label>
+                            <input asp-for="@Model.MedicalAnalystName" type="text" class="form-control" id="inputPatientName" placeholder="Enter Medical    Analyst Name">
+                            <span asp-validation-for="@Model.MedicalAnalystName" class="text-danger"></span>
                         </div>
                     </div>
                     <hr />

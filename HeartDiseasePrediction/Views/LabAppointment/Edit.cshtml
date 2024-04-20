@@ -1,5 +1,196 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model HeartDiseasePrediction.ViewModel.EditAppointmentViewModel
+
 @{
+    ViewData["Title"] = "Update Appointment";
+}
+<style type="text/css">
+    .card {
+        box-shadow: 0px 4px 8px 0px #7986CB;
+    }
+
+    input {
+        padding: 10px 20px !important;
+        border: 1px solid #060 !important;
+        border-radius: 10px;
+        box-sizing: border-box;
+        font-size: 16px;
+        letter-spacing: 1px;
+        width: 180px;
+    }
+
+        input:focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border: 1px solid #512DA8;
+            outline-width: 0;
+        }
+
+    ::placeholder {
+        color: #000;
+        opacity: 1;
+    }
+
+    :-ms-input-placeholder {
+        color: #000;
+    }
+
+    ::-ms-input-placeholder {
+        color: #000;
+    }
+
+    button:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        outline-width: 0;
+    }
+
+    .datepicker {
+        background-color: white !important;
+        color: #000 !important;
+        border: none;
+        padding: 5px !important;
+    }
+
+    .datepicker-dropdown:after {
+        border-bottom: 6px solid #000;
+    }
+
+    thead tr:nth-child(3) th {
+        color: #fff !important;
+        font-weight: bold;
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    .dow, .old-day, .day, .new-day {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 0px !important;
+    }
+
+        .old-day:hover, .day:hover, .new-day:hover, .month:hover, .year:hover, .decade:hover, .century:hover {
+            border-radius: 6px !important;
+            background-color: #eee;
+            color: #000;
+        }
+
+    .disabled {
+        color: #616161 !important;
+    }
+
+    .prev, .next, .datepicker-switch {
+        border-radius: 0 !important;
+        padding: 20px 10px !important;
+        text-transform: uppercase;
+        font-size: 20px;
+        color: #000 !important;
+        opacity: 0.8;
+    }
+
+        .prev:hover, .next:hover, .datepicker-switch:hover {
+            background-color: inherit !important;
+            opacity: 1;
+        }
+
+    .cell {
+        border: 1px solid;
+        margin: 2px;
+        cursor: pointer;
+    }
+
+        .cell:hover {
+            border: 1px solid #3D5AFE;
+        }
+
+        .cell.select {
+            background-color: #3D5AFE;
+            color: #fff;
+            cursor: not-allowed;
+        }
+
+    .fa-calendar {
+        color: #fff;
+        font-size: 20px;
+        padding-top: 8px;
+        padding-left: 5px;
+        cursor: pointer;
+    }
+
+    .fa-envelope-o {
+        padding-top: 10px;
+        padding-left: 5px;
+    }
+
+</style>
+<div class="card card-body" style="margin:20px 100px 10px 100px">
+    <div class="main-body">
+        <div aria-label="breadcrumb" class="main-breadcrumb ">
+            <div class="breadcrumb" style="background-color:#00c6a9">
+                <div class="justify-content-center text-white" aria-current="page"><h4>Update Your Appointment</h4></div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container-fluid px-0 px-sm-4 mx-auto">
+            <div class="row justify-content-center mx-0">
+                <div class="col-lg-10">
+                    <form asp-action="Edit" method="post">
+                        <div class="card border-0">
+                            <div autocomplete="off">
+                                <div class="card-header bg-secondary">
+                                    <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1">
+                                        <div class="form-group col-lg-12">
+                                            <div class="input-group date" id="inputDate" data-date-format="mm-dd-yyyy">
+                                                Date: <input asp-for="@Model.Date" id="displayYear" type="text" class="form-control" style="margin:0px 10px" readonly>
+                                                <span class="input-group-addon date_icon">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            <span asp-validation-for="@Model.Date" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body p-3 p-sm-5">
+                                    <div class="row text-center mx-0">
+                                        @{
+                                            var times = new List<string> { "9:00AM", "10:00AM", "11:00AM","12:00PM", "1:00PM","2:00PM","3:00PM","4:00PM","5:00PM"}; // Add more times as needed
+                                        }
+
+                                        @foreach (var time in times)
+                                        {
+                                            <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                        }
+                                        <input asp-for="Time" id="selectedTime" type="hidden" name="Time" />
+                                        @*  <input asp-for="DoctorId" type="text" hidden/>*@
+                                        <input asp-for="PateintName" type="text" hidden />
+                                        <input asp-for="PatientPhone" type="text" hidden />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn btn-success " style="margin:20px 230px 10px; padding:0px 50px">
+                            <button type="submit" class="btn text-white"><strong>Update Appointment</strong></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('.cell').click(function () {
+                $('.cell').removeClass('select');
+                $(this).addClass('select');
+            });
+        });
+
+        function setTime(time) {
+            document.getElementById("selectedTime").value = time;
+        }
+    </script>
 }

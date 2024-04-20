@@ -25,7 +25,7 @@ namespace HearPrediction.Api.Controllers
             _userManager = userManager;
         }
         //Get MedicalTests by userId
-        [Authorize("MedicalAnalyst")]
+        [Authorize(Roles = "MedicalAnalyst")]
         [HttpGet("GetMedicalTestsByUserId")]
         public async Task<IActionResult> Index()
         {
@@ -35,7 +35,7 @@ namespace HearPrediction.Api.Controllers
             return Ok(medicalTests);
         }
 
-        [Authorize("User")]
+        [Authorize(Roles = "User")]
         [HttpGet("GetMedicalTestsByEmail")]
         public async Task<IActionResult> GetMedicalTests()
         {
@@ -45,7 +45,7 @@ namespace HearPrediction.Api.Controllers
             return Ok(medicalTests);
         }
 
-        [Authorize("MedicalAnalyst")]
+        [Authorize(Roles = "MedicalAnalyst")]
         [AllowAnonymous]
         [HttpGet("GetMedicalDetails")]
         public async Task<IActionResult> MedicalTestDetails(int id)
@@ -80,7 +80,7 @@ namespace HearPrediction.Api.Controllers
             return Ok(medicalTestView);
         }
 
-        [Authorize("MedicalAnalyst")]
+        [Authorize(Roles = "MedicalAnalyst")]
         [HttpPost("CreateMedicalTest")]
         public async Task<IActionResult> Create(int id, MedicalTestDto model)
         {
@@ -121,7 +121,7 @@ namespace HearPrediction.Api.Controllers
             return Ok(medicalTest);
         }
 
-        [Authorize("MedicalAnalyst")]
+        [Authorize(Roles = "User")]
         [HttpPut("MakePrediction")]
         public async Task<IActionResult> Prediction(int id, PredictionDTO model)
         {

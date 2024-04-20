@@ -24,7 +24,7 @@
 				</div>
 				<div class="form-inline justify-content-end my-2 my-lg-1 d-flex">
 					<div>
-						@using (Html.BeginForm("Index", "MedicalTests", FormMethod.Post))
+						@using (Html.BeginForm("GetMedicalTests", "MedicalTests", FormMethod.Post))
 						{
 							@Html.TextBox("date",null,new{@class="form-control",type="date",style="margin:5px 0px 5px 5px"})
 							<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
@@ -58,7 +58,7 @@
 									<td class="align-middle text-center counterColumn">
 									</td>
 									<td class="align-middle text-center">
-										@item.date.ToString("dd MMM yyyy")
+										@item.Date.ToString("dd MMM yyyy")
 									</td>
 									<td class="align-middle text-center">
 										@item.PatientSSN

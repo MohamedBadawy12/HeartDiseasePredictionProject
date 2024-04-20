@@ -30,6 +30,8 @@ namespace HeartDiseasePrediction.ViewModel
         [Display(Name = "Email"), StringLength(200)]
         [Required(ErrorMessage = "Email Is Required")]
         public string Email { get; set; }
+        [Display(Name = "Patient Image")]
+        public string? PatientImage { get; set; }
         [Display(Name = "Age")]
         public int Age => CalculateAge();
         private int CalculateAge()
