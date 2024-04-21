@@ -21,6 +21,12 @@ namespace Database.Entities
         public string Price { get; set; }
         [Display(Name = "Lab Image")]
         public string? LabImage { get; set; }
+        [Display(Name = "Zone")]
+        public string? Zone { get; set; }
+        [Display(Name = "Start Time")]
+        public string? StartTime { get; set; }
+        [Display(Name = "End Time")]
+        public string? EndTime { get; set; }
         [NotMapped]
         [Display(Name = "Upload File")]
         public IFormFile? ImageFile { get; set; }

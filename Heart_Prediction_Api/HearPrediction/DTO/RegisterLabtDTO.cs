@@ -13,9 +13,18 @@ namespace HearPrediction.Api.DTO
         [Required(ErrorMessage = "Location Is Required")]
         [Display(Name = "Location")]
         public string Location { get; set; }
+        [Required(ErrorMessage = "Zone Is Required")]
+        [Display(Name = "Zone")]
+        public string? Zone { get; set; }
         [Required(ErrorMessage = "Price Is Required")]
         [Display(Name = "Price")]
         public string Price { get; set; }
+        [Required(ErrorMessage = "Start Time Is Required")]
+        [Display(Name = "Start Time")]
+        public string? StartTime { get; set; }
+        [Required(ErrorMessage = "End Time Is Required")]
+        [Display(Name = "End Time")]
+        public string? EndTime { get; set; }
         [Required(ErrorMessage = "Phone Number Is Required")]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }

@@ -91,6 +91,7 @@ namespace HearPrediction.Api.Controllers
                 Id = id,
                 PateintName = appointment.PateintName,
                 PatientEmail = appointment.PatientEmail,
+                PatinetImage = appointment.PatientImage,
                 LabEmail = appointment.LabEmail,
                 Date = appointment.Date,
                 Time = appointment.Time,
@@ -122,6 +123,7 @@ namespace HearPrediction.Api.Controllers
                 Id = id,
                 PateintName = appointment.PateintName,
                 PatientEmail = appointment.PatientEmail,
+                PatinetImage = appointment.PatientImage,
                 LabEmail = appointment.LabEmail,
                 Date = appointment.date,
                 Time = appointment.Time,
@@ -167,6 +169,7 @@ namespace HearPrediction.Api.Controllers
                 PatientID = userId,
                 PateintName = model.PateintName,
                 PatientEmail = patientEmail,
+                PatientImage = user.ProfileImg,
                 LabEmail = lab.User.Email,
                 date = model.Date,
                 Time = model.Time,
@@ -206,6 +209,7 @@ namespace HearPrediction.Api.Controllers
             appointment.Time = model.Time;
             appointment.PateintName = model.PateintName;
             appointment.PatientEmail = patientEmail;
+            appointment.PatientImage = model.PatinetImage;
             appointment.PhoneNumber = user.PhoneNumber;
             appointment.IsAccepted = false;
             appointment.PatientSSN = model.PatientSSN;
@@ -238,6 +242,7 @@ namespace HearPrediction.Api.Controllers
             appointment.LabId = appointment.LabId;
             appointment.PatientSSN = appointment.PatientSSN;
             appointment.PateintName = appointment.PateintName;
+            appointment.PatientImage = appointment.PatientImage;
             appointment.IsAccepted = true;
             appointment.PatientID = appointment.PatientID;
 
@@ -252,6 +257,7 @@ namespace HearPrediction.Api.Controllers
                 LabEmail = labEmail,
                 PateintName = appointment.PateintName,
                 PatientSSN = appointment.PatientSSN,
+                PatientImage = appointment.PatientImage,
                 LabId = appointment.LabId,
                 PhoneNumber = appointment.PhoneNumber,
                 IsAccepted = true,
@@ -296,6 +302,7 @@ namespace HearPrediction.Api.Controllers
                     LabEmail = labEmail,
                     PateintName = appointment.PateintName,
                     PatientSSN = appointment.PatientSSN,
+                    PatientImage = appointment.PatientImage,
                     LabId = appointment.LabId,
                     PhoneNumber = appointment.PhoneNumber,
                     IsAccepted = false,
@@ -343,6 +350,7 @@ namespace HearPrediction.Api.Controllers
                 LabEmail = appointment.LabEmail,
                 PateintName = appointment.PateintName,
                 PatientSSN = appointment.PatientSSN,
+                PatientImage = appointment.PatientImage,
                 LabId = appointment.LabId,
                 PhoneNumber = appointment.PhoneNumber,
                 IsAccepted = false,

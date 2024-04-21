@@ -32,15 +32,32 @@
                         </div>
                     </div>
                     <div class="form-row ">
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-6">
                             <label asp-for="@Model.Location" class="control-label"></label>
-                            <input asp-for="@Model.Location" type="text" class="form-control" id="inputFullName" placeholder="Enter Lab Location">
+                            <input asp-for="@Model.Location" type="text" class="form-control" id="inputLocation" placeholder="Enter Lab Location">
                             <span asp-validation-for="@Model.Location" class="text-danger"></span>
                         </div>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-3">
+                            <label asp-for="@Model.Zone" class="control-label"></label>
+                            <input asp-for="@Model.Zone" type="text" class="form-control" id="inputZone" placeholder="Enter Lab Zone">
+                            <span asp-validation-for="@Model.Zone" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-3">
                             <label asp-for="@Model.Price" class="control-label"></label>
-                            <input asp-for="@Model.Price" type="text" class="form-control" id="inputFullName" placeholder="Enter Lab Price">
+                            <input asp-for="@Model.Price" type="text" class="form-control" id="inputPrice" placeholder="Enter Lab Price">
                             <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row ">
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.StartTime" class="control-label"></label>
+                            <input asp-for="@Model.StartTime" type="text" class="form-control" id="inputStartTime" placeholder="Lab Open">
+                            <span asp-validation-for="@Model.StartTime" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.EndTime" class="control-label"></label>
+                            <input asp-for="@Model.EndTime" type="text" class="form-control" id="inputEndTime" placeholder="Lab Close">
+                            <span asp-validation-for="@Model.EndTime" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.Id" hidden class="control-label"></label>

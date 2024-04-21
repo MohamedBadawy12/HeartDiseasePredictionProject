@@ -21,8 +21,8 @@ namespace Repositories
             {
                 doctors = await _context.Doctors.
                 Where(x => x.Name.Contains(search) || x.User.FirstName.Contains(search)
-                || x.User.LastName.Contains(search) || x.User.Location.Contains(location)
-                || x.Location.Contains(location)).ToListAsync();
+                || x.User.LastName.Contains(search) || x.User.Location.Contains(location) || x.User.Location.Contains(search)
+                || x.Location.Contains(location) || x.Location.Contains(search)).ToListAsync();
             }
             return doctors;
         }

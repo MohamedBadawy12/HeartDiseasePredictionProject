@@ -47,10 +47,13 @@ namespace HearPrediction.Api.Controllers
             {
                 Id = id,
                 Email = lab.User.Email,
-                Name = lab.Name,
-                PhoneNumber = lab.PhoneNumber,
-                Location = lab.Location,
-                Price = lab.Price,
+                Name = lab.User.Name,
+                PhoneNumber = lab.User.PhoneNumber,
+                Location = lab.User.Location,
+                Price = lab.User.Price,
+                Zone = lab.User.Zone,
+                StartTime = lab.User.StartTime,
+                EndTime = lab.User.EndTime,
                 ProfileImg = lab.LabImage,
             };
             return Ok(labVM);
@@ -80,12 +83,18 @@ namespace HearPrediction.Api.Controllers
             lab.User.PhoneNumber = model.PhoneNumber;
             lab.User.Location = model.Location;
             lab.User.Price = model.Price;
+            lab.User.Zone = model.Zone;
+            lab.User.StartTime = model.StartTime;
+            lab.User.EndTime = model.EndTime;
             lab.User.Email = model.Email;
             lab.User.ProfileImg = model.ProfileImg;
             lab.Name = model.Name;
             lab.PhoneNumber = model.PhoneNumber;
             lab.Location = model.Location;
             lab.Price = model.Price;
+            lab.Zone = model.Zone;
+            lab.StartTime = model.StartTime;
+            lab.EndTime = model.EndTime;
             lab.LabImage = model.ProfileImg;
 
             await _unitOfWork.Complete();

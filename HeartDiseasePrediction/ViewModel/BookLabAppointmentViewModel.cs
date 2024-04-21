@@ -10,12 +10,18 @@ namespace HeartDiseasePrediction.ViewModel
         public int Id { get; set; }
         [Display(Name = "Phone Number")]
         public string LabPhoneNumber { get; set; }
-        [Display(Name = "Location"), StringLength(100)]
+        [Display(Name = "Location"), StringLength(200)]
         public string? Location { get; set; }
+        [Display(Name = "Zone"), StringLength(100)]
+        public string? Zone { get; set; }
         [Display(Name = "Name"), StringLength(150)]
         public string? Name { get; set; }
         [Display(Name = "Price")]
         public string? Price { get; set; }
+        [Display(Name = "Start Time")]
+        public string? StartTime { get; set; }
+        [Display(Name = "End Time")]
+        public string? EndTime { get; set; }
         [Display(Name = "Lab Image")]
         public string? LabImage { get; set; }
         [NotMapped]

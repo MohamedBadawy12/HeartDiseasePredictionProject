@@ -11,6 +11,7 @@ namespace HeartDiseasePrediction.ViewModel
         public string Time { get; set; }
         public string PatientPhone { get; set; }
         public string PateintName { get; set; }
+        public string PatientImage { get; set; }
         //public int DoctorId { get; set; }
         //public long PatientSSN { get; set; }
     }

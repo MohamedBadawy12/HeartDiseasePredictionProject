@@ -106,9 +106,13 @@ namespace HeartDiseasePrediction.Controllers
                     Gender = doctor.User.Gender,
                     PhoneNumber = doctor.User.PhoneNumber,
                     ProfileImg = doctor.User.ProfileImg,
-                    Name = doctor.Name,
-                    Location = doctor.Location,
-                    Price = doctor.Price,
+                    Name = doctor.User.Name,
+                    Location = doctor.User.Location,
+                    Price = doctor.User.Price,
+                    Zone = doctor.User.Zone,
+                    //Name = doctor.Name,
+                    //Location = doctor.Location,
+                    //Price = doctor.Price,
                 };
                 return View(DoctorDetail);
             }
@@ -142,10 +146,14 @@ namespace HeartDiseasePrediction.Controllers
                     Email = doctor.User.Email,
                     Gender = doctor.User.Gender,
                     PhoneNumber = doctor.User.PhoneNumber,
-                    Name = doctor.Name,
-                    Location = doctor.Location,
-                    Price = doctor.Price,
+                    Name = doctor.User.Name,
+                    Location = doctor.User.Location,
+                    Price = doctor.User.Price,
+                    Zone = doctor.User.Zone,
                     ProfileImg = doctor.User.ProfileImg,
+                    //Name = doctor.Name,
+                    //Location = doctor.Location,
+                    //Price = doctor.Price,
                 };
                 return View(DoctorDetail);
             }
@@ -184,10 +192,12 @@ namespace HeartDiseasePrediction.Controllers
                 doctor.User.BirthDate = model.BirthDate;
                 doctor.User.Name = model.Name;
                 doctor.User.Location = model.Location;
+                doctor.User.Zone = model.Zone;
                 doctor.User.Price = model.Price;
                 doctor.User.Gender = model.Gender;
                 doctor.Name = model.Name;
                 doctor.Location = model.Location;
+                doctor.Zone = model.Zone;
                 doctor.Price = model.Price;
                 doctor.User.ProfileImg = model.ProfileImg;
 

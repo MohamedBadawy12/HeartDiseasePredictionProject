@@ -147,6 +147,7 @@ namespace HeartDiseasePrediction.Controllers
                 Id = id,
                 PateintName = appointment.PateintName,
                 PatientEmail = appointment.PatientEmail,
+                PatientImage = appointment.PatientImage,
                 LabEmail = appointment.LabEmail,
                 Date = appointment.Date,
                 Time = appointment.Time,
@@ -177,7 +178,7 @@ namespace HeartDiseasePrediction.Controllers
                 Id = id,
                 PateintName = appointment.PateintName,
                 PatientEmail = appointment.PatientEmail,
-                PatientImage = appointment.Patientt.ProfileImg,
+                PatientImage = appointment.PatientImage,
                 LabEmail = appointment.LabEmail,
                 Date = appointment.date,
                 Time = appointment.Time,
@@ -208,9 +209,12 @@ namespace HeartDiseasePrediction.Controllers
             {
                 LabPhoneNumber = lab.PhoneNumber,
                 LabEmail = lab.User.Email,
-                Name = lab.Name,
-                Location = lab.Location,
-                Price = lab.Price,
+                Name = lab.User.Name,
+                Location = lab.User.Location,
+                Price = lab.User.Price,
+                Zone = lab.User.Zone,
+                StartTime = lab.User.StartTime,
+                EndTime = lab.User.EndTime,
                 LabImage = lab.LabImage,
             };
             return View(labDetails);
@@ -242,6 +246,7 @@ namespace HeartDiseasePrediction.Controllers
                 PatientID = model.PatientID,
                 PateintName = $"{user.FirstName} {user.LastName}",
                 PatientEmail = model.PatientEmail,
+                PatientImage = user.ProfileImg,
                 LabEmail = lab.User.Email,
                 date = model.Date,
                 Time = model.Time,
@@ -300,6 +305,7 @@ namespace HeartDiseasePrediction.Controllers
             appointment.Time = model.Time;
             appointment.PatientSSN = patientSSN;
             appointment.PateintName = model.PateintName;
+            appointment.PatientImage = model.PatientImage;
             appointment.PatientEmail = patientEmail;
             appointment.PhoneNumber = user.PhoneNumber;
             appointment.IsAccepted = false;
@@ -328,6 +334,7 @@ namespace HeartDiseasePrediction.Controllers
             appointment.LabId = appointment.LabId;
             appointment.PatientSSN = appointment.PatientSSN;
             appointment.PateintName = appointment.PateintName;
+            appointment.PatientImage = appointment.PatientImage;
             appointment.IsAccepted = true;
             appointment.PatientID = appointment.PatientID;
 
@@ -342,6 +349,7 @@ namespace HeartDiseasePrediction.Controllers
                 LabEmail = labEmail,
                 PateintName = appointment.PateintName,
                 PatientSSN = appointment.PatientSSN,
+                PatientImage = appointment.PatientImage,
                 LabId = appointment.LabId,
                 PhoneNumber = appointment.PhoneNumber,
                 IsAccepted = true,
@@ -381,6 +389,7 @@ namespace HeartDiseasePrediction.Controllers
                 LabEmail = labEmail,
                 PateintName = appointment.PateintName,
                 PatientSSN = appointment.PatientSSN,
+                PatientImage = appointment.PatientImage,
                 LabId = appointment.LabId,
                 PhoneNumber = appointment.PhoneNumber,
                 IsAccepted = false,
@@ -418,6 +427,7 @@ namespace HeartDiseasePrediction.Controllers
                 LabEmail = appointment.LabEmail,
                 PateintName = appointment.PateintName,
                 PatientSSN = appointment.PatientSSN,
+                PatientImage = appointment.PatientImage,
                 LabId = appointment.LabId,
                 PhoneNumber = appointment.PhoneNumber,
                 IsAccepted = false,

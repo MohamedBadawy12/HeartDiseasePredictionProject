@@ -89,8 +89,11 @@ namespace HeartDiseasePrediction.Controllers
                     Name = lab.Name,
                     Email = lab.User.Email,
                     PhoneNumber = lab.User.PhoneNumber,
-                    Location = lab.Location,
-                    Price = lab.Price,
+                    Location = lab.User.Location,
+                    Price = lab.User.Price,
+                    Zone = lab.User.Zone,
+                    StartTime = lab.User.StartTime,
+                    EndTime = lab.User.EndTime,
                     ProfileImg = lab.LabImage,
                 };
                 return View(labVM);
@@ -117,8 +120,11 @@ namespace HeartDiseasePrediction.Controllers
                     Name = lab.Name,
                     Email = lab.User.Email,
                     PhoneNumber = lab.User.PhoneNumber,
-                    Location = lab.Location,
-                    Price = lab.Price,
+                    Location = lab.User.Location,
+                    Price = lab.User.Price,
+                    Zone = lab.User.Zone,
+                    StartTime = lab.User.StartTime,
+                    EndTime = lab.User.EndTime,
                     ProfileImg = lab.LabImage,
                 };
                 return View(labVM);
@@ -153,12 +159,18 @@ namespace HeartDiseasePrediction.Controllers
                 lab.User.Name = model.Name;
                 lab.User.PhoneNumber = model.PhoneNumber;
                 lab.User.Location = model.Location;
+                lab.User.Zone = model.Zone;
+                lab.User.StartTime = model.StartTime;
+                lab.User.EndTime = model.EndTime;
                 lab.User.Price = model.Price;
                 lab.User.Email = model.Email;
                 lab.User.ProfileImg = model.ProfileImg;
                 lab.Name = model.Name;
                 lab.PhoneNumber = model.PhoneNumber;
                 lab.Location = model.Location;
+                lab.Zone = model.Zone;
+                lab.StartTime = model.StartTime;
+                lab.EndTime = model.EndTime;
                 lab.Price = model.Price;
                 lab.LabImage = model.ProfileImg;
 

@@ -56,14 +56,21 @@
                             <input asp-for="@Model.Email" type="text" class="form-control" id="Email">
                             <span asp-validation-for="@Model.Email" class="text-danger"></span>
                         </div>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-8">
                             <label asp-for="@Model.Location">Location</label>
                             <input asp-for="@Model.Location" type="text" class="form-control" id="Location" placeholder="Enter Location">
                             <span asp-validation-for="@Model.Location" class="text-danger"></span>
                         </div>
+                    </div>
+                    <div class="form-row ">
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.Zone">Zone</label>
+                            <input asp-for="@Model.Zone" type="text" class="form-control" id="Zone" placeholder="Enter Zone">
+                            <span asp-validation-for="@Model.Zone" class="text-danger"></span>
+                        </div>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.Price">Price</label>
-                            <input asp-for="@Model.Price" type="number" class="form-control" id="Price" placeholder="Enter Price">
+                            <input asp-for="@Model.Price" type="text" class="form-control" id="Price" placeholder="Enter Price">
                             <span asp-validation-for="@Model.Price" class="text-danger"></span>
                         </div>
                     </div>

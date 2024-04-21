@@ -47,6 +47,7 @@ namespace HearPrediction.Api.Controllers
                 BirthDate = doctor.User.BirthDate,
                 Name = doctor.User.Name,
                 Location = doctor.User.Location,
+                Zone = doctor.User.Zone,
                 Price = doctor.User.Price,
                 Email = doctor.User.Email,
                 Gender = doctor.User.Gender,
@@ -101,7 +102,11 @@ namespace HearPrediction.Api.Controllers
             doctor.User.LastName = model.LastName;
             doctor.User.BirthDate = model.BirthDate;
             doctor.User.Gender = model.Gender;
+            doctor.User.Zone = model.Zone;
             doctor.User.ProfileImg = model.ProfileImg;
+            doctor.Zone = model.Zone;
+            doctor.Location = model.Location;
+            doctor.Price = model.Price;
 
             await _unitOfWork.Complete();
             return Ok(doctor);

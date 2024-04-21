@@ -50,6 +50,7 @@ namespace HearPrediction.Api.DTO
         public string LabPhoneNumber { get; set; }
         public string PateintName { get; set; }
         public string PatientEmail { get; set; }
+        public string PatinetImage { get; set; }
         public string LabEmail { get; set; }
         public string PatientID { get; set; }
         public long PatientSSN { get; set; }

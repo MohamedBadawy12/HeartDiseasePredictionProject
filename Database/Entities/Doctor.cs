@@ -11,6 +11,8 @@ namespace Database.Entities
         public int Id { get; set; }
         [Display(Name = "Location")]
         public string? Location { get; set; }
+        [Display(Name = "Zone")]
+        public string? Zone { get; set; }
         [Display(Name = "Name")]
         public string? Name { get; set; }
         [Display(Name = "Price")]

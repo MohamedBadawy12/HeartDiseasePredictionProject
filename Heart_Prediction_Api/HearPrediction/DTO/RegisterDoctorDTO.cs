@@ -14,8 +14,10 @@ namespace HearPrediction.Api.DTO
         [Display(Name = "Last Name"), StringLength(100)]
         [Required(ErrorMessage = "Last Name Is Required")]
         public string LastName { get; set; }
-        [Display(Name = "Location"), StringLength(100)]
+        [Display(Name = "Location"), StringLength(200)]
         public string? Location { get; set; }
+        [Display(Name = "Zone"), StringLength(100)]
+        public string? Zone { get; set; }
         [Display(Name = "Name"), StringLength(150)]
         public string? Name { get; set; }
         [Display(Name = "Price")]

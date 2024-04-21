@@ -541,6 +541,7 @@ namespace HeartDiseasePrediction.Controllers
                     PhoneNumber = user.PhoneNumber,
                     Name = user.Name,
                     Location = user.Location,
+
                     Price = user.Price,
                 };
                 return View(model);

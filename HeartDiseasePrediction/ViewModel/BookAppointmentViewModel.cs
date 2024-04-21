@@ -20,8 +20,10 @@ namespace HeartDiseasePrediction.ViewModel
         [Required(ErrorMessage = "Phone Number Is Required")]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
-        [Display(Name = "Location"), StringLength(100)]
+        [Display(Name = "Location"), StringLength(200)]
         public string? Location { get; set; }
+        [Display(Name = "Zone"), StringLength(100)]
+        public string? Zone { get; set; }
         [Display(Name = "Name"), StringLength(150)]
         public string? Name { get; set; }
         [Display(Name = "Price")]

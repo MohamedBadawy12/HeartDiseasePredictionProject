@@ -17,6 +17,7 @@ namespace Database.Entities
         public string PatientEmail { get; set; }
         public string PhoneNumber { get; set; }
         public string PatientID { get; set; }
+        public string PatientImage { get; set; }
         public bool IsAccepted { get; set; }
         [ForeignKey(nameof(PatientID))]
         public ApplicationUser Patientt { get; set; }

@@ -163,6 +163,7 @@ namespace Services
                 BirthDate = registerDoctorDTO.BirthDate,
                 PhoneNumber = registerDoctorDTO.PhoneNumber,
                 Location = registerDoctorDTO.Location,
+                Zone = registerDoctorDTO.Zone,
                 Name = registerDoctorDTO.Name,
                 Price = registerDoctorDTO.Price,
                 ProfileImg = registerDoctorDTO.ProfileImg,
@@ -179,6 +180,7 @@ namespace Services
                     Location = registerDoctorDTO.Location,
                     Name = registerDoctorDTO.Name,
                     Price = registerDoctorDTO.Price,
+                    Zone = registerDoctorDTO.Zone,
                 };
 
                 await _unitOfWork.Doctors.Add(doctor);
@@ -228,6 +230,9 @@ namespace Services
                 Name = registerLabtDTO.Name,
                 Price = registerLabtDTO.Price,
                 Location = registerLabtDTO.Location,
+                Zone = registerLabtDTO.Zone,
+                StartTime = registerLabtDTO.StartTime,
+                EndTime = registerLabtDTO.EndTime,
                 PhoneNumber = registerLabtDTO.PhoneNumber,
                 ProfileImg = registerLabtDTO.ProfileImg,
                 //TwoFactorEnabled = true,
@@ -242,6 +247,9 @@ namespace Services
                     Name = registerLabtDTO.Name,
                     Price = registerLabtDTO.Price,
                     Location = registerLabtDTO.Location,
+                    Zone = registerLabtDTO.Zone,
+                    StartTime = registerLabtDTO.StartTime,
+                    EndTime = registerLabtDTO.EndTime,
                     PhoneNumber = registerLabtDTO.PhoneNumber,
                     LabImage = registerLabtDTO.ProfileImg,
                 };
