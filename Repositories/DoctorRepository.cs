@@ -14,15 +14,15 @@ namespace Repositories
         }
         public async Task Add(Doctor doctor) => await _context.Doctors.AddAsync(doctor);
 
-        public async Task<IEnumerable<Doctor>> FilterDoctors(string search, string location)
+        public async Task<IEnumerable<Doctor>> FilterDoctors(string search, string zone)
         {
             var doctors = await GetDoctors();
-            if (!string.IsNullOrEmpty(search) || !string.IsNullOrEmpty(location))
+            if (!string.IsNullOrEmpty(search) || !string.IsNullOrEmpty(zone))
             {
                 doctors = await _context.Doctors.
                 Where(x => x.Name.Contains(search) || x.User.FirstName.Contains(search)
-                || x.User.LastName.Contains(search) || x.User.Location.Contains(location) || x.User.Location.Contains(search)
-                || x.Location.Contains(location) || x.Location.Contains(search)).ToListAsync();
+                || x.User.LastName.Contains(search) || x.User.Zone.Contains(zone)
+                || x.Zone.Contains(zone)).ToListAsync();
             }
             return doctors;
         }

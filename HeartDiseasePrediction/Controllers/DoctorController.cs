@@ -3,6 +3,7 @@ using HeartDiseasePrediction.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NToastNotify;
 using Repositories;
 using Repositories.Interfaces;
@@ -63,6 +64,8 @@ namespace HeartDiseasePrediction.Controllers
         public async Task<IActionResult> DoctorsList(int currentPage = 1)
         {
             var doctors = await _unitOfWork.Doctors.GetDoctors();
+            var ZoneDropDownList = await _unitOfWork.labs.GetLabZoneDropDownsValues();
+            ViewBag.Zone = new SelectList(ZoneDropDownList.Zones, "Id", "Zone");
             int totalRecords = doctors.Count();
             int pageSize = 5;
             int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
@@ -75,9 +78,11 @@ namespace HeartDiseasePrediction.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> DoctorsList(string search, string location, int currentPage = 1)
+        public async Task<IActionResult> DoctorsList(string search, string zone, int currentPage = 1)
         {
-            var doctors = await _unitOfWork.Doctors.FilterDoctors(search, location);
+            var ZoneDropDownList = await _unitOfWork.labs.GetLabZoneDropDownsValues();
+            ViewBag.Zone = new SelectList(ZoneDropDownList.Zones, "Id", "Zone");
+            var doctors = await _unitOfWork.Doctors.FilterDoctors(search, zone);
             int totalRecords = doctors.Count();
             int pageSize = 5;
             int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);

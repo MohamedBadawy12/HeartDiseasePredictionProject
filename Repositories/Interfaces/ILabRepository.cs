@@ -1,5 +1,6 @@
 ﻿using Database.Entities;
 using HeartDiseasePrediction.ViewModel;
+using Repositories.DropDownViewModel;
 
 namespace Repositories.Interfaces
 {
@@ -10,6 +11,7 @@ namespace Repositories.Interfaces
         Task<IEnumerable<Lab>> SearchForLab(string name, string location);
         Lab Get_Lab(int id);
         Task<NewLabDropDownViewMode> GetLabDropDownsValues();
+        Task<ZoneDropDownViewMode> GetLabZoneDropDownsValues();
         Task AddAsync(Lab lab);
         void Delete(Lab lab);
         bool DeleteLab(int id);

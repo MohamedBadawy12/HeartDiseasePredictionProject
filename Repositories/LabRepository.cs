@@ -1,6 +1,7 @@
 ﻿using Database.Entities;
 using HeartDiseasePrediction.ViewModel;
 using Microsoft.EntityFrameworkCore;
+using Repositories.DropDownViewModel;
 using Repositories.Interfaces;
 
 namespace Repositories
@@ -33,6 +34,15 @@ namespace Repositories
             return data;
         }
 
+        public async Task<ZoneDropDownViewMode> GetLabZoneDropDownsValues()
+        {
+            var data = new ZoneDropDownViewMode()
+            {
+                Zones = await _context.Users.Where(x => x.Zone != null).OrderBy(a => a.Zone).Distinct().ToListAsync(),
+            };
+            return data;
+        }
+
         public Lab Get_Lab(int id) => _context.Labs
             .Include(d => d.User)
             .FirstOrDefault(l => l.Id == id);
@@ -57,13 +67,14 @@ namespace Repositories
             return isDeleted;
         }
 
-        public async Task<IEnumerable<Lab>> SearchForLab(string name, string location)
+        public async Task<IEnumerable<Lab>> SearchForLab(string name, string zone)
         {
             var labs = await GetLabs();
-            if (!string.IsNullOrEmpty(name) || !string.IsNullOrEmpty(location))
+            if (!string.IsNullOrEmpty(name) || !string.IsNullOrEmpty(zone))
             {
                 labs = await _context.Labs.
-                Where(x => x.Name.Contains(name) || x.Location.Contains(location)).ToListAsync();
+                Where(x => x.User.Name.Contains(name) || x.Name.Contains(name) ||
+                x.Zone.Contains(zone) || x.User.Zone.Contains(zone)).ToListAsync();
             }
             return labs;
         }

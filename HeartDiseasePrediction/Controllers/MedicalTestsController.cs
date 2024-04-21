@@ -101,7 +101,7 @@ namespace HeartDiseasePrediction.Controllers
         [Authorize(Roles = "MedicalAnalyst")]
         public async Task<IActionResult> GetPatientMedicalTests(int id, int currentPage = 1)
         {
-            var appointment = await _unitOfWork.labAppointment.GetAppointment(id);
+            var appointment = await _unitOfWork.labAppointment.GetAcceptAppointment(id);
             if (appointment == null)
                 return View("NotFound");
             string labEmail = User.FindFirstValue(ClaimTypes.Email);
@@ -122,7 +122,7 @@ namespace HeartDiseasePrediction.Controllers
         [HttpPost]
         public async Task<IActionResult> GetPatientMedicalTests(int id, DateTime? date, int currentPage = 1)
         {
-            var appointment = await _unitOfWork.labAppointment.GetAppointment(id);
+            var appointment = await _unitOfWork.labAppointment.GetAcceptAppointment(id);
             if (appointment == null)
                 return View("NotFound");
             string labEmail = User.FindFirstValue(ClaimTypes.Email);
