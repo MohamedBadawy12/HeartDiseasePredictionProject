@@ -19,7 +19,7 @@
                     <div class="card card-body col-md-10 offset-0">
                         <div class="mb-4" style="text-align:center;">
                             <h2><strong>Sign In</strong></h2>
-                            <img src="~/images/istockphoto-1223671392-612x612-1.jpg" style="padding-top:3px;" alt="Admin" class="rounded-circle" width="150">
+                            <img src="~/images/avatar2.png" style="padding-top:3px;" alt="Admin" class="rounded-circle" width="150">
                         </div>
                         <form asp-action="Login">
                             @Html.AntiForgeryToken()
@@ -39,7 +39,6 @@
                                     <span class="caption">Remember me</span>
                                     <input type="checkbox" checked="checked" />
                                     <div class="control__indicator"></div>
-                                    @*<span class="ml-auto"><a asp-controller="Account" asp-action="RegisterOfUser" class="forgot-pass">Sign Up</a></span>*@
                                 </label>
                                 <span class="ml-auto"><a asp-controller="Account" asp-action="ForgotPassword" class="forgot-pass">Forgot Password</a></span>
                             </div>

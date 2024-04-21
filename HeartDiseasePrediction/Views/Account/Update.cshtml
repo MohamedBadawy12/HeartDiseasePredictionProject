@@ -102,7 +102,7 @@
                     <option value="NoSelected ">--Please Select Gender-- </option>
                 </select>
             </div>
-            <button id="update-profile-button" type="submit" class="btn btn-primary" style="margin:10px 0px">Save image</button>
+            <button id="update-profile-button" type="submit" class="btn btn-primary" style="margin:10px 110px">Save image</button>
         </form>
        
     </div>
@@ -151,12 +151,12 @@
             <div class="form-group mb-3">
 
                 @if(!User.IsInRole("MedicalAnalyst")){
+                     <span class="input-group-addon date_icon">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                     </span>
                     <label asp-for="@Model.BirthDate"></label>
                     <div class="input-group date" id="inputDate" data-date-format="mm-dd-yyyy">
                         <input asp-for="@Model.BirthDate" type="text" class="form-control">
-                        <span class="input-group-addon date_icon">
-                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                        </span>
                     </div>
                     <span asp-validation-for="@Model.BirthDate" class="text-danger"></span>
                     <div class="form-group mb-3">

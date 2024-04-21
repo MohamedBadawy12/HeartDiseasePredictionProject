@@ -277,9 +277,9 @@
                                     <li class="sidebar-item">
                                         <a asp-controller="Account" asp-action="RegisterOfDoctor" class="sidebar-link"><i class="fa fa-user-md"></i> Doctor</a>
                                     </li>
-                                    <li class="sidebar-item">
+                                @*    <li class="sidebar-item">
                                         <a asp-controller="Account" asp-action="RegisterOfMedicalAnalyst" class="sidebar-link"><i class="fa fa-user"></i> Medical Analyst</a>
-                                    </li>
+                                    </li>*@
                                     <li class="sidebar-item">
                                         <a asp-controller="Account" asp-action="RegisterOfReciptionist" class="sidebar-link"><i class="fa fa-user"></i> Reciptionist</a>
                                     </li>
@@ -296,9 +296,9 @@
                                     <li class="sidebar-item">
                                         <a asp-controller="Doctor" asp-action="Index" class="sidebar-link"><i class="fa fa-address-book-o"></i> Doctor</a>
                                     </li>
-                                    <li class="sidebar-item">
+                                   @* <li class="sidebar-item">
                                         <a asp-controller="MedicalAnalyst" asp-action="Index" class="sidebar-link"><i class="fa fa-address-book"></i>Medical Analyst</a>
-                                    </li>
+                                    </li>*@
                                     <li class="sidebar-item">
                                         <a asp-controller="Reciptionist" asp-action="Index" class="sidebar-link"><i class="fa fa-address-book"></i> Reciptionist</a>
                                     </li>
@@ -317,10 +317,10 @@
                         </a>
                         <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a asp-controller="Lab" asp-action="Index" class="sidebar-link"><i class="lni lni-menu"></i> Labs</a>
+                                <a asp-controller="Lab" asp-action="Index" class="sidebar-link">@*<i class="lni lni-menu"></i> *@Labs</a>
                             </li>
                             <li class="sidebar-item">
-                                <a asp-controller="Account" asp-action="RegisterOfLab" class="sidebar-link"><i class="lni lni-clipboard"></i> Add Labs</a>
+                                <a asp-controller="Account" asp-action="RegisterOfLab" class="sidebar-link">@*<i class="lni lni-clipboard"></i>*@ Add Labs</a>
                             </li>
                         </ul>
                     </li>
