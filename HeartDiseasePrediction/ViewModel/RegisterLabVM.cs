@@ -32,7 +32,7 @@ namespace HeartDiseasePrediction.ViewModel
         public string PhoneNumber { get; set; }
         [Display(Name = "Email"), StringLength(200)]
         [Required(ErrorMessage = "Email Is Required")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Email is already Exist")]
         public string Email { get; set; }
         [Display(Name = "Profile Image")]
         public string? ProfileImg { get; set; }

@@ -206,7 +206,7 @@
 
 <div class="container" style="margin:20px">
     <div class="row">
-        <div class="col-lg-11 mx-auto">
+        <div class="col-lg-12 mx-auto">
             <div class="career-search mb-60">
                 <form asp-action="DoctorsList" method="post" class="career-form mb-60 ">
                     <div class="row justify-content-between">
@@ -271,7 +271,18 @@
                                             }
                                         </div>
                                         <div class="job-content">
-                                            <h5 class="text-center text-md-left">@item.Name</h5>
+                                            <h5 class="text-center text-md-left">@item.Name
+                                              @*  @{
+                                                    if (item.IsAvailable == true)
+                                                    {
+                                                        <li class="mr-md-4 badge text-white" href="#" style="padding: 10px; background-color:green " readonly><i class="zmdi zmdi-time mr-2"></i> <strong>Avaliable</strong></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="mr-md-4 badge text-white" href="#" style="padding: 10px; background-color:greenyellow" readonly><i class="zmdi zmdi-time mr-2"></i> <strong>Pending</strong></li>
+                                                    }
+                                                }*@
+                                            </h5>
                                             <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
                                                 <li class="mr-md-4">
                                                     <i class="fa fa-user-md"></i> Cardiologist

@@ -22,6 +22,10 @@ namespace HearPrediction.Api.DTO
         [Required]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+        [Display(Name = "Zone")]
+        public string Zone { get; set; }
+        [Display(Name = "About")]
+        public string About { get; set; }
         [Required]
         [Display(Name = "Birth Date")]
         public DateTime BirthDate { get; set; }

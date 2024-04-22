@@ -173,6 +173,8 @@ namespace HearPrediction.Api.Controllers
                     PhoneNumber = user.PhoneNumber,
                     Name = user.Name,
                     Location = user.Location,
+                    Zone = user.Zone,
+                    About = user.About,
                     Price = user.Price,
                 };
                 return Ok(model);
@@ -195,17 +197,17 @@ namespace HearPrediction.Api.Controllers
                 return BadRequest("Register Or Login Please");
             var user = await _userManager.FindByNameAsync(userName);
 
-            //var path = model.ProfileImg;
-            //if (model.ImageFile?.Length > 0)
-            //{
-            //    _fileRepository.DeleteImage(path);
-            //    path = await _fileRepository.UploadAsync(model.ImageFile, "/Uploads/");
-            //    if (path == "An Problem occured when creating file")
-            //    {
-            //        return BadRequest();
-            //    }
-            //}
-            //model.ProfileImg = path;
+            var path = model.ProfileImg;
+            if (model.ImageFile?.Length > 0)
+            {
+                _fileRepository.DeleteImage(path);
+                path = await _fileRepository.UploadAsync(model.ImageFile, "/Uploads/");
+                if (path == "An Problem occured when creating file")
+                {
+                    return BadRequest();
+                }
+            }
+            model.ProfileImg = path;
             if (user != null)
             {
                 user.Email = model.Email;
@@ -216,6 +218,9 @@ namespace HearPrediction.Api.Controllers
                 user.ProfileImg = model.ProfileImg;
                 user.Name = model.Name;
                 user.Location = model.Location;
+                user.Zone = model.Zone;
+                user.About = model.About;
+                user.Price = model.Price;
                 user.Name = model.Name;
 
                 var result = await _userManager.UpdateAsync(user);
