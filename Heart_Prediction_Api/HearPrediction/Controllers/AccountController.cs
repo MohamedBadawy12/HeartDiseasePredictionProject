@@ -118,7 +118,7 @@ namespace HearPrediction.Api.Controllers
         //Register of Lab
         [HttpPost("AddLab")]
         [AllowAnonymous]
-        public async Task<IActionResult> AddLabAsync([FromBody] RegisterLabtDTO model)
+        public async Task<IActionResult> AddLabAsync([FromQuery] RegisterLabtDTO model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -195,17 +195,17 @@ namespace HearPrediction.Api.Controllers
                 return BadRequest("Register Or Login Please");
             var user = await _userManager.FindByNameAsync(userName);
 
-            var path = model.ProfileImg;
-            if (model.ImageFile?.Length > 0)
-            {
-                _fileRepository.DeleteImage(path);
-                path = await _fileRepository.UploadAsync(model.ImageFile, "/Uploads/");
-                if (path == "An Problem occured when creating file")
-                {
-                    return BadRequest();
-                }
-            }
-            model.ProfileImg = path;
+            //var path = model.ProfileImg;
+            //if (model.ImageFile?.Length > 0)
+            //{
+            //    _fileRepository.DeleteImage(path);
+            //    path = await _fileRepository.UploadAsync(model.ImageFile, "/Uploads/");
+            //    if (path == "An Problem occured when creating file")
+            //    {
+            //        return BadRequest();
+            //    }
+            //}
+            //model.ProfileImg = path;
             if (user != null)
             {
                 user.Email = model.Email;

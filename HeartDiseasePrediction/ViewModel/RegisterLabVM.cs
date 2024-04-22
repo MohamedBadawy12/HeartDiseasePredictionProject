@@ -22,6 +22,8 @@ namespace HeartDiseasePrediction.ViewModel
         [Required(ErrorMessage = "End Time Is Required")]
         [Display(Name = "End Time")]
         public string EndTime { get; set; }
+        [Display(Name = "About")]
+        public string? About { get; set; }
         [Required(ErrorMessage = "Price Is Required")]
         [Display(Name = "Price")]
         public string Price { get; set; }

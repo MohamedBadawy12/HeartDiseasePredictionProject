@@ -75,6 +75,7 @@ namespace Repositories
                     SystolicBloodPressure = a.SystolicBloodPressure,
                     Prevalenthypertension = a.Prevalenthypertension,
                     PrevalentStroke = a.PrevalentStroke,
+                    HeartRate = a.HeartRate,
                     PatientEmail = a.PatientEmail,
                     PatientName = a.PatientName,
                     PatientSSN = a.PatientSSN,
@@ -82,8 +83,8 @@ namespace Repositories
                     MedicalAnalystName = a.MedicalAnalystName,
                     LabEmail = a.LabEmail,
                     LabId = a.LabId,
-                    Prediction = a.Prediction,
-                    Probability = a.Probability,
+                    //Prediction = a.Prediction,
+                    //Probability = a.Probability,
 
                     Patient = userRole == "MedicalAnalyst" ? new Patient
                     {
@@ -170,6 +171,7 @@ namespace Repositories
                     SystolicBloodPressure = a.SystolicBloodPressure,
                     Prevalenthypertension = a.Prevalenthypertension,
                     PrevalentStroke = a.PrevalentStroke,
+                    HeartRate = a.HeartRate,
                     Date = a.Date,
                     PatientEmail = a.PatientEmail,
                     PatientName = a.PatientName,
@@ -177,8 +179,8 @@ namespace Repositories
                     MedicalAnalystName = a.MedicalAnalystName,
                     LabEmail = a.LabEmail,
                     LabId = a.LabId,
-                    Prediction = a.Prediction,
-                    Probability = a.Probability,
+                    //Prediction = a.Prediction,
+                    //Probability = a.Probability,
 
                     Labb = userRole == "User" ? new ApplicationUser
                     {

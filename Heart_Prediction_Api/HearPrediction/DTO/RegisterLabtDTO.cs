@@ -19,6 +19,8 @@ namespace HearPrediction.Api.DTO
         [Required(ErrorMessage = "Price Is Required")]
         [Display(Name = "Price")]
         public string Price { get; set; }
+        [Display(Name = "About")]
+        public string? About { get; set; }
         [Required(ErrorMessage = "Start Time Is Required")]
         [Display(Name = "Start Time")]
         public string? StartTime { get; set; }

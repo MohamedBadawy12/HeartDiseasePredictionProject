@@ -51,6 +51,7 @@ namespace HearPrediction.Api.Controllers
                 Price = doctor.User.Price,
                 Email = doctor.User.Email,
                 Gender = doctor.User.Gender,
+                About = doctor.User.About,
                 PhoneNumber = doctor.User.PhoneNumber,
                 ProfileImg = doctor.User.ProfileImg,
             };
@@ -101,6 +102,7 @@ namespace HearPrediction.Api.Controllers
             doctor.User.FirstName = model.FirstName;
             doctor.User.LastName = model.LastName;
             doctor.User.BirthDate = model.BirthDate;
+            doctor.User.About = model.About;
             doctor.User.Gender = model.Gender;
             doctor.User.Zone = model.Zone;
             doctor.User.ProfileImg = model.ProfileImg;

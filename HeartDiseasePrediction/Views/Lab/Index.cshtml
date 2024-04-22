@@ -10,10 +10,10 @@
 		box-shadow: 0px 4px 8px 0px #7986CB;
 	}
 </style>
-<section class="card card-body bg-light " style="margin:20px 70px">
+<section class="card card-body bg-light " style="margin:20px 10px">
 	<div class="container mt-4">
 		<div class="row">
-			<div class="col-md-12 offset-md-0">
+			<div class="col-md-14 offset-md-0">
 				<div class="main-body">
 					<nav aria-label="breadcrumb" class="main-breadcrumb ">
 						<ol class="breadcrumb">
@@ -24,22 +24,7 @@
 					</nav>
 				</div>
 				@*<div id="PlaceHolderHere"></div>*@
-				<div class="form-inline justify-content-between my-2 my-lg-0 d-flex">
-					<a asp-controller="Account" asp-action="RegisterOfLab" class="btn btn-success">
-						<i class="fa fa-plus-circle"></i> Add New
-					</a>
-					@*<button type="button" class="btn btn-success" data-toggle= "ajax-modal" data-target="#addLab"
-							data-url="@Url.Action("Create")">
-						<i class="fa fa-plus-circle"></i> Add New
-					</button>*@
-					<div>
-						@using (Html.BeginForm("Index", "Lab", FormMethod.Post))
-						{
-							@Html.TextBox("search",null,new{@class="form-control",placeholder="Search here...",style="margin:5px 0px 5px 5px"})
-							<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
-						}
-					</div>
-				</div>
+				
 				@if (!Model.Any())
 				{
 					<div class="alert alert-warning" role="alert">
@@ -48,15 +33,31 @@
 				}
 				else
 				{
+					<div class="form-inline justify-content-between my-2 my-lg-0 d-flex">
+						<a asp-controller="Account" asp-action="RegisterOfLab" class="btn btn-success">
+							<i class="fa fa-plus-circle"></i> Add New
+						</a>
+						@*<button type="button" class="btn btn-success" data-toggle= "ajax-modal" data-target="#addLab"
+						data-url="@Url.Action("Create")">
+						<i class="fa fa-plus-circle"></i> Add New
+						</button>*@
+						<div>
+							@using (Html.BeginForm("Index", "Lab", FormMethod.Post))
+							{
+								@Html.TextBox("search",null,new{@class="form-control",placeholder="Search here...",style="margin:5px 0px 5px 5px"})
+								<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
+							}
+						</div>
+					</div>
 					<table class="table table-hover table-responsive table-striped">
 						<thead>
 							<tr class="text-center bg-dark text-light">
 								<th>Id</th>
 								<th>Image</th>
 								<th>Name</th>
-								<th>Phone Number</th>
+								<th>Phone</th>
 								<th>Location</th>
-								<th>Price</th>
+								@*<th>Price</th>*@
 								<th></th>
 							</tr>
 						</thead>
@@ -86,9 +87,9 @@
 									<td class="align-middle text-center">
 										@item.Location
 									</td>
-									<td class="align-middle text-center">
+									@*<td class="align-middle text-center">
 										@item.Price EGP
-									</td>
+									</td>*@
 									<td class="align-middle text-center">
 										<a class="btn btn-outline-primary" asp-controller="Lab" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-square"></i> Edit</a> |
 										<a class="btn btn-outline-info" asp-controller="Lab" asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-eye"></i> Details</a> |

@@ -142,16 +142,19 @@ namespace Services
             if (await _userManager.FindByEmailAsync(registerDoctorDTO.Email) is not null)
                 return new AuthModel { Message = "Email is already exist" };
 
-            var path = "";
-            if (registerDoctorDTO.ImageFile?.Length > 0)
+            if (registerDoctorDTO.ProfileImg == null)
             {
-                path = await _fileRepository.UploadAsync(registerDoctorDTO.ImageFile, "/Upload/");
-                if (path == "An Problem occured when creating file")
+                var path = "";
+                if (registerDoctorDTO.ImageFile?.Length > 0)
                 {
-                    return new AuthModel { Message = "An Problem occured when creating file" };
+                    path = await _fileRepository.UploadAsync(registerDoctorDTO.ImageFile, "/Upload/");
+                    if (path == "An Problem occured when creating file")
+                    {
+                        return new AuthModel { Message = "An Problem occured when creating file" };
+                    }
                 }
+                registerDoctorDTO.ProfileImg = path;
             }
-            registerDoctorDTO.ProfileImg = path;
 
             var user = new ApplicationUser
             {
@@ -166,6 +169,7 @@ namespace Services
                 Zone = registerDoctorDTO.Zone,
                 Name = registerDoctorDTO.Name,
                 Price = registerDoctorDTO.Price,
+                About = registerDoctorDTO.About,
                 ProfileImg = registerDoctorDTO.ProfileImg,
                 //TwoFactorEnabled = true,
             };
@@ -212,16 +216,19 @@ namespace Services
             if (await _userManager.FindByEmailAsync(registerLabtDTO.Email) is not null)
                 return new AuthModel { Message = "Email is already exist" };
 
-            var path = "";
-            if (registerLabtDTO.ImageFile?.Length > 0)
+            if (registerLabtDTO.ProfileImg == null)
             {
-                path = await _fileRepository.UploadAsync(registerLabtDTO.ImageFile, "/Upload/");
-                if (path == "An Problem occured when creating file")
+                var path = "";
+                if (registerLabtDTO.ImageFile?.Length > 0)
                 {
-                    return new AuthModel { Message = "An Problem occured when creating file" };
+                    path = await _fileRepository.UploadAsync(registerLabtDTO.ImageFile, "/Upload/");
+                    if (path == "An Problem occured when creating file")
+                    {
+                        return new AuthModel { Message = "An Problem occured when creating file" };
+                    }
                 }
+                registerLabtDTO.ProfileImg = path;
             }
-            registerLabtDTO.ProfileImg = path;
 
             var user = new ApplicationUser
             {
@@ -234,6 +241,7 @@ namespace Services
                 StartTime = registerLabtDTO.StartTime,
                 EndTime = registerLabtDTO.EndTime,
                 PhoneNumber = registerLabtDTO.PhoneNumber,
+                About = registerLabtDTO.About,
                 ProfileImg = registerLabtDTO.ProfileImg,
                 //TwoFactorEnabled = true,
             };
@@ -284,16 +292,20 @@ namespace Services
             if (await _userManager.FindByEmailAsync(registerMedicalAnalystDTO.Email) is not null)
                 return new AuthModel { Message = "Email is already exist" };
 
-            var path = "";
-            if (registerMedicalAnalystDTO.ImageFile?.Length > 0)
+            if (registerMedicalAnalystDTO.ProfileImg == null)
             {
-                path = await _fileRepository.UploadAsync(registerMedicalAnalystDTO.ImageFile, "/Upload/");
-                if (path == "An Problem occured when creating file")
+
+                var path = "";
+                if (registerMedicalAnalystDTO.ImageFile?.Length > 0)
                 {
-                    return new AuthModel { Message = "An Problem occured when creating file" };
+                    path = await _fileRepository.UploadAsync(registerMedicalAnalystDTO.ImageFile, "/Upload/");
+                    if (path == "An Problem occured when creating file")
+                    {
+                        return new AuthModel { Message = "An Problem occured when creating file" };
+                    }
                 }
+                registerMedicalAnalystDTO.ProfileImg = path;
             }
-            registerMedicalAnalystDTO.ProfileImg = path;
 
             var user = new ApplicationUser
             {
@@ -346,16 +358,19 @@ namespace Services
             if (await _userManager.FindByEmailAsync(registerReciptionistDTO.Email) is not null)
                 return new AuthModel { Message = "Email is already exist" };
 
-            var path = "";
-            if (registerReciptionistDTO.ImageFile?.Length > 0)
+            if (registerReciptionistDTO.ProfileImg == null)
             {
-                path = await _fileRepository.UploadAsync(registerReciptionistDTO.ImageFile, "/Upload/");
-                if (path == "An Problem occured when creating file")
+                var path = "";
+                if (registerReciptionistDTO.ImageFile?.Length > 0)
                 {
-                    return new AuthModel { Message = "An Problem occured when creating file" };
+                    path = await _fileRepository.UploadAsync(registerReciptionistDTO.ImageFile, "/Upload/");
+                    if (path == "An Problem occured when creating file")
+                    {
+                        return new AuthModel { Message = "An Problem occured when creating file" };
+                    }
                 }
+                registerReciptionistDTO.ProfileImg = path;
             }
-            registerReciptionistDTO.ProfileImg = path;
 
             var user = new ApplicationUser
             {
@@ -407,16 +422,19 @@ namespace Services
             if (await _userManager.FindByEmailAsync(registerUserDTO.Email) is not null)
                 return new AuthModel { Message = "Email is already exist" };
 
-            var path = "";
-            if (registerUserDTO.ImageFile?.Length > 0)
+            if (registerUserDTO.ProfileImg != null)
             {
-                path = await _fileRepository.UploadAsync(registerUserDTO.ImageFile, "/Upload/");
-                if (path == "An Problem occured when creating file")
+                var path = "";
+                if (registerUserDTO.ImageFile?.Length > 0)
                 {
-                    return new AuthModel { Message = "An Problem occured when creating file" };
+                    path = await _fileRepository.UploadAsync(registerUserDTO.ImageFile, "/Upload/");
+                    if (path == "An Problem occured when creating file")
+                    {
+                        return new AuthModel { Message = "An Problem occured when creating file" };
+                    }
                 }
+                registerUserDTO.ProfileImg = path;
             }
-            registerUserDTO.ProfileImg = path;
 
             var user = new ApplicationUser
             {

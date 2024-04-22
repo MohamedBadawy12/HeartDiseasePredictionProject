@@ -115,6 +115,7 @@ namespace HeartDiseasePrediction.Controllers
                     Location = doctor.User.Location,
                     Price = doctor.User.Price,
                     Zone = doctor.User.Zone,
+                    About = doctor.User.About,
                     //Name = doctor.Name,
                     //Location = doctor.Location,
                     //Price = doctor.Price,
@@ -155,6 +156,7 @@ namespace HeartDiseasePrediction.Controllers
                     Location = doctor.User.Location,
                     Price = doctor.User.Price,
                     Zone = doctor.User.Zone,
+                    About = doctor.User.About,
                     ProfileImg = doctor.User.ProfileImg,
                     //Name = doctor.Name,
                     //Location = doctor.Location,
@@ -197,6 +199,7 @@ namespace HeartDiseasePrediction.Controllers
                 doctor.User.BirthDate = model.BirthDate;
                 doctor.User.Name = model.Name;
                 doctor.User.Location = model.Location;
+                doctor.User.About = model.About;
                 doctor.User.Zone = model.Zone;
                 doctor.User.Price = model.Price;
                 doctor.User.Gender = model.Gender;

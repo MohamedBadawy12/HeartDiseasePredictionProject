@@ -28,6 +28,8 @@ namespace HeartDiseasePrediction.ViewModel
         [Required(ErrorMessage = "Phone Number Is Required")]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+        [Display(Name = "About")]
+        public string? About { get; set; }
         [Display(Name = "Email"), StringLength(200)]
         [Required(ErrorMessage = "Email Is Required")]
         [EmailAddress]

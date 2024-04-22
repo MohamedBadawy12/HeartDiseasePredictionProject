@@ -38,6 +38,8 @@ namespace Database.Entities
         public string? Zone { get; set; }
         [Display(Name = "Name")]
         public string? Name { get; set; }
+        [Display(Name = "About")]
+        public string? About { get; set; }
         [Display(Name = "Price")]
         public string? Price { get; set; }
         [Display(Name = "Start Time")]

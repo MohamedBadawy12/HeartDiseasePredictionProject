@@ -215,6 +215,7 @@ namespace HeartDiseasePrediction.Controllers
                 Zone = lab.User.Zone,
                 StartTime = lab.User.StartTime,
                 EndTime = lab.User.EndTime,
+                About = lab.User.About,
                 LabImage = lab.LabImage,
             };
             return View(labDetails);
@@ -360,7 +361,7 @@ namespace HeartDiseasePrediction.Controllers
 
             var message = new Message
             {
-                Messages = $"From Lab:{appointment.Lab.Name}. " +
+                Messages = $"From Lab: ({appointment.Lab.Name}). " +
                 $" Your Appointment with date ({appointment.date.ToString("dd MMMM yyyy")}) and time ({appointment.Time}) is Accepted",
                 Date = DateTime.Now,
                 PatientEmail = appointment.PatientEmail,

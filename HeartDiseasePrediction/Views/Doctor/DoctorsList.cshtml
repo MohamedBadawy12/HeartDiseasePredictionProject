@@ -7,7 +7,6 @@
 <style type="text/css">
     body {
         background: white;
-        margin-top: 20px;
     }
 
     /* ===== Career ===== */
@@ -240,63 +239,72 @@
                 </form>
          @*       <p class="mb-30 ff-montserrat">Total Doctors Avaliable : 89</p>*@
                 <div style="margin-top:10px">
-                    @foreach (var item in Model)
+                    @if (!Model.Any())
                     {
-                        <div class="filter-result">
+                        <div class="alert alert-warning" role="alert">
+                            No Doctors Found
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <div class="filter-result">
 
-                            <div class="job-box d-md-flex align-items-center justify-content-between mb-30">
-                                <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
-                                    <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-md-none d-lg-flex">
-                                        @if (item.User.ProfileImg == null)
-                                        {
-                                            if (item.User.Gender == 0)
+                                <div class="job-box d-md-flex align-items-center justify-content-between mb-30">
+                                    <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
+                                        <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-md-none d-lg-flex">
+                                            @if (item.User.ProfileImg == null)
                                             {
-                                                <img src="~/images/194915.png" height="63px" width="63px" class="rounded-circle" alt="@item.User.Name">
-                                            }
-                                            else
-                                            {
-                                                <img src="~/images/FemaleDoctor.jpg" height="63px" width="63px" class="rounded-circle" alt="@item.User.Name">
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <img src="@item.User.ProfileImg" class="rounded-circle" height="63px" width="63px">
-                                        }
-                                    </div>
-                                    <div class="job-content">
-                                        <h5 class="text-center text-md-left">@item.Name</h5>
-                                        <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
-                                            <li class="mr-md-4">
-                                                <i class="fa fa-user-md"></i> Cardiologist
-                                            </li>
-                                            <li class="mr-md-4">
-                                                <i class="zmdi zmdi-pin mr-2"></i> @item.User.Zone, @item.User.Location
-                                            </li>
-                                            <li class="mr-md-4">
-                                                <i class="fa fa-money" aria-hidden="true"></i> @item.User.Price EGP
-                                            </li>
-                                           @* <li class="mr-md-4">
-                                                <i class="zmdi zmdi-pin mr-2"></i>  @item.User.Zone
-                                            </li>*@
-                                            @{
-                                                if (item.IsAvailable == true)
+                                                if (item.User.Gender == 0)
                                                 {
-                                                    <li class="mr-md-4 badge text-white" href="#" style="padding: 10px; background-color:green " readonly><i class="zmdi zmdi-time mr-2"></i> <strong>Avaliable</strong></li>
+                                                    <img src="~/images/194915.png" height="63px" width="63px" class="rounded-circle" alt="@item.User.Name">
                                                 }
                                                 else
                                                 {
-                                                    <li class="mr-md-4 badge text-white" href="#" style="padding: 10px; background-color:greenyellow" readonly><i class="zmdi zmdi-time mr-2"></i> <strong>Pending</strong></li>
+                                                    <img src="~/images/FemaleDoctor.jpg" height="63px" width="63px" class="rounded-circle" alt="@item.User.Name">
                                                 }
                                             }
-                                        </ul>
+                                            else
+                                            {
+                                                <img src="@item.User.ProfileImg" class="rounded-circle" height="63px" width="63px">
+                                            }
+                                        </div>
+                                        <div class="job-content">
+                                            <h5 class="text-center text-md-left">@item.Name</h5>
+                                            <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+                                                <li class="mr-md-4">
+                                                    <i class="fa fa-user-md"></i> Cardiologist
+                                                </li>
+                                                <li class="mr-md-4">
+                                                    <i class="zmdi zmdi-pin mr-2"></i> @item.User.Zone, @item.User.Location
+                                                </li>
+                                                <li class="mr-md-4">
+                                                    <i class="fa fa-money" aria-hidden="true"></i> @item.User.Price EGP
+                                                </li>
+                                                @* <li class="mr-md-4">
+                                        <i class="zmdi zmdi-pin mr-2"></i>  @item.User.Zone
+                                        </li>*@
+                                                @{
+                                                    if (item.IsAvailable == true)
+                                                    {
+                                                        <li class="mr-md-4 badge text-white" href="#" style="padding: 10px; background-color:green " readonly><i class="zmdi zmdi-time mr-2"></i> <strong>Avaliable</strong></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="mr-md-4 badge text-white" href="#" style="padding: 10px; background-color:greenyellow" readonly><i class="zmdi zmdi-time mr-2"></i> <strong>Pending</strong></li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="job-right my-4 flex-shrink-0">
+                                        <a asp-controller="Appointment" asp-action="Create" asp-route-id="@item.Id" class="btn btn-outline-primary">Book Now</a>
                                     </div>
                                 </div>
-                                <div class="job-right my-4 flex-shrink-0">
-                                    <a asp-controller="Appointment" asp-action="Create" asp-route-id="@item.Id" class="btn btn-outline-primary">Book Now</a>
-                                </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    }        
                 </div>
             </div>
 

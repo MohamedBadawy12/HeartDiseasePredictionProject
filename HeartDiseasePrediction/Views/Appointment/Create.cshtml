@@ -176,7 +176,7 @@
                     <img src="@Model.ProfileImg" width="160px" class="rounded-circle" alt="@Model.Name">
                 }
             </div>
-            <div class="col-xl-6 col-lg-8">
+            <div class="col-xl-6 col-lg-10">
                 <h2 style="color:royalblue"><strong>Doctor Details</strong></h2>
                 <h2>
                     @Model.FirstName @Model.LastName
@@ -203,21 +203,25 @@
                             @Model.Gender
                         </span>
                     </div>
+                    <div style="padding-right:10px">
+                        <i class="fa fa-money" aria-hidden="true"></i> Fee:
+                        <span style="text-decoration:none; color:royalblue">
+                            @Model.Price EGP
+                        </span>
+                    </div>
                 </div>
                 <div class="align-items-center mb-6">
+                    <div style="padding-right:20px">
+                        <i class="fa fa-drivers-license-o"></i> <span>@Model.About</span>
+                    </div>
                     <div style="padding-right:15px">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
                         <span style="text-decoration:none; color:royalblue">
                             @Model.Zone @Model.Location
                         </span>
                     </div>              
-                    <div style="padding-right:15px">
-                        <i class="fa fa-usd" aria-hidden="true"></i> Fee:
-                        <span style="text-decoration:none; color:royalblue">
-                            @Model.Price EGP
-                        </span>
-                    </div>
-                    <div style="padding-right:10px">
+                  
+                    <div>
                         <i class="fa fa-calendar" aria-hidden="true" style="color:limegreen"></i>
                         @Model.BirthDate.ToString("dd MMMM yyyy")
                     </div>

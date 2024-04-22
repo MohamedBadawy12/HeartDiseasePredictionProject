@@ -22,6 +22,8 @@ namespace HeartDiseasePrediction.ViewModel
         public string PhoneNumber { get; set; }
         [Display(Name = "Location"), StringLength(200)]
         public string? Location { get; set; }
+        [Display(Name = "About")]
+        public string? About { get; set; }
         [Display(Name = "Zone"), StringLength(100)]
         public string? Zone { get; set; }
         [Display(Name = "Name"), StringLength(150)]

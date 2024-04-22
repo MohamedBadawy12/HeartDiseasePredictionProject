@@ -18,6 +18,8 @@ namespace HeartDiseasePrediction.ViewModel
         public string? Name { get; set; }
         [Display(Name = "Price")]
         public string? Price { get; set; }
+        [Display(Name = "About")]
+        public string? About { get; set; }
         [Display(Name = "Start Time")]
         public string? StartTime { get; set; }
         [Display(Name = "End Time")]

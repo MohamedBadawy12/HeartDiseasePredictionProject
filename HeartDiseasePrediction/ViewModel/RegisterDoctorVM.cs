@@ -21,6 +21,8 @@ namespace HeartDiseasePrediction.ViewModel
         public string? Name { get; set; }
         [Display(Name = "Price")]
         public string? Price { get; set; }
+        [Display(Name = "About")]
+        public string? About { get; set; }
         [Display(Name = "Gender")]
         [Required(ErrorMessage = "Gender Is Required")]
         public Database.Enums.Gender Gender { get; set; }

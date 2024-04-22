@@ -121,12 +121,12 @@
                                             <a class="nav-link" asp-action="Update" asp-controller="Account"> Dashboard</a>
                                         </li>
                                     }
-                                    <li class="nav-item">
+                                 @*   <li class="nav-item">
                                         <a class="nav-link" asp-controller="Lab" asp-action="GetAllLabs">Labs</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" asp-controller="Doctor" asp-action="DoctorsList">Doctors</a>
-                                    </li>
+                                    </li>*@
                                     <li class="nav-item">
                                         <a class="nav-link" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
                                     </li>
@@ -223,11 +223,11 @@
                                     <a href="treatment.html">
                                         Treatment
                                     </a>
-                                    <a href="doctor.html">
+                                    <a asp-controller="Doctor" asp-action="DoctorsList">
                                         Doctors
                                     </a>
-                                    <a href="testimonial.html">
-                                        Testimonial
+                                    <a asp-controller="Lab" asp-action="GetAllLabs">
+                                        Labs
                                     </a>
                                     <a asp-controller="Home" asp-action="ContactUs">
                                         Contact us

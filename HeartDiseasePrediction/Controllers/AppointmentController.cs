@@ -250,6 +250,7 @@ namespace HeartDiseasePrediction.Controllers
                 Location = doctor.Location,
                 Zone = doctor.User.Zone,
                 Price = doctor.Price,
+                About = doctor.User.About,
                 ProfileImg = doctor.User.ProfileImg,
             };
             return View(DoctorDetail);

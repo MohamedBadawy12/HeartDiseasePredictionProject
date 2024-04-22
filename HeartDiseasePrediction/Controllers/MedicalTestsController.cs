@@ -178,6 +178,7 @@ namespace HeartDiseasePrediction.Controllers
                     GlucoseLevel = medicalTest.GlucoseLevel,
                     Smoking = medicalTest.Smoking,
                     SystolicBloodPressure = medicalTest.SystolicBloodPressure,
+                    HeartRate = medicalTest.HeartRate,
                     PrevalentStroke = medicalTest.PrevalentStroke,
                 };
                 return View(medicalTestView);
@@ -210,7 +211,7 @@ namespace HeartDiseasePrediction.Controllers
                 var medicalTest = new MedicalTest
                 {
                     UserId = userId,
-                    PatientName = $"{appointment.Patientt.FirstName} {appointment.Patientt.FirstName}",
+                    PatientName = $"{appointment.Patientt.FirstName} {appointment.Patientt.LastName}",
                     PatientEmail = appointment.Patientt.Email,
                     MedicalAnalystName = model.MedicalAnalystName,
                     LabEmail = labEmail,
@@ -228,6 +229,7 @@ namespace HeartDiseasePrediction.Controllers
                     GlucoseLevel = model.GlucoseLevel,
                     Smoking = model.Smoking,
                     SystolicBloodPressure = model.SystolicBloodPressure,
+                    HeartRate = model.HeartRate,
                     PrevalentStroke = model.PrevalentStroke,
                 };
                 await _unitOfWork.medicalTest.AddAsync(medicalTest);
@@ -272,6 +274,7 @@ namespace HeartDiseasePrediction.Controllers
                     GlucoseLevel = medicalTest.GlucoseLevel,
                     Smoking = medicalTest.Smoking,
                     SystolicBloodPressure = medicalTest.SystolicBloodPressure,
+                    HeartRate = medicalTest.HeartRate,
                     PrevalentStroke = medicalTest.PrevalentStroke,
                 };
                 return View(medicalTestView);
@@ -311,9 +314,10 @@ namespace HeartDiseasePrediction.Controllers
                 medicalTest.PrevalentStroke = model.PrevalentStroke;
                 medicalTest.NumberOfCigarettes = model.NumberOfCigarettes;
                 medicalTest.SystolicBloodPressure = model.SystolicBloodPressure;
+                medicalTest.HeartRate = model.HeartRate;
                 medicalTest.GlucoseLevel = model.GlucoseLevel;
-                medicalTest.Prediction = model.Prediction;
-                medicalTest.Probability = model.Probability;
+                //medicalTest.Prediction = model.Prediction;
+                //medicalTest.Probability = model.Probability;
 
                 _context.MedicalTests.Update(medicalTest);
                 await _unitOfWork.Complete();

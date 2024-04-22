@@ -33,6 +33,8 @@ namespace HearPrediction.Api.DTO
         public float BMI { get; set; }
         [Required, Display(Name = "Glucose Level")]
         public float GlucoseLevel { get; set; }
+        [Required, Display(Name = "Heart Rate")]
+        public float HeartRate { get; set; }
         [Required, Display(Name = "Prediction")]
         public float? Prediction { get; set; }
         [Required, Display(Name = "Probability")]

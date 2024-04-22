@@ -29,6 +29,8 @@ namespace HearPrediction.Api.DTO
         public string? Zone { get; set; }
         [Display(Name = "Name"), StringLength(150)]
         public string? Name { get; set; }
+        [Display(Name = "About")]
+        public string? About { get; set; }
         [Display(Name = "Price")]
         public string? Price { get; set; }
         [Display(Name = "Email"), StringLength(200)]

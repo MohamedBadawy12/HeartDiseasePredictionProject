@@ -38,6 +38,7 @@ namespace HearPrediction.Api.Controllers
 
         //Lab Details
         [HttpGet("GetLabDetails")]
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var lab = await _unitOfWork.labs.GetLab(id);
@@ -52,6 +53,7 @@ namespace HearPrediction.Api.Controllers
                 Location = lab.User.Location,
                 Price = lab.User.Price,
                 Zone = lab.User.Zone,
+                About = lab.User.About,
                 StartTime = lab.User.StartTime,
                 EndTime = lab.User.EndTime,
                 ProfileImg = lab.LabImage,
@@ -61,7 +63,7 @@ namespace HearPrediction.Api.Controllers
 
         //Edit Lab
         [HttpPut("EditLab")]
-        public async Task<IActionResult> Edit(int id, LabDTO model)
+        public async Task<IActionResult> Edit(int id, [FromQuery] LabDTO model)
         {
             var lab = await _unitOfWork.labs.GetLab(id);
             if (lab == null)
@@ -86,6 +88,7 @@ namespace HearPrediction.Api.Controllers
             lab.User.Zone = model.Zone;
             lab.User.StartTime = model.StartTime;
             lab.User.EndTime = model.EndTime;
+            lab.User.About = model.About;
             lab.User.Email = model.Email;
             lab.User.ProfileImg = model.ProfileImg;
             lab.Name = model.Name;

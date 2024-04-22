@@ -75,6 +75,7 @@ namespace HearPrediction.Api.Controllers
                 Smoking = medicalTest.Smoking,
                 SystolicBloodPressure = medicalTest.SystolicBloodPressure,
                 PrevalentStroke = medicalTest.PrevalentStroke,
+                HeartRate = medicalTest.HeartRate,
             };
             return Ok(medicalTestView);
         }
@@ -95,7 +96,7 @@ namespace HearPrediction.Api.Controllers
             var medicalTest = new MedicalTest
             {
                 UserId = userId,
-                PatientName = $"{appointment.Patientt.FirstName} {appointment.Patientt.FirstName}",
+                PatientName = $"{appointment.Patientt.FirstName} {appointment.Patientt.LastName}",
                 PatientEmail = appointment.Patientt.Email,
                 MedicalAnalystName = model.MedicalAnalystName,
                 LabEmail = labEmail,
@@ -114,6 +115,7 @@ namespace HearPrediction.Api.Controllers
                 Smoking = model.Smoking,
                 SystolicBloodPressure = model.SystolicBloodPressure,
                 PrevalentStroke = model.PrevalentStroke,
+                HeartRate = model.HeartRate,
             };
             await _unitOfWork.medicalTest.AddAsync(medicalTest);
             await _unitOfWork.Complete();
@@ -148,8 +150,9 @@ namespace HearPrediction.Api.Controllers
             medicalTest.NumberOfCigarettes = model.NumberOfCigarettes;
             medicalTest.SystolicBloodPressure = model.SystolicBloodPressure;
             medicalTest.GlucoseLevel = model.GlucoseLevel;
-            medicalTest.Prediction = model.Prediction;
-            medicalTest.Probability = model.Probability;
+            medicalTest.HeartRate = model.HeartRate;
+            //medicalTest.Prediction = model.Prediction;
+            //medicalTest.Probability = model.Probability;
 
             await _unitOfWork.Complete();
             return Ok(medicalTest);

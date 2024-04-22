@@ -97,6 +97,7 @@ namespace HeartDiseasePrediction.Controllers
                     Location = lab.User.Location,
                     Price = lab.User.Price,
                     Zone = lab.User.Zone,
+                    About = lab.User.About,
                     StartTime = lab.User.StartTime,
                     EndTime = lab.User.EndTime,
                     ProfileImg = lab.LabImage,
@@ -128,6 +129,7 @@ namespace HeartDiseasePrediction.Controllers
                     Location = lab.User.Location,
                     Price = lab.User.Price,
                     Zone = lab.User.Zone,
+                    About = lab.User.About,
                     StartTime = lab.User.StartTime,
                     EndTime = lab.User.EndTime,
                     ProfileImg = lab.LabImage,
@@ -169,6 +171,7 @@ namespace HeartDiseasePrediction.Controllers
                 lab.User.EndTime = model.EndTime;
                 lab.User.Price = model.Price;
                 lab.User.Email = model.Email;
+                lab.User.About = model.About;
                 lab.User.ProfileImg = model.ProfileImg;
                 lab.Name = model.Name;
                 lab.PhoneNumber = model.PhoneNumber;

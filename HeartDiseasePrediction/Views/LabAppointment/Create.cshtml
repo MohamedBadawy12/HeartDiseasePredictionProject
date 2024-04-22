@@ -172,6 +172,7 @@
             <div class="col-xl-8 col-lg-10">
                 <h2 style="color:royalblue"><strong>Lab Details</strong></h2>
                 <h2>
+                   
                     @Model.Name
                 </h2>
                 <div class="d-flex flex-row align-items-center mb-3">
@@ -197,6 +198,9 @@
                     </div>
                 </div>
                 <div class="align-items-center mb-6">
+                    <div style="padding-right:15px">
+                        <i class="fa fa-drivers-license-o"></i> <span>@Model.About</span>
+                    </div>
                     <div style="padding-right:15px">
                         <i class="fa fa-clock-o text-success" aria-hidden="true"></i> <span>@Model.StartTime</span>
                         <i class="fa fa-clock-o text-danger" aria-hidden="true"></i> <span class="margin-right:10px">@Model.EndTime</span>
@@ -241,15 +245,7 @@
                                 <div class="card-body p-3 p-sm-5">
                                     <div class="row text-center mx-0">
                                         @{
-                                            @if ((Model.StartTime == "9:00AM" && Model.EndTime == "7:00PM") || Model.StartTime == "9:00 AM" && Model.EndTime == "7:00 PM")
-                                            {
-                                                var times = new List<string> { "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM" };
-                                                @foreach (var time in times)
-                                                {
-                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
-                                                }
-                                            }
-                                            @if ((Model.StartTime == "9:00AM" && Model.EndTime == "6:00PM") || Model.StartTime == "9:00 AM" && Model.EndTime == "6:00 PM")
+                                            @if ((Model.StartTime == "09:00AM" && Model.EndTime == "07:00PM") || Model.StartTime == "09:00 AM" && Model.EndTime == "07:00 PM")
                                             {
                                                 var times = new List<string> { "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM" };
                                                 @foreach (var time in times)
@@ -257,15 +253,15 @@
                                                     <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
                                                 }
                                             }
-                                            @if ((Model.StartTime == "9:00AM" && Model.EndTime == "5:00PM") || Model.StartTime == "9:00 AM" && Model.EndTime == "5:00 PM")
+                                            @if ((Model.StartTime == "09:00AM" && Model.EndTime == "06:00PM") || Model.StartTime == "09:00 AM" && Model.EndTime == "06:00 PM")
                                             {
-                                                var times = new List<string> { "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM" };
+                                                var times = new List<string> { "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM"};
                                                 @foreach (var time in times)
                                                 {
                                                     <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
                                                 }
                                             }
-                                            @if ((Model.StartTime == "9:00AM" && Model.EndTime == "4:00PM") || Model.StartTime == "9:00 AM" && Model.EndTime == "4:00 PM")
+                                            @if ((Model.StartTime == "09:00AM" && Model.EndTime == "05:00PM") || Model.StartTime == "09:00 AM" && Model.EndTime == "05:00 PM")
                                             {
                                                 var times = new List<string> { "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM" };
                                                 @foreach (var time in times)
@@ -273,7 +269,7 @@
                                                     <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
                                                 }
                                             }
-                                            @if ((Model.StartTime == "9:00AM" && Model.EndTime == "3:00PM") || Model.StartTime == "9:00 AM" && Model.EndTime == "3:00 PM")
+                                            @if ((Model.StartTime == "09:00AM" && Model.EndTime == "04:00PM") || Model.StartTime == "09:00 AM" && Model.EndTime == "04:00 PM")
                                             {
                                                 var times = new List<string> { "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM" };
                                                 @foreach (var time in times)
@@ -281,41 +277,185 @@
                                                     <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
                                                 }
                                             }
-                                            @if ((Model.StartTime == "8:00AM" && Model.EndTime == "5:00PM") || Model.StartTime == "8:00 AM" && Model.EndTime == "5:00 PM")
+                                            @if ((Model.StartTime == "09:00AM" && Model.EndTime == "03:00PM") || Model.StartTime == "09:00 AM" && Model.EndTime == "03:00 PM")
                                             {
-                                                var times = new List<string> { "8:00AM","9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM"};
+                                                var times = new List<string> { "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM" };
                                                 @foreach (var time in times)
                                                 {
                                                     <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
                                                 }
                                             }
-                                            @if ((Model.StartTime == "8:00AM" && Model.EndTime == "4:00PM") || Model.StartTime == "8:00 AM" && Model.EndTime == "4:00 PM")
+                                            @if ((Model.StartTime == "08:00AM" && Model.EndTime == "05:00PM") || Model.StartTime == "08:00 AM" && Model.EndTime == "05:00 PM")
                                             {
-                                                var times = new List<string> { "8:00AM", "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM" };
+                                                var times = new List<string> { "8:00AM","9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM"};
                                                 @foreach (var time in times)
                                                 {
                                                     <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
                                                 }
                                             }
-                                            @if ((Model.StartTime == "8:00AM" && Model.EndTime == "3:00PM") || Model.StartTime == "8:00 AM" && Model.EndTime == "3:00 PM")
+                                            @if ((Model.StartTime == "08:00AM" && Model.EndTime == "04:00PM") || Model.StartTime == "08:00 AM" && Model.EndTime == "04:00 PM")
                                             {
-                                                var times = new List<string> { "8:00AM", "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM"};
+                                                var times = new List<string> { "8:00AM", "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM" };
                                                 @foreach (var time in times)
                                                 {
                                                     <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
                                                 }
                                             }
-                                            @if ((Model.StartTime == "8:00AM" && Model.EndTime == "6:00PM") || Model.StartTime == "8:00 AM" && Model.EndTime == "6:00 PM")
+                                            @if ((Model.StartTime == "08:00AM" && Model.EndTime == "03:00PM") || Model.StartTime == "08:00 AM" && Model.EndTime == "03:00 PM")
                                             {
-                                                var times = new List<string> { "8:00AM", "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM" };
+                                                var times = new List<string> { "8:00AM", "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM"};
                                                 @foreach (var time in times)
                                                 {
                                                     <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
                                                 }
                                             }
-                                            @if ((Model.StartTime == "8:00AM" && Model.EndTime == "7:00PM") || Model.StartTime == "8:00 AM" && Model.EndTime == "6:00 PM")
+                                            @if ((Model.StartTime == "08:00AM" && Model.EndTime == "06:00PM") || Model.StartTime == "08:00 AM" && Model.EndTime == "06:00 PM")
                                             {
-                                                var times = new List<string> { "8:00AM", "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM" };
+                                                var times = new List<string> { "8:00AM", "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "08:00AM" && Model.EndTime == "07:00PM") || Model.StartTime == "08:00 AM" && Model.EndTime == "06:00 PM")
+                                            {
+                                                var times = new List<string> { "8:00AM", "9:00AM", "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "12:00PM" && Model.EndTime == "10:00PM") || Model.StartTime == "12:00 PM" && Model.EndTime == "10:00 PM")
+                                            {
+                                                var times = new List<string> { "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM","8:00PM","9:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "10:00AM" && Model.EndTime == "07:00PM") || Model.StartTime == "10:00 AM" && Model.EndTime == "07:00 PM")
+                                            {
+                                                var times = new List<string> { "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "10:00AM" && Model.EndTime == "05:00PM") || Model.StartTime == "10:00 AM" && Model.EndTime == "05:00 PM")
+                                            {
+                                                var times = new List<string> { "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "10:00AM" && Model.EndTime == "04:00PM") || Model.StartTime == "10:00 AM" && Model.EndTime == "04:00 PM")
+                                            {
+                                                var times = new List<string> { "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM"};
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "10:00AM" && Model.EndTime == "03:00PM") || Model.StartTime == "10:00 AM" && Model.EndTime == "03:00 PM")
+                                            {
+                                                var times = new List<string> { "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM"};
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "11:00AM" && Model.EndTime == "05:00PM") || Model.StartTime == "11:00 AM" && Model.EndTime == "05:00 PM")
+                                            {
+                                                var times = new List<string> { "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "11:00AM" && Model.EndTime == "06:00PM") || Model.StartTime == "11:00 AM" && Model.EndTime == "06:00 PM")
+                                            {
+                                                var times = new List<string> { "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM","4:00PM","5:00PM"};
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "11:00AM" && Model.EndTime == "07:00PM") || Model.StartTime == "11:00 AM" && Model.EndTime == "07:00 PM")
+                                            {
+                                                var times = new List<string> { "10:00AM", "11:00AM", "12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM","6:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "01:00PM" && Model.EndTime == "10:00PM") || Model.StartTime == "01:00 AM" && Model.EndTime == "10:00 PM")
+                                            {
+                                                var times = new List<string> { "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM", "8:00PM", "9:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "01:00PM" && Model.EndTime == "11:00PM") || Model.StartTime == "01:00 AM" && Model.EndTime == "11:00 PM")
+                                            {
+                                                var times = new List<string> { "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM", "8:00PM", "9:00PM", "10:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "01:00PM" && Model.EndTime == "09:00PM") || Model.StartTime == "01:00 AM" && Model.EndTime == "09:00 PM")
+                                            {
+                                                var times = new List<string> { "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM", "8:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "01:00PM" && Model.EndTime == "08:00PM") || Model.StartTime == "01:00 AM" && Model.EndTime == "08:00 PM")
+                                            {
+                                                var times = new List<string> { "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM"};
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "02:00PM" && Model.EndTime == "10:00PM") || Model.StartTime == "02:00 AM" && Model.EndTime == "10:00 PM")
+                                            {
+                                                var times = new List<string> { "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM", "8:00PM", "9:00PM"};
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "02:00PM" && Model.EndTime == "11:00PM") || Model.StartTime == "02:00 PM" && Model.EndTime == "11:00 PM")
+                                            {
+                                                var times = new List<string> { "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM", "8:00PM", "9:00PM", "10:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "02:00PM" && Model.EndTime == "9:00PM") || Model.StartTime == "02:00 PM" && Model.EndTime == "9:00 PM")
+                                            {
+                                                var times = new List<string> { "2:00PM", "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM", "8:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "03:00PM" && Model.EndTime == "10:00PM") || Model.StartTime == "03:00 PM" && Model.EndTime == "10:00 PM")
+                                            {
+                                                var times = new List<string> { "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM", "8:00PM", "9:00PM" };
+                                                @foreach (var time in times)
+                                                {
+                                                    <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />
+                                                }
+                                            }
+                                            @if ((Model.StartTime == "03:00PM" && Model.EndTime == "09:00PM") || Model.StartTime == "03:00 PM" && Model.EndTime == "09:00 PM")
+                                            {
+                                                var times = new List<string> { "3:00PM", "4:00PM", "5:00PM", "6:00PM", "7:00PM", "8:00PM" };
                                                 @foreach (var time in times)
                                                 {
                                                     <input class="col-md-2 col-4 my-1 px-2 cell py-1" type="button" value="@time" onclick="setTime('@time')" style="margin:7px" />

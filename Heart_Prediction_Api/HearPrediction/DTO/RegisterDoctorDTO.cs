@@ -22,6 +22,8 @@ namespace HearPrediction.Api.DTO
         public string? Name { get; set; }
         [Display(Name = "Price")]
         public string? Price { get; set; }
+        [Display(Name = "About")]
+        public string? About { get; set; }
         [Display(Name = "Gender")]
         [Required(ErrorMessage = "Gender Is Required")]
         public Gender Gender { get; set; }

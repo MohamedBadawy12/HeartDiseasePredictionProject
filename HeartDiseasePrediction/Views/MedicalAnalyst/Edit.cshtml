@@ -69,6 +69,9 @@
                                 <label asp-for="@Model.ImageFile">Image Profile</label>
                                 <input type="file" asp-for="@Model.ImageFile" value="0" class="form-control" style="padding:8px;">
                                 <span asp-validation-for="@Model.ImageFile" class="text-danger"></span>
+                                <label asp-for="@Model.ProfileImg">Or Link</label>
+                                <input type="text" asp-for="@Model.ProfileImg" class="form-control" placeholder="Enter Link of image ">
+                                <span asp-validation-for="@Model.ProfileImg" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
