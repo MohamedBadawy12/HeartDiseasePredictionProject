@@ -7,7 +7,6 @@
 
 <style type="text/css">
     body {
-        margin-top: 20px;
         color: black;
         text-align: left;
         background-color: white;
@@ -101,8 +100,6 @@
                             <h4><strong>@Model.FirstName</strong> <strong>@Model.FirstName @Model.LastName</strong></h4>
                             <a class="btn btn-outline-info" asp-controller="MedicalTests" asp-action="GetPatientMedicalTests" asp-route-id="@Model.Id"><i class="fa fa-eye"></i> View Tests</a>
                             <a class="btn btn-outline-success" asp-controller="MedicalTests" asp-action="Create" asp-route-id="@Model.Id"><i class="fa fa-plus-circle"></i> Add Test</a>
-                            @*<a class="btn btn-primary" asp-controller="Doctor" asp-action="Edit" asp-route-id="@Model.Id"><i class="fa fa-pencil-square"></i>  Edit</a>
-                            <a class="btn btn-danger" asp-controller="Doctor" asp-action="DeleteDoctor" asp-route-id="@Model.Id" onclick="ConfirmDelete()"><i class="fa fa-trash"></i> Delete</a>*@
                         </div>
                     </div>
                 </div>

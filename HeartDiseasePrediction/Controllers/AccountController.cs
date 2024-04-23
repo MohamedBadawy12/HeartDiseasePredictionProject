@@ -60,7 +60,14 @@ namespace HeartDiseasePrediction.Controllers
                         if (result.Succeeded)
                         {
                             _toastNotification.AddSuccessToastMessage("Login Success");
-                            return RedirectToAction("Index", "Home");
+                            if (await _userManager.IsInRoleAsync(user, "User"))
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Update", "Account");
+                            }
                         }
                         _toastNotification.AddErrorToastMessage("Email or Password is Incorrect");
                         TempData["Error"] = "Wrong credentials. please,try again!";
@@ -561,6 +568,8 @@ namespace HeartDiseasePrediction.Controllers
                     Zone = user.Zone,
                     About = user.About,
                     Price = user.Price,
+                    StartTime = user.StartTime,
+                    EndTime = user.EndTime,
                 };
                 return View(model);
             }
@@ -599,6 +608,8 @@ namespace HeartDiseasePrediction.Controllers
                 user.Location = model.Location;
                 user.Zone = model.Zone;
                 user.Name = model.Name;
+                user.StartTime = model.StartTime;
+                user.EndTime = model.EndTime;
                 user.About = model.About;
                 user.ProfileImg = model.ProfileImg;
                 IdentityResult result = await _userManager.UpdateAsync(user);

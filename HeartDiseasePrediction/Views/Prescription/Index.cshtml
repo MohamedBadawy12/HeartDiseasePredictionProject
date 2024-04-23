@@ -38,7 +38,7 @@
 						<div>
 							@using (Html.BeginForm("Index", "Prescription", FormMethod.Post))
 							{
-								@Html.TextBox("ssn",null,new{@class="form-control",placeholder="Search by ssn..",style="margin:5px 0px 5px 5px"})
+								@Html.TextBox("ssn",null,new{@class="form-control",placeholder="Search patient ssn..",style="margin:5px 0px 5px 5px"})
 								<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
 							}
 						</div>

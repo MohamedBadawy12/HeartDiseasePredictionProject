@@ -62,10 +62,20 @@
                     <i class="lni lni-grid-alt"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                      @*  <img src="~/images//460bec2777fe7d4a4fec0dde54fdabde.png" alt="">*@
-                        <img src="~/images/heart.jpg" alt="">
-                    </a>
+                    @if(User.Identity.IsAuthenticated && User.IsInRole("User"))
+                    {
+                        <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                            @*  <img src="~/images//460bec2777fe7d4a4fec0dde54fdabde.png" alt="">*@
+                            <img src="~/images/heart.jpg" alt="">
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="navbar-brand" asp-controller="Account" asp-action="Update">
+                            @*  <img src="~/images//460bec2777fe7d4a4fec0dde54fdabde.png" alt="">*@
+                            <img src="~/images/heart.jpg" alt="">
+                        </a>
+                    }
                     @*<a asp-controller="Home" asp-action="Index"><i class="fa fa-h-square" aria-hidden="true"></i> Heart Hospital</a>*@
                 </div>
             </div>
@@ -200,6 +210,12 @@
                 @if (User.Identity.IsAuthenticated && User.IsInRole("MedicalAnalyst"))
                 {
                     <li class="sidebar-item">
+                        <a asp-controller="MedicalTests" asp-action="Index" class="sidebar-link">
+                            <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                            <span>Medical Tests</span>
+                        </a>
+                    </li>
+                    @*<li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                            data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
                             <i class="fa fa-heartbeat" aria-hidden="true"></i>
@@ -213,7 +229,7 @@
                                 <a asp-controller="MedicalTests" asp-action="Create" class="sidebar-link"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Medical Test</a>
                             </li>
                         </ul>
-                    </li>
+                    </li>*@
                     <li class="sidebar-item">
                         @* <a asp-action="GetAppointmentByEmail" asp-controller="Appointment" class="sidebar-link">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -343,14 +359,29 @@
             <header class="header_section navbar-dark" style="background-color:#00c6a9">
                 <div class="container-fluid">
                     <nav class="navbar navbar-expand-lg custom_nav-container">
-                        <a class="navbar-brand text-black" asp-controller="Home" asp-action="Index"><strong><i class="fa fa-heartbeat" aria-hidden="true"></i> Heart Health</strong></a>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                        {
+                            <a class="navbar-brand text-black" asp-controller="Home" asp-action="Index"><strong><i class="fa fa-heartbeat" aria-hidden="true"></i> Heart Health</strong></a>
+                        }
+                        else
+                        {
+                            <a class="navbar-brand text-black" asp-controller="Account" asp-action="Update"><strong><i class="fa fa-heartbeat" aria-hidden="true"></i> Heart Health</strong></a>
+                        }
                         @*<a class="navbar-brand" asp-controller="Home" asp-action="Index">
                             <img src="~/images//460bec2777fe7d4a4fec0dde54fdabde.png" alt="">
                         </a>*@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav px-3">
                                 <li class="nav-item text-nowrap">
-                                    <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                                    {
+                                        <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="nav-link" asp-controller="Account" asp-action="Update"><i class="fa fa-home"></i> Home</a>
+                                    }
+
                                 </li>
                             </ul>
                         </div>

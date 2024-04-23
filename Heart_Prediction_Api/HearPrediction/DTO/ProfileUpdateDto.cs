@@ -9,17 +9,13 @@ namespace HearPrediction.Api.DTO
     public class ProfileUpdateDto
     {
         //public string UserId { get; set; }
-        [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
-        [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
-        [Required]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
         [Display(Name = "Zone")]
@@ -33,7 +29,6 @@ namespace HearPrediction.Api.DTO
         //public long? SSN { get; set; }
         //[Display(Name = "Insurance Number")]
         //public int? Insurance_No { get; set; }
-        [Required]
         [Display(Name = "Gender")]
         public Gender Gender { get; set; }
         [NotMapped]

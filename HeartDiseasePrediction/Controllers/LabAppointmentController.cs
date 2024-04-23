@@ -225,6 +225,11 @@ namespace HeartDiseasePrediction.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int id, BookLabAppointmentViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                _toastNotification.AddErrorToastMessage("Please select time or date");
+                return View("Error");
+            }
             var lab = await _unitOfWork.labs.GetLab(id);
             if (lab == null)
                 return View("NotFound");
@@ -240,7 +245,11 @@ namespace HeartDiseasePrediction.Controllers
             var dateWithTime = _context.LabAppointments.Where(x => x.date == model.Date && x.Time == model.Time &&
              x.LabEmail == lab.User.Email && x.PatientEmail == patientEmail).FirstOrDefault();
             if (dateWithTime != null)
-                return View(model);
+            {
+                _toastNotification.AddErrorToastMessage("This time with date is booked before");
+                return View("Error");
+            }
+
 
             var appointment = new LabAppointment()
             {
@@ -286,6 +295,11 @@ namespace HeartDiseasePrediction.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, EditAppointmentViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                _toastNotification.AddErrorToastMessage("Please select time or date");
+                return View("Error");
+            }
             var appointment = await _unitOfWork.labAppointment.GetAppointment(id);
             if (appointment == null)
                 return View("NotFound");
@@ -300,7 +314,10 @@ namespace HeartDiseasePrediction.Controllers
             var dateWithTime = _context.LabAppointments.Where(x => x.date == model.Date && x.Time == model.Time &&
              x.LabEmail == appointment.LabEmail && x.PatientEmail == patientEmail).FirstOrDefault();
             if (dateWithTime != null)
-                return BadRequest("This Date with this time is Booked");
+            {
+                _toastNotification.AddErrorToastMessage("This time with date is booked before");
+                return View("Error");
+            }
             appointment.PatientID = userId;
             appointment.date = model.Date;
             appointment.Time = model.Time;
