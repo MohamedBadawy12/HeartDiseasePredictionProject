@@ -6,7 +6,7 @@ namespace HearPrediction.Api.DTO
 {
     public class PredictionDTO
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         [Required, Display(Name = "Age")]
         public float Age { get; set; }
         [Required, Display(Name = "Gender")]

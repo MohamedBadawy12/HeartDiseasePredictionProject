@@ -1,0 +1,56 @@
+﻿@model HeartDiseasePrediction.ViewModel.PredictionViewModel
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: whitesmoke
+    }
+
+    .containerr {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .result-image {
+        width: 150px;
+        margin-bottom: 20px;
+    }
+
+    .button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+</style>
+<div class="containerr">
+    <h1>Heart Disease Prediction Result</h1>
+    @if (Model.Prediction == 1)
+    {
+        <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
+        <p id="prediction-result">Congratulations! You do not have heart disease.</p>
+    }
+    else
+    {
+        <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
+        <p id="prediction-result">ohh! Sorry you have a heart disease. please follow doctor to be in health</p>
+        <a asp-action="DoctorsList" asp-controller="Doctor" class="button" id="show-doctors-btn">Show All Doctors</a>
+    }
+   
+  
+</div>

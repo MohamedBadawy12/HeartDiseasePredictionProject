@@ -123,7 +123,7 @@ namespace HearPrediction.Api.Controllers
         }
 
         [Authorize(Roles = "User")]
-        [HttpPut("MakePrediction")]
+        [HttpPost("MakePrediction")]
         public async Task<IActionResult> Prediction(int id, PredictionDTO model)
         {
             var medicalTest = await _unitOfWork.medicalTest.GetMedicalTest(id);
@@ -131,7 +131,6 @@ namespace HearPrediction.Api.Controllers
                 return NotFound($"MedicalTest with id {id} is not found");
 
 
-            medicalTest.Id = model.Id;
             medicalTest.PatientName = model.PatientName;
             medicalTest.PatientSSN = model.PatientSSN;
             medicalTest.PatientEmail = model.PatientEmail;
@@ -151,8 +150,8 @@ namespace HearPrediction.Api.Controllers
             medicalTest.SystolicBloodPressure = model.SystolicBloodPressure;
             medicalTest.GlucoseLevel = model.GlucoseLevel;
             medicalTest.HeartRate = model.HeartRate;
-            //medicalTest.Prediction = model.Prediction;
-            //medicalTest.Probability = model.Probability;
+            medicalTest.Prediction = model.Prediction;
+            medicalTest.Probability = model.Probability;
 
             await _unitOfWork.Complete();
             return Ok(medicalTest);

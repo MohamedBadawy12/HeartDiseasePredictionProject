@@ -38,16 +38,14 @@ namespace Database.Entities
         [Required, Display(Name = "Glucose Level")]
         public float HeartRate { get; set; }
         [Display(Name = "Prediction")]
-        //[LoadColumn(16)]
-        //public float? Prediction { get; set; }
-        //[Display(Name = "Probability")]
-        //[LoadColumn(17)]
-        //public float? Probability { get; set; }
+        public float? Prediction { get; set; }
+        [Display(Name = "Probability")]
+        public float? Probability { get; set; }
         //[LoadColumn(15)]
         //public bool Label { get; set; }
         //public int PredictionId { get; set; }
         //[ForeignKey(nameof(PredictionId))]
-        public Prediction Prediction { get; set; }
+        //public Prediction Prediction { get; set; }
         [Required, Display(Name = "Patient Name")]
         public string PatientName { get; set; }
         [Required, Display(Name = "Patient Email")]

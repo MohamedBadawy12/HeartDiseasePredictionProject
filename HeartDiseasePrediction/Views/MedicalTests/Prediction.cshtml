@@ -15,25 +15,8 @@
                     </h4>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input asp-for="@Model.Id" type="text" hidden />
-                    <div class="form-row">
-                        <div class="form-group col-lg-4">
-                            <label asp-for="@Model.PatientSSN"></label>
-                            <input asp-for="@Model.PatientSSN" type="text" class="form-control" id="inputPatientSSN" placeholder="Enter Patient SSN">
-                            <span asp-validation-for="@Model.PatientSSN" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label asp-for="@Model.PatientEmail"></label>
-                            <input asp-for="@Model.PatientEmail" type="text" class="form-control" id="inputPatientEmail" placeholder="Enter Patient Email">
-                            <span asp-validation-for="@Model.PatientEmail" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label asp-for="@Model.PatientName"></label>
-                            <input asp-for="@Model.PatientName" type="text" class="form-control" id="inputPatientName" placeholder="Enter Patient Name">
-                            <span asp-validation-for="@Model.PatientName" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="form-row ">
+               
+                    <div class="form-row" disabled>
                         <div class="form-group col-lg-3">
                             <label asp-for="@Model.Age"></label>
                             <input asp-for="@Model.Age" type="number" class="form-control" id="inputAge" placeholder="Enter Age">
@@ -65,7 +48,7 @@
                             <span asp-validation-for="@Model.Diabetes" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="form-row ">
+                    <div class="form-row " disabled>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.GlucoseLevel"></label>
                             <input asp-for="@Model.GlucoseLevel" type="number" class="form-control" id="inputGlucoseLevel" placeholder="Enter Glucose Level">
@@ -82,7 +65,7 @@
                             <span asp-validation-for="@Model.CholesterolLevel" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row" disabled>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.BloodPressureMedicine"></label>
                             <select asp-for="@Model.BloodPressureMedicine" class="form-control wide" id="inputBloodPressureMedicine">
@@ -103,11 +86,16 @@
                             <span asp-validation-for="@Model.Prevalenthypertension" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-lg-4">
+                    <div class="form-row" disabled>
+                        <div class="form-group col-lg-2">
                             <label asp-for="@Model.BMI"></label>
                             <input asp-for="@Model.BMI" type="number" class="form-control" id="BMI" placeholder="Enter BMI">
                             <span asp-validation-for="@Model.BMI" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label asp-for="@Model.HeartRate"></label>
+                            <input asp-for="@Model.HeartRate" type="number" class="form-control" id="BMI" placeholder="Enter HeartRate">
+                            <span asp-validation-for="@Model.HeartRate" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.SystolicBloodPressure"></label>
@@ -118,6 +106,23 @@
                             <label asp-for="@Model.DiastolicBloodPressure"></label>
                             <input asp-for="@Model.DiastolicBloodPressure" type="number" class="form-control" id="DiastolicBloodPressure" placeholder="Enter Diastolic Blood Pressure">
                             <span asp-validation-for="@Model.DiastolicBloodPressure" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row" hidden>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.PatientSSN"></label>
+                            <input asp-for="@Model.PatientSSN" type="text" class="form-control" id="inputPatientSSN" placeholder="Enter Patient SSN">
+                            <span asp-validation-for="@Model.PatientSSN" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.PatientEmail"></label>
+                            <input asp-for="@Model.PatientEmail" type="text" class="form-control" id="inputPatientEmail" placeholder="Enter Patient Email">
+                            <span asp-validation-for="@Model.PatientEmail" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label asp-for="@Model.PatientName"></label>
+                            <input asp-for="@Model.PatientName" type="text" class="form-control" id="inputPatientName" placeholder="Enter Patient Name">
+                            <span asp-validation-for="@Model.PatientName" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="btn-box">

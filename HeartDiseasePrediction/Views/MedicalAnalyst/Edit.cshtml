@@ -63,8 +63,8 @@
                             <div class="form-group col-lg-12">
                                 <div>
                                     <label>Current Image</label>
-                                    <img src="@Model.ProfileImg" height="50" width="50" />
-                                    <input asp-for="@Model.ProfileImg" type="hidden" />
+                                    <img src="@Model.ProfileImg" height="100" width="100" />
+                                   @* <input asp-for="@Model.ProfileImg" type="hidden" />*@
                                 </div>
                                 <label asp-for="@Model.ImageFile">Image Profile</label>
                                 <input type="file" asp-for="@Model.ImageFile" value="0" class="form-control" style="padding:8px;">

@@ -93,10 +93,15 @@
                         </div>                   
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-2">
                             <label asp-for="@Model.BMI"></label>
                             <input asp-for="@Model.BMI" type="number" class="form-control" id="BMI" placeholder="Enter BMI">
                             <span asp-validation-for="@Model.BMI" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label asp-for="@Model.HeartRate"></label>
+                            <input asp-for="@Model.HeartRate" type="number" class="form-control" id="BMI" placeholder="Enter HeartRate">
+                            <span asp-validation-for="@Model.HeartRate" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.SystolicBloodPressure"></label>

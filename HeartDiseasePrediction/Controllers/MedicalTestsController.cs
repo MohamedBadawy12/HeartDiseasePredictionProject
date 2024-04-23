@@ -276,6 +276,8 @@ namespace HeartDiseasePrediction.Controllers
                     SystolicBloodPressure = medicalTest.SystolicBloodPressure,
                     HeartRate = medicalTest.HeartRate,
                     PrevalentStroke = medicalTest.PrevalentStroke,
+                    //Prediction = medicalTest.Prediction,
+                    //Probability = medicalTest.Probability,
                 };
                 return View(medicalTestView);
             }
@@ -316,13 +318,13 @@ namespace HeartDiseasePrediction.Controllers
                 medicalTest.SystolicBloodPressure = model.SystolicBloodPressure;
                 medicalTest.HeartRate = model.HeartRate;
                 medicalTest.GlucoseLevel = model.GlucoseLevel;
-                //medicalTest.Prediction = model.Prediction;
-                //medicalTest.Probability = model.Probability;
+                medicalTest.Prediction = model.Prediction;
+                medicalTest.Probability = model.Probability;
 
                 _context.MedicalTests.Update(medicalTest);
                 await _unitOfWork.Complete();
                 _toastNotification.AddSuccessToastMessage("Predicted successfully");
-                return RedirectToAction("Index");
+                return View("PredictionResult");
             }
             catch (Exception ex)
             {
