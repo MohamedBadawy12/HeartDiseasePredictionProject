@@ -361,11 +361,11 @@
                     <nav class="navbar navbar-expand-lg custom_nav-container">
                         @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
                         {
-                            <a class="navbar-brand text-black" asp-controller="Home" asp-action="Index"><strong><i class="fa fa-heartbeat" aria-hidden="true"></i> Heart Health</strong></a>
+                            <a class="navbar-brand text-black" asp-controller="Home" asp-action="Index"><strong><i class="fa fa-heartbeat text-danger" aria-hidden="true"></i>  Heart <span style="color:#00c6a9">Health</span></strong></a>
                         }
                         else
                         {
-                            <a class="navbar-brand text-black" asp-controller="Account" asp-action="Update"><strong><i class="fa fa-heartbeat" aria-hidden="true"></i> Heart Health</strong></a>
+                            <a class="navbar-brand text-black" asp-controller="Account" asp-action="Update"><strong><i class="fa fa-heartbeat text-danger" aria-hidden="true"></i> Heart <span style="color:#00c6a9">Health</span></strong></a>
                         }
                         @*<a class="navbar-brand" asp-controller="Home" asp-action="Index">
                             <img src="~/images//460bec2777fe7d4a4fec0dde54fdabde.png" alt="">

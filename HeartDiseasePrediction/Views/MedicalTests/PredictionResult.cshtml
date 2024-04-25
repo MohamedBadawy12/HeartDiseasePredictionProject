@@ -1,17 +1,8 @@
 ﻿@model HeartDiseasePrediction.ViewModel.PredictionViewModel
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: whitesmoke
-    }
 
     .containerr {
+        margin:20px;
         text-align: center;
         background-color: #fff;
         padding: 20px;
@@ -40,17 +31,19 @@
 </style>
 <div class="containerr">
     <h1>Heart Disease Prediction Result</h1>
-    @if (Model.Prediction == 1)
+    @if (ViewBag.Prediction != null)
     {
-        <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
-        <p id="prediction-result">Congratulations! You do not have heart disease.</p>
+        if (ViewBag.Prediction == "Has Heart Disease")
+        {
+            <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
+            <p id="prediction-result">ohh! Sorry you have a heart disease. please follow doctor to be in health</p>
+            <a asp-action="DoctorsList" asp-controller="Doctor" class="button" id="show-doctors-btn">Show All Doctors</a>
+        }
+        else
+        {
+            <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
+            <p id="prediction-result">Congratulations! You do not have heart disease.</p>
+        }
+
     }
-    else
-    {
-        <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
-        <p id="prediction-result">ohh! Sorry you have a heart disease. please follow doctor to be in health</p>
-        <a asp-action="DoctorsList" asp-controller="Doctor" class="button" id="show-doctors-btn">Show All Doctors</a>
-    }
-   
-  
 </div>

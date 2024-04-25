@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HeartDiseasePrediction.ViewModel
+namespace HearPrediction.Api.DTO
 {
-    public class PredictionViewModel
+    public class PredictionDetailsDTO
     {
-        //public int Id { get; set; }
         [Display(Name = "Gender")]
         public int Sex { get; set; }
         [Display(Name = "Age")]
@@ -33,11 +32,6 @@ namespace HeartDiseasePrediction.ViewModel
         public int HeartRate { get; set; }
         [Display(Name = "Glucose")]
         public int Glucose { get; set; }
-        //public long PatientSSN { get; set; }
-        //public string PatientName { get; set; }
-        //public string MedicalAnalystName { get; set; }
-        //public string PatientEmail { get; set; }
-        //public string LabEmail { get; set; }
-        //public DateTime Date { get; set; }
+        public int prediction { get; set; }
     }
 }

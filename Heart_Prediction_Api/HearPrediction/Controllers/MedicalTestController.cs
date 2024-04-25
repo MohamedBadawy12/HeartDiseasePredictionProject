@@ -3,7 +3,9 @@ using HearPrediction.Api.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Repositories;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -44,7 +46,7 @@ namespace HearPrediction.Api.Controllers
             return Ok(medicalTests);
         }
 
-        [Authorize(Roles = "MedicalAnalyst")]
+        //[Authorize(Roles = "MedicalAnalyst")]
         [AllowAnonymous]
         [HttpGet("GetMedicalDetails")]
         public async Task<IActionResult> MedicalTestDetails(int id)
@@ -55,7 +57,6 @@ namespace HearPrediction.Api.Controllers
 
             var medicalTestView = new PredictionDTO
             {
-                Id = id,
                 PatientName = medicalTest.PatientName,
                 PatientEmail = medicalTest.PatientEmail,
                 MedicalAnalystName = medicalTest.MedicalAnalystName,
@@ -122,37 +123,81 @@ namespace HearPrediction.Api.Controllers
             return Ok(medicalTest);
         }
 
-        [Authorize(Roles = "User")]
-        [HttpPost("MakePrediction")]
-        public async Task<IActionResult> Prediction(int id, PredictionDTO model)
+
+        [Authorize(Roles = "MedicalAnalyst")]
+        [HttpGet("GetPatientMedicalTest")]
+        public async Task<IActionResult> GetPatientPrescriptions(int id)
+        {
+            var appointment = await _unitOfWork.labAppointment.GetAppointment(id);
+            if (appointment == null)
+                return NotFound($"No appointment was found with Id: {id}");
+
+            string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userName == null)
+                return BadRequest("Register Or Login Please");
+
+            var user = await _userManager.FindByNameAsync(userName);
+            string userId = user.Id;
+            string labEmail = User.FindFirstValue(ClaimTypes.Email);
+
+            var medicalTets = await _context.MedicalTests.Where(x => x.PatientSSN == appointment.PatientSSN &&
+            x.LabEmail == labEmail && x.UserId == userId).Include(x => x.Labb).ToListAsync();
+            if (medicalTets == null)
+                return NotFound($"No medical Tets was found with Id: {id}");
+            return Ok(medicalTets);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetMedicalTestDetails")]
+        public async Task<IActionResult> MedicalTest(int id)
         {
             var medicalTest = await _unitOfWork.medicalTest.GetMedicalTest(id);
             if (medicalTest == null)
                 return NotFound($"MedicalTest with id {id} is not found");
 
+            var medicalTestView = new PredictionDetailsDTO
+            {
+                BPMeds = (int)medicalTest.BloodPressureMedicine,
+                PrevalentHyp = (int)medicalTest.Prevalenthypertension,
+                Age = (int)medicalTest.Age,
+                BMI = (float)medicalTest.BMI,
+                Diabetes = (int)medicalTest.Diabetes,
+                DiaBP = (float)medicalTest.DiastolicBloodPressure,
+                Cholesterol = (int)medicalTest.CholesterolLevel,
+                CigsPerDay = (int)medicalTest.NumberOfCigarettes,
+                Sex = (int)medicalTest.Gender,
+                Glucose = (int)medicalTest.GlucoseLevel,
+                Smoker = (int)medicalTest.Smoking,
+                SysBP = (float)medicalTest.SystolicBloodPressure,
+                HeartRate = (int)medicalTest.HeartRate,
+                PrevalentStroke = (int)medicalTest.PrevalentStroke,
+            };
+            return Ok(medicalTestView);
+        }
 
-            medicalTest.PatientName = model.PatientName;
-            medicalTest.PatientSSN = model.PatientSSN;
-            medicalTest.PatientEmail = model.PatientEmail;
-            medicalTest.Date = model.Date;
-            medicalTest.LabEmail = model.LabEmail;
+        [Authorize(Roles = "User")]
+        [HttpPost("MakePrediction")]
+        public async Task<IActionResult> Prediction(int id, PredictionDetailsDTO model)
+        {
+            var medicalTest = await _unitOfWork.medicalTest.GetMedicalTest(id);
+            if (medicalTest == null)
+                return NotFound($"MedicalTest with id {id} is not found");
+
             medicalTest.Diabetes = model.Diabetes;
-            medicalTest.Smoking = model.Smoking;
-            medicalTest.CholesterolLevel = model.CholesterolLevel;
-            medicalTest.BloodPressureMedicine = model.BloodPressureMedicine;
+            medicalTest.Smoking = model.Smoker;
+            medicalTest.CholesterolLevel = model.Cholesterol;
+            medicalTest.BloodPressureMedicine = model.BPMeds;
             medicalTest.BMI = model.BMI;
             medicalTest.Age = model.Age;
-            medicalTest.Gender = model.Gender;
-            medicalTest.DiastolicBloodPressure = model.DiastolicBloodPressure;
-            medicalTest.Prevalenthypertension = model.Prevalenthypertension;
+            medicalTest.Gender = (Database.Enums.Gender)model.Sex;
+            medicalTest.DiastolicBloodPressure = model.DiaBP;
+            medicalTest.Prevalenthypertension = model.PrevalentHyp;
             medicalTest.PrevalentStroke = model.PrevalentStroke;
-            medicalTest.NumberOfCigarettes = model.NumberOfCigarettes;
-            medicalTest.SystolicBloodPressure = model.SystolicBloodPressure;
-            medicalTest.GlucoseLevel = model.GlucoseLevel;
+            medicalTest.NumberOfCigarettes = model.CigsPerDay;
+            medicalTest.SystolicBloodPressure = model.SysBP;
             medicalTest.HeartRate = model.HeartRate;
-            medicalTest.Prediction = model.Prediction;
-            medicalTest.Probability = model.Probability;
-
+            medicalTest.GlucoseLevel = model.Glucose;
+            medicalTest.Prediction = model.prediction;
             await _unitOfWork.Complete();
             return Ok(medicalTest);
         }

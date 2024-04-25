@@ -1,29 +1,30 @@
 ﻿using Database.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace HeartDiseasePrediction.ViewModel
 {
-    public class MedicalTestViewModel
+    public class PredictionDetailsViewModel
     {
         public int Id { get; set; }
         [Required, Display(Name = "Age")]
-        public int Age { get; set; }
+        public float Age { get; set; }
         [Required, Display(Name = "Gender")]
         public Gender Gender { get; set; }
         [Required, Display(Name = "Smoking")]
-        public int Smoking { get; set; }
+        public float Smoking { get; set; }
         [Required, Display(Name = "Number Of Cigarettes")]
-        public int NumberOfCigarettes { get; set; }
+        public float NumberOfCigarettes { get; set; }
         [Required, Display(Name = "Blood Pressure Medicine")]
-        public int BloodPressureMedicine { get; set; }
+        public float BloodPressureMedicine { get; set; }
         [Required, Display(Name = "Prevalent Stroke")]
-        public int PrevalentStroke { get; set; }
+        public float PrevalentStroke { get; set; }
         [Required, Display(Name = "Prevalent hypertension")]
-        public int Prevalenthypertension { get; set; }
+        public float Prevalenthypertension { get; set; }
         [Required, Display(Name = "Diabetes")]
-        public int Diabetes { get; set; }
+        public float Diabetes { get; set; }
         [Required, Display(Name = "Cholesterol Level")]
-        public int CholesterolLevel { get; set; }
+        public float CholesterolLevel { get; set; }
         [Required, Display(Name = "Systolic Blood Pressure")]
         public float SystolicBloodPressure { get; set; }
         [Required, Display(Name = "Diastolic Blood Pressure")]
@@ -31,12 +32,18 @@ namespace HeartDiseasePrediction.ViewModel
         [Required, Display(Name = "BMI")]
         public float BMI { get; set; }
         [Required, Display(Name = "Heart Rate")]
-        public int HeartRate { get; set; }
+        public float HeartRate { get; set; }
         [Required, Display(Name = "Glucose Level")]
-        public int GlucoseLevel { get; set; }
+        public float GlucoseLevel { get; set; }
+        [Display(Name = "Prediction")]
+        public float? Prediction { get; set; }
+        [Display(Name = "Probability")]
+        public float? Probability { get; set; }
         public long PatientSSN { get; set; }
         public string PatientName { get; set; }
         public string MedicalAnalystName { get; set; }
         public string PatientEmail { get; set; }
+        public string LabEmail { get; set; }
+        public DateTime Date { get; set; }
     }
 }

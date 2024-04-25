@@ -9,7 +9,7 @@
 		box-shadow: 0px 4px 8px 0px #7986CB;
 	}
 </style>
-<section class="card card-body bg-light " style="margin:30px 80px">
+<section class="card card-body bg-light " style="margin:30px 150px">
 	<div class="container mt-4">
 		<div class="row">
 			<div class="col-md-10 offset-md-1">
@@ -18,7 +18,7 @@
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item">Appointment</li>
 							<li class="breadcrumb-item">List</li>
-							<li class="breadcrumb-item active" aria-current="page">List of Appointments</li>
+							<li class="breadcrumb-item active" aria-current="page">Waiting Appointments</li>
 						</ol>
 					</nav>
 				</div>
@@ -38,7 +38,7 @@
 								<th>Date</th>
 								<th>Time</th>
 								@*<th>Phone</th>*@
-								<th>SSN</th>
+								@*<th>SSN</th>*@
 								@*@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
 								{
 									<th>Doctor</th>
@@ -75,9 +75,9 @@
 								@*	<td class="align-middle text-center">
 										@item.Patientt.PhoneNumber
 									</td>*@
-									<td class="align-middle text-center">
+								@*	<td class="align-middle text-center">
 										@item.PatientSSN
-									</td>
+									</td>*@
 									@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
 									{
 										<td class="align-middle text-center">

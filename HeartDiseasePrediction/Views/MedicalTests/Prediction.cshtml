@@ -4,43 +4,87 @@
     ViewData["Title"] = "Prediction Page";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
+@*
+<style>
+/*    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: whitesmoke
+    }*/
+
+    .containerr {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .result-image {
+        width: 150px;
+        margin-bottom: 20px;
+    }
+
+    .button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+</style>*@
 
 <section class="book_section layout_padding">
     <div class="container">
         <div class="row">
             <div class="col">
-                <form asp-action="Create">
+            @*    <div>
+                    <label>Blood Pressure Medicine:</label>
+                    <span>@Model.Age.GetValue(Model.Age)</span>
+                </div>*@
+                <form asp-action="Prediction">
                     <h4>
                         Make <span>Prediction</span>
                     </h4>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input asp-for="@Model.Id" type="text" hidden />
+                  @*  <input asp-for="@Model.Id" type="text" hidden />*@
                
                     <div class="form-row" >
                         <div class="form-group col-lg-3">
                             <label asp-for="@Model.Age"></label>
-                            <input asp-for="@Model.Age" type="number" class="form-control" id="inputAge" placeholder="Enter Age" disabled>
+                            <input asp-for="@Model.Age" type="number" class="form-control" id="inputAge" placeholder="Enter Age" readonly>
                             <span asp-validation-for="@Model.Age" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-3">
-                            <label asp-for="@Model.Gender"></label>
-                            <select asp-for="@Model.Gender" class="form-control wide" disabled id="inputGender" asp-items="Html.GetEnumSelectList<Gender>()">
-                                <option value="NoSelected ">--Select Gender-- </option>
+                            <label asp-for="@Model.Sex"></label>
+                            <select asp-for="@Model.Sex" class="form-control wide" readonly id="inputGender" asp-items="Html.GetEnumSelectList<Gender>()">
+                                <option value="">--Select Gender-- </option>
                             </select>
-                            <span asp-validation-for="@Model.Gender" class="text-danger"></span>
+                            <span asp-validation-for="@Model.Sex" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-3">
-                            <label asp-for="@Model.Smoking"></label>
-                            <select asp-for="@Model.Smoking" class="form-control wide" id="inputSmoking" disabled>
-                                <option value="NoSelected ">--Select Smoking-- </option>
+                            <label asp-for="@Model.Smoker"></label>
+                            <select asp-for="@Model.Smoker" class="form-control wide" id="inputSmoking" readonly>
+                                <option value="">--Select Smoker-- </option>
                                 <option value="1"> Yes </option>
                                 <option value="0"> No </option>
                             </select>
-                            <span asp-validation-for="@Model.Smoking" class="text-danger"></span>
+                            <span asp-validation-for="@Model.Smoker" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-3">
                             <label asp-for="@Model.Diabetes"></label>
-                            <select asp-for="@Model.Diabetes" class="form-control wide" id="inputDiabetes" disabled>
+                            <select asp-for="@Model.Diabetes" class="form-control wide" id="inputDiabetes" readonly>
                                 <option value="NoSelected ">--Select Diabetes-- </option>
                                 <option value="1"> Yes </option>
                                 <option value="0"> No </option>
@@ -50,26 +94,26 @@
                     </div>
                     <div class="form-row " disabled>
                         <div class="form-group col-lg-4">
-                            <label asp-for="@Model.GlucoseLevel"></label>
-                            <input asp-for="@Model.GlucoseLevel" type="number" class="form-control" disabled id="inputGlucoseLevel" placeholder="Enter Glucose Level">
-                            <span asp-validation-for="@Model.GlucoseLevel" class="text-danger"></span>
+                            <label asp-for="@Model.Glucose"></label>
+                            <input asp-for="@Model.Glucose" type="number" class="form-control" id="inputGlucoseLevel" placeholder="Enter Glucose Level" readonly>
+                            <span asp-validation-for="@Model.Glucose" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">
-                            <label asp-for="@Model.NumberOfCigarettes"></label>
-                            <input asp-for="@Model.NumberOfCigarettes" type="number" class="form-control" disabled id="inputNumberOfCigarettes" placeholder="Enter Number Of Cigarettes">
-                            <span asp-validation-for="@Model.NumberOfCigarettes" class="text-danger"></span>
+                            <label asp-for="@Model.CigsPerDay"></label>
+                            <input asp-for="@Model.CigsPerDay" type="number" class="form-control" id="inputNumberOfCigarettes" placeholder="Enter Number Of Cigarettes" readonly>
+                            <span asp-validation-for="@Model.CigsPerDay" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">
-                            <label asp-for="@Model.CholesterolLevel"></label>
-                            <input asp-for="@Model.CholesterolLevel" type="number" class="form-control" disabled id="CholesterolLevel" placeholder="Enter Cholesterol Level">
-                            <span asp-validation-for="@Model.CholesterolLevel" class="text-danger"></span>
+                            <label asp-for="@Model.Cholesterol"></label>
+                            <input asp-for="@Model.Cholesterol" type="number" class="form-control" disabled id="CholesterolLevel" placeholder="Enter Cholesterol Level" readonly>
+                            <span asp-validation-for="@Model.Cholesterol" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-row" disabled>
                         <div class="form-group col-lg-4">
-                            <label asp-for="@Model.BloodPressureMedicine"></label>
-                            <select asp-for="@Model.BloodPressureMedicine" class="form-control wide" disabled id="inputBloodPressureMedicine">
-                                <option value="NoSelected ">--Select Blood Pressure Medicine-- </option>
+                            <label asp-for="@Model.BPMeds"></label>
+                            <select asp-for="@Model.BPMeds" class="form-control wide" disabled id="inputBloodPressureMedicine" readonly>
+                                <option value="">--Select Blood Pressure Medicine-- </option>
                                 <option value="1"> Yes </option>
                                 <option value="0"> No </option>
                             </select>
@@ -77,38 +121,38 @@
                         </div>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.PrevalentStroke"></label>
-                            <input asp-for="@Model.PrevalentStroke" type="number" class="form-control" disabled id="PrevalentStroke" placeholder="Enter Prevalent Stroke">
+                            <input asp-for="@Model.PrevalentStroke" type="number" class="form-control" disabled id="PrevalentStroke" placeholder="Enter Prevalent Stroke" readonly>
                             <span asp-validation-for="@Model.PrevalentStroke" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">
-                            <label asp-for="@Model.Prevalenthypertension"></label>
-                            <input asp-for="@Model.Prevalenthypertension" type="number" class="form-control" disabled id="Prevalenthypertension" placeholder="Enter Prevalent hypertension">
-                            <span asp-validation-for="@Model.Prevalenthypertension" class="text-danger"></span>
+                            <label asp-for="@Model.PrevalentHyp"></label>
+                            <input asp-for="@Model.PrevalentHyp" type="number" class="form-control" disabled id="Prevalenthypertension" placeholder="Enter Prevalent hypertension" readonly>
+                            <span asp-validation-for="@Model.PrevalentHyp" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-row" disabled>
                         <div class="form-group col-lg-2">
                             <label asp-for="@Model.BMI"></label>
-                            <input asp-for="@Model.BMI" type="number" class="form-control" id="BMI" disabled placeholder="Enter BMI">
+                            <input asp-for="@Model.BMI" type="number" class="form-control" id="BMI" disabled placeholder="Enter BMI" readonly>
                             <span asp-validation-for="@Model.BMI" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-2">
                             <label asp-for="@Model.HeartRate"></label>
-                            <input asp-for="@Model.HeartRate" type="number" class="form-control" id="BMI" placeholder="Enter HeartRate" disabled>
+                            <input asp-for="@Model.HeartRate" type="number" class="form-control" id="BMI" placeholder="Enter HeartRate" readonly>
                             <span asp-validation-for="@Model.HeartRate" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">
-                            <label asp-for="@Model.SystolicBloodPressure"></label>
-                            <input asp-for="@Model.SystolicBloodPressure" type="number" class="form-control" id="SystolicBloodPressure" placeholder="Enter Systolic Blood Pressure" disabled>
-                            <span asp-validation-for="@Model.SystolicBloodPressure" class="text-danger"></span>
+                            <label asp-for="@Model.SysBP"></label>
+                            <input asp-for="@Model.SysBP" type="number" class="form-control" id="SystolicBloodPressure" placeholder="Enter Systolic Blood Pressure" readonly>
+                            <span asp-validation-for="@Model.SysBP" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">
-                            <label asp-for="@Model.DiastolicBloodPressure"></label>
-                            <input asp-for="@Model.DiastolicBloodPressure" type="number" class="form-control" id="DiastolicBloodPressure" placeholder="Enter Diastolic Blood Pressure" disabled>
-                            <span asp-validation-for="@Model.DiastolicBloodPressure" class="text-danger"></span>
+                            <label asp-for="@Model.DiaBP"></label>
+                            <input asp-for="@Model.DiaBP" type="number" class="form-control" id="DiastolicBloodPressure" placeholder="Enter Diastolic Blood Pressure" readonly>
+                            <span asp-validation-for="@Model.DiaBP" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="form-row" hidden>
+               @*     <div class="form-row" hidden>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.PatientSSN"></label>
                             <input asp-for="@Model.PatientSSN" type="text" class="form-control" id="inputPatientSSN" placeholder="Enter Patient SSN" >
@@ -124,7 +168,7 @@
                             <input asp-for="@Model.PatientName" type="text" class="form-control" id="inputPatientName" placeholder="Enter Patient Name">
                             <span asp-validation-for="@Model.PatientName" class="text-danger"></span>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="btn-box">
                         <button type="submit" class="btn ">Predict</button>
                     </div>
@@ -133,6 +177,28 @@
         </div>
     </div>
 </section>
+
+<div class="containerr">
+    <h1>Heart Disease Prediction Result</h1>
+    @if (ViewBag.Prediction != null)
+    {
+        <p id="prediction-result">Prediction: @ViewBag.Prediction</p>
+    }
+
+ @*   @if (Model.Prediction == 1)
+    {
+        <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
+        <p id="prediction-result">Congratulations! You do not have heart disease.</p>
+    }
+    else
+    {
+        <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
+        <p id="prediction-result">ohh! Sorry you have a heart disease. please follow doctor to be in health</p>
+        <a asp-action="DoctorsList" asp-controller="Doctor" class="button" id="show-doctors-btn">Show All Doctors</a>
+    }*@
+
+
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NToastNotify;
 using Repositories;
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HeartDiseasePrediction.Controllers
@@ -17,6 +20,8 @@ namespace HeartDiseasePrediction.Controllers
     {
         private readonly IToastNotification _toastNotification;
         private readonly IUnitOfWork _unitOfWork;
+        //Uri baseAddress = new Uri("https://heart-project-2-2.onrender.com/predict");
+        HttpClient _client;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppDbContext _context;
         public MedicalTestsController(IToastNotification toastNotification,
@@ -25,6 +30,7 @@ namespace HeartDiseasePrediction.Controllers
             _toastNotification = toastNotification;
             _unitOfWork = unitOfWork;
             _context = context;
+            _client = new HttpClient();
             _userManager = userManager;
         }
         //Get MedicalTests by userId
@@ -157,7 +163,7 @@ namespace HeartDiseasePrediction.Controllers
                 if (medicalTest == null)
                     return View("NotFound");
 
-                var medicalTestView = new PredictionViewModel
+                var medicalTestView = new PredictionDetailsViewModel
                 {
                     Id = id,
                     PatientName = medicalTest.PatientName,
@@ -180,6 +186,7 @@ namespace HeartDiseasePrediction.Controllers
                     SystolicBloodPressure = medicalTest.SystolicBloodPressure,
                     HeartRate = medicalTest.HeartRate,
                     PrevalentStroke = medicalTest.PrevalentStroke,
+                    Prediction = medicalTest.Prediction,
                 };
                 return View(medicalTestView);
             }
@@ -202,7 +209,7 @@ namespace HeartDiseasePrediction.Controllers
         {
             try
             {
-                var appointment = await _unitOfWork.labAppointment.GetAppointment(id);
+                var appointment = await _unitOfWork.labAppointment.GetAcceptAppointment(id);
                 if (appointment == null)
                     return View("NotFound");
                 string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -256,29 +263,24 @@ namespace HeartDiseasePrediction.Controllers
 
                 var medicalTestView = new PredictionViewModel
                 {
-                    Id = id,
-                    PatientName = medicalTest.PatientName,
-                    PatientEmail = medicalTest.PatientEmail,
-                    LabEmail = medicalTest.LabEmail,
-                    Date = medicalTest.Date,
-                    PatientSSN = medicalTest.PatientSSN,
-                    BloodPressureMedicine = medicalTest.BloodPressureMedicine,
-                    Prevalenthypertension = medicalTest.Prevalenthypertension,
-                    Age = medicalTest.Age,
-                    BMI = medicalTest.BMI,
-                    Diabetes = medicalTest.Diabetes,
-                    DiastolicBloodPressure = medicalTest.DiastolicBloodPressure,
-                    CholesterolLevel = medicalTest.CholesterolLevel,
-                    NumberOfCigarettes = medicalTest.NumberOfCigarettes,
-                    Gender = medicalTest.Gender,
-                    GlucoseLevel = medicalTest.GlucoseLevel,
-                    Smoking = medicalTest.Smoking,
-                    SystolicBloodPressure = medicalTest.SystolicBloodPressure,
-                    HeartRate = medicalTest.HeartRate,
-                    PrevalentStroke = medicalTest.PrevalentStroke,
+                    BPMeds = (int)medicalTest.BloodPressureMedicine,
+                    PrevalentHyp = (int)medicalTest.Prevalenthypertension,
+                    Age = (int)medicalTest.Age,
+                    BMI = (float)medicalTest.BMI,
+                    Diabetes = (int)medicalTest.Diabetes,
+                    DiaBP = (float)medicalTest.DiastolicBloodPressure,
+                    Cholesterol = (int)medicalTest.CholesterolLevel,
+                    CigsPerDay = (int)medicalTest.NumberOfCigarettes,
+                    Sex = (int)medicalTest.Gender,
+                    Glucose = (int)medicalTest.GlucoseLevel,
+                    Smoker = (int)medicalTest.Smoking,
+                    SysBP = (float)medicalTest.SystolicBloodPressure,
+                    HeartRate = (int)medicalTest.HeartRate,
+                    PrevalentStroke = (int)medicalTest.PrevalentStroke,
                     //Prediction = medicalTest.Prediction,
                     //Probability = medicalTest.Probability,
                 };
+
                 return View(medicalTestView);
             }
             catch (Exception ex)
@@ -291,40 +293,60 @@ namespace HeartDiseasePrediction.Controllers
         [HttpPost]
         public async Task<IActionResult> Prediction(int id, PredictionViewModel model)
         {
+
             try
             {
-                var medicalTest = await _unitOfWork.medicalTest.GetMedicalTest(id);
-                if (medicalTest == null)
-                    return View("NotFound");
+                string data = JsonConvert.SerializeObject(model);
+                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _client.PostAsync("https://heart-project-2-2.onrender.com/predict", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read response content
+                    string responseBody = await response.Content.ReadAsStringAsync();
 
+                    // Parse JSON response to extract prediction
+                    string prediction = ParseResponse(responseBody);
 
-                medicalTest.Id = model.Id;
-                medicalTest.PatientName = model.PatientName;
-                medicalTest.PatientSSN = model.PatientSSN;
-                medicalTest.PatientEmail = model.PatientEmail;
-                medicalTest.Date = model.Date;
-                medicalTest.LabEmail = model.LabEmail;
-                medicalTest.Diabetes = model.Diabetes;
-                medicalTest.Smoking = model.Smoking;
-                medicalTest.CholesterolLevel = model.CholesterolLevel;
-                medicalTest.BloodPressureMedicine = model.BloodPressureMedicine;
-                medicalTest.BMI = model.BMI;
-                medicalTest.Age = model.Age;
-                medicalTest.Gender = model.Gender;
-                medicalTest.DiastolicBloodPressure = model.DiastolicBloodPressure;
-                medicalTest.Prevalenthypertension = model.Prevalenthypertension;
-                medicalTest.PrevalentStroke = model.PrevalentStroke;
-                medicalTest.NumberOfCigarettes = model.NumberOfCigarettes;
-                medicalTest.SystolicBloodPressure = model.SystolicBloodPressure;
-                medicalTest.HeartRate = model.HeartRate;
-                medicalTest.GlucoseLevel = model.GlucoseLevel;
-                medicalTest.Prediction = model.Prediction;
-                medicalTest.Probability = model.Probability;
+                    ViewBag.Prediction = prediction;
+                    var medicalTest = await _unitOfWork.medicalTest.GetMedicalTest(id);
+                    if (medicalTest == null)
+                        return View("NotFound");
 
-                _context.MedicalTests.Update(medicalTest);
-                await _unitOfWork.Complete();
-                _toastNotification.AddSuccessToastMessage("Predicted successfully");
-                return View("PredictionResult");
+                    medicalTest.Diabetes = model.Diabetes;
+                    medicalTest.Smoking = model.Smoker;
+                    medicalTest.CholesterolLevel = model.Cholesterol;
+                    medicalTest.BloodPressureMedicine = model.BPMeds;
+                    medicalTest.BMI = model.BMI;
+                    medicalTest.Age = model.Age;
+                    medicalTest.Gender = (Database.Enums.Gender)model.Sex;
+                    medicalTest.DiastolicBloodPressure = model.DiaBP;
+                    medicalTest.Prevalenthypertension = model.PrevalentHyp;
+                    medicalTest.PrevalentStroke = model.PrevalentStroke;
+                    medicalTest.NumberOfCigarettes = model.CigsPerDay;
+                    medicalTest.SystolicBloodPressure = model.SysBP;
+                    medicalTest.HeartRate = model.HeartRate;
+                    medicalTest.GlucoseLevel = model.Glucose;
+                    if (prediction == "Has Heart Disease")
+                    {
+                        medicalTest.Prediction = 1;
+                    }
+                    else
+                    {
+                        medicalTest.Prediction = 0;
+                    }
+
+                    _context.MedicalTests.Update(medicalTest);
+                    await _unitOfWork.Complete();
+                    _toastNotification.AddSuccessToastMessage("Predicted successfully");
+                    return View("PredictionResult");
+                    //return View();
+                }
+                else
+                {
+                    _toastNotification.AddErrorToastMessage("Predicted Failed");
+                    return View();
+                }
+
             }
             catch (Exception ex)
             {
@@ -341,5 +363,25 @@ namespace HeartDiseasePrediction.Controllers
             var isDeleted = _unitOfWork.medicalTest.Delete(id);
             return isDeleted ? Ok() : BadRequest();
         }
+        private string ParseResponse(string responseBody)
+        {
+            try
+            {
+                // Parse JSON response and extract prediction
+                dynamic jsonResponse = JsonConvert.DeserializeObject(responseBody);
+
+                // Assuming the response contains a "prediction" field
+                string prediction = jsonResponse.prediction;
+
+                return prediction;
+            }
+            catch (Exception ex)
+            {
+                // Handle parsing errors
+                Console.WriteLine($"Error parsing JSON response: {ex.Message}");
+                return null;
+            }
+        }
+
     }
 }

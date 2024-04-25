@@ -11,6 +11,7 @@ namespace Database.Entities
         public virtual DbSet<Prescription> Prescriptions { get; set; }
         public virtual DbSet<MedicalAnalyst> MedicalAnalysts { get; set; }
         public virtual DbSet<MedicalTest> MedicalTests { get; set; }
+        //public virtual DbSet<TestsAndPrediction> TestsAndPredictions { get; set; }
         //public virtual DbSet<Prediction> Predictions { get; set; }
         public virtual DbSet<Reciptionist> Reciptionists { get; set; }
         public virtual DbSet<Lab> Labs { get; set; }
