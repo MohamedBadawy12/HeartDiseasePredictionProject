@@ -130,15 +130,19 @@
                 {
                     <td>Has Heart Disease</td>
                 }
-                else
+                else if (Model.Prediction == 0)
                 {
                     <td>No Heart Disease</td>
                 }
+                else
+                {
+                    <td>@Model.Prediction</td>
+                }
             </tr>
-       @*     <tr>
+            <tr>
                 <td><strong>Probability</strong></td>
-                <td>@Model.Probability</td>
-            </tr>*@
+                <td>@Model.Probability %</td>
+            </tr>
         </table>
     </div>
 

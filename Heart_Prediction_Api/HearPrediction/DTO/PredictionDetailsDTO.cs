@@ -33,5 +33,6 @@ namespace HearPrediction.Api.DTO
         [Display(Name = "Glucose")]
         public int Glucose { get; set; }
         public int prediction { get; set; }
+        public float probability { get; set; }
     }
 }

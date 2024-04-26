@@ -77,6 +77,8 @@ namespace HearPrediction.Api.Controllers
                 SystolicBloodPressure = medicalTest.SystolicBloodPressure,
                 PrevalentStroke = medicalTest.PrevalentStroke,
                 HeartRate = medicalTest.HeartRate,
+                Prediction = medicalTest.Prediction,
+                Probability = medicalTest.Probability,
             };
             return Ok(medicalTestView);
         }
@@ -198,6 +200,7 @@ namespace HearPrediction.Api.Controllers
             medicalTest.HeartRate = model.HeartRate;
             medicalTest.GlucoseLevel = model.Glucose;
             medicalTest.Prediction = model.prediction;
+            medicalTest.Probability = model.probability;
             await _unitOfWork.Complete();
             return Ok(medicalTest);
         }

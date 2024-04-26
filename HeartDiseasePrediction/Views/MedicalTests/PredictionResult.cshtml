@@ -1,13 +1,18 @@
 ﻿@model HeartDiseasePrediction.ViewModel.PredictionViewModel
-<style>
+@{
+    ViewData["Title"] = "Prediction Result Page";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
 
+<style>
     .containerr {
-        margin:20px;
+        margin: 90px auto;
         text-align: center;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+        max-width: 800px;
     }
 
     .result-image {
@@ -19,31 +24,57 @@
         background-color: #007bff;
         color: #fff;
         padding: 10px 20px;
+        margin-top: 20px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
     }
 
         .button:hover {
             background-color: #0056b3;
         }
+
+    .alert {
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
 </style>
+
 <div class="containerr">
-    <h1>Heart Disease Prediction Result</h1>
     @if (ViewBag.Prediction != null)
     {
         if (ViewBag.Prediction == "Has Heart Disease")
         {
-            <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
-            <p id="prediction-result">ohh! Sorry you have a heart disease. please follow doctor to be in health</p>
-            <a asp-action="DoctorsList" asp-controller="Doctor" class="button" id="show-doctors-btn">Show All Doctors</a>
+            <div class="alert alert-danger">
+                <h2><strong>Heart Disease Prediction Result</strong></h2>
+                <img src="~/images/sadheart.jpg" alt="Sad Heart Image" class="result-image">
+                <h5>You may have heart disease with (@ViewBag.Probability %). Please consult a doctor for further evaluation.</h5>
+                <a asp-action="DoctorsList" asp-controller="Doctor" class="button">Find Doctors</a>
+            </div>
         }
         else
         {
-            <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
-            <p id="prediction-result">Congratulations! You do not have heart disease.</p>
+            <div class="alert alert-success">
+                <h2><strong>Heart Disease Prediction Result</strong></h2>
+                <img src="~/images/smileheart.png" alt="Happy Doctors Image" class="result-image">
+                <h5>Congratulations! You do not have heart disease (@ViewBag.Probability %).</h5>
+            </div>
         }
-
     }
 </div>

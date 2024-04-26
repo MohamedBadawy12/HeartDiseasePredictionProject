@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NToastNotify;
 using Repositories;
 using System;
@@ -187,6 +188,7 @@ namespace HeartDiseasePrediction.Controllers
                     HeartRate = medicalTest.HeartRate,
                     PrevalentStroke = medicalTest.PrevalentStroke,
                     Prediction = medicalTest.Prediction,
+                    Probability = medicalTest.Probability,
                 };
                 return View(medicalTestView);
             }
@@ -277,8 +279,6 @@ namespace HeartDiseasePrediction.Controllers
                     SysBP = (float)medicalTest.SystolicBloodPressure,
                     HeartRate = (int)medicalTest.HeartRate,
                     PrevalentStroke = (int)medicalTest.PrevalentStroke,
-                    //Prediction = medicalTest.Prediction,
-                    //Probability = medicalTest.Probability,
                 };
 
                 return View(medicalTestView);
@@ -298,16 +298,13 @@ namespace HeartDiseasePrediction.Controllers
             {
                 string data = JsonConvert.SerializeObject(model);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _client.PostAsync("https://heart-project-2-2.onrender.com/predict", content);
+                HttpResponseMessage response = await _client.PostAsync("https://heart-project-2-4.onrender.com/predict", content);
                 if (response.IsSuccessStatusCode)
                 {
-                    // Read response content
                     string responseBody = await response.Content.ReadAsStringAsync();
-
-                    // Parse JSON response to extract prediction
-                    string prediction = ParseResponse(responseBody);
-
-                    ViewBag.Prediction = prediction;
+                    JObject prediction = JObject.Parse(responseBody);
+                    ViewBag.Prediction = prediction["prediction"].ToString();
+                    ViewBag.Probability = prediction["Risk Rate"];
                     var medicalTest = await _unitOfWork.medicalTest.GetMedicalTest(id);
                     if (medicalTest == null)
                         return View("NotFound");
@@ -326,7 +323,8 @@ namespace HeartDiseasePrediction.Controllers
                     medicalTest.SystolicBloodPressure = model.SysBP;
                     medicalTest.HeartRate = model.HeartRate;
                     medicalTest.GlucoseLevel = model.Glucose;
-                    if (prediction == "Has Heart Disease")
+                    medicalTest.Probability = (float?)prediction["Risk Rate"];
+                    if (prediction["prediction"].ToString() == "Has Heart Disease")
                     {
                         medicalTest.Prediction = 1;
                     }
@@ -339,7 +337,6 @@ namespace HeartDiseasePrediction.Controllers
                     await _unitOfWork.Complete();
                     _toastNotification.AddSuccessToastMessage("Predicted successfully");
                     return View("PredictionResult");
-                    //return View();
                 }
                 else
                 {

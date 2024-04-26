@@ -4,62 +4,16 @@
     ViewData["Title"] = "Prediction Page";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
-@*
-<style>
-/*    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: whitesmoke
-    }*/
-
-    .containerr {
-        text-align: center;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .result-image {
-        width: 150px;
-        margin-bottom: 20px;
-    }
-
-    .button {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-        .button:hover {
-            background-color: #0056b3;
-        }
-</style>*@
 
 <section class="book_section layout_padding">
     <div class="container">
         <div class="row">
             <div class="col">
-            @*    <div>
-                    <label>Blood Pressure Medicine:</label>
-                    <span>@Model.Age.GetValue(Model.Age)</span>
-                </div>*@
                 <form asp-action="Prediction">
                     <h4>
                         Make <span>Prediction</span>
                     </h4>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                  @*  <input asp-for="@Model.Id" type="text" hidden />*@
-               
                     <div class="form-row" >
                         <div class="form-group col-lg-3">
                             <label asp-for="@Model.Age"></label>
@@ -152,23 +106,6 @@
                             <span asp-validation-for="@Model.DiaBP" class="text-danger"></span>
                         </div>
                     </div>
-               @*     <div class="form-row" hidden>
-                        <div class="form-group col-lg-4">
-                            <label asp-for="@Model.PatientSSN"></label>
-                            <input asp-for="@Model.PatientSSN" type="text" class="form-control" id="inputPatientSSN" placeholder="Enter Patient SSN" >
-                            <span asp-validation-for="@Model.PatientSSN" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label asp-for="@Model.PatientEmail"></label>
-                            <input asp-for="@Model.PatientEmail" type="text" class="form-control" id="inputPatientEmail" placeholder="Enter Patient Email" >
-                            <span asp-validation-for="@Model.PatientEmail" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label asp-for="@Model.PatientName"></label>
-                            <input asp-for="@Model.PatientName" type="text" class="form-control" id="inputPatientName" placeholder="Enter Patient Name">
-                            <span asp-validation-for="@Model.PatientName" class="text-danger"></span>
-                        </div>
-                    </div>*@
                     <div class="btn-box">
                         <button type="submit" class="btn ">Predict</button>
                     </div>
@@ -177,28 +114,6 @@
         </div>
     </div>
 </section>
-
-<div class="containerr">
-    <h1>Heart Disease Prediction Result</h1>
-    @if (ViewBag.Prediction != null)
-    {
-        <p id="prediction-result">Prediction: @ViewBag.Prediction</p>
-    }
-
- @*   @if (Model.Prediction == 1)
-    {
-        <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
-        <p id="prediction-result">Congratulations! You do not have heart disease.</p>
-    }
-    else
-    {
-        <img src="smile.png" alt="Smile Image" class="result-image" id="result-image">
-        <p id="prediction-result">ohh! Sorry you have a heart disease. please follow doctor to be in health</p>
-        <a asp-action="DoctorsList" asp-controller="Doctor" class="button" id="show-doctors-btn">Show All Doctors</a>
-    }*@
-
-
-</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
