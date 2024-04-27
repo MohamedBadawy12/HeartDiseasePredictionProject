@@ -170,6 +170,8 @@ namespace Services
                 Name = registerDoctorDTO.Name,
                 Price = registerDoctorDTO.Price,
                 About = registerDoctorDTO.About,
+                StartTime = registerDoctorDTO.StartTime,
+                EndTime = registerDoctorDTO.EndTime,
                 ProfileImg = registerDoctorDTO.ProfileImg,
                 //TwoFactorEnabled = true,
             };

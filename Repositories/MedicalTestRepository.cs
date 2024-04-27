@@ -83,8 +83,8 @@ namespace Repositories
                     MedicalAnalystName = a.MedicalAnalystName,
                     LabEmail = a.LabEmail,
                     LabId = a.LabId,
-                    //Prediction = a.Prediction,
-                    //Probability = a.Probability,
+                    Prediction = a.Prediction,
+                    Probability = a.Probability,
 
                     Patient = userRole == "MedicalAnalyst" ? new Patient
                     {
@@ -179,8 +179,8 @@ namespace Repositories
                     MedicalAnalystName = a.MedicalAnalystName,
                     LabEmail = a.LabEmail,
                     LabId = a.LabId,
-                    //Prediction = a.Prediction,
-                    //Probability = a.Probability,
+                    Prediction = a.Prediction,
+                    Probability = a.Probability,
 
                     Labb = userRole == "User" ? new ApplicationUser
                     {
@@ -261,7 +261,6 @@ namespace Repositories
              .Include(p => p.Lab)
             .Include(p => p.Labb)
             .Include(D => D.Patient)
-            //.Include(D => D.Prediction)
             .FirstOrDefaultAsync(m => m.Id == id);
 
         public async Task<IEnumerable<MedicalTest>> GetMedicalTests() =>
@@ -269,7 +268,6 @@ namespace Repositories
             .Include(p => p.Lab)
             .Include(p => p.Labb)
             .Include(D => D.Patient)
-            //.Include(D => D.Prediction)
             .ToListAsync();
 
 
@@ -278,7 +276,6 @@ namespace Repositories
              .Include(p => p.Lab)
             .Include(p => p.Labb)
             .Include(D => D.Patient)
-            //.Include(D => D.Prediction)
             .FirstOrDefault(m => m.Id == id);
 
         public void Remove(MedicalTest medicalTest) =>

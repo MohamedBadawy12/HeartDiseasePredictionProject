@@ -155,6 +155,54 @@ namespace HeartDiseasePrediction.Controllers
             return View(medicalTests);
         }
 
+        [Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> GetPatientTests(int id, int currentPage = 1)
+        {
+            var appointment = await _unitOfWork.appointments.GetAcceptAppointment(id);
+            if (appointment == null)
+                return View("NotFound");
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
+            var medicalTests = await _context.MedicalTests.Where(x => x.PatientSSN == appointment.PatientSSN &&
+            x.PatientEmail == appointment.PatientEmail).ToListAsync();
+            int totalRecords = medicalTests.Count();
+            int pageSize = 8;
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            medicalTests = medicalTests.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPrevious = currentPage > 1;
+            ViewBag.HasNext = currentPage < totalPages;
+            return View(medicalTests);
+        }
+        [Authorize(Roles = "Doctor")]
+        [HttpPost]
+        public async Task<IActionResult> GetPatientTests(int id, DateTime? date, int currentPage = 1)
+        {
+            var appointment = await _unitOfWork.appointments.GetAcceptAppointment(id);
+            if (appointment == null)
+                return View("NotFound");
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
+            var medicalTests = await _context.MedicalTests.Where(x => x.PatientSSN == appointment.PatientSSN &&
+           x.PatientEmail == appointment.PatientEmail).ToListAsync();
+            if ((date.HasValue && date != null) || date == DateTime.MinValue)
+            {
+                var medicalTestss = await _context.MedicalTests.Where(x => x.PatientSSN == appointment.PatientSSN &&
+                    x.PatientEmail == appointment.PatientEmail).ToListAsync();
+                int totalRecords = medicalTestss.Count();
+                int pageSize = 8;
+                int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+                medicalTestss = medicalTestss.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+                ViewBag.CurrentPage = currentPage;
+                ViewBag.TotalPages = totalPages;
+                ViewBag.HasPrevious = currentPage > 1;
+                ViewBag.HasNext = currentPage < totalPages;
+                return View(medicalTestss);
+            }
+            return View(medicalTests);
+        }
+
         [AllowAnonymous]
         public async Task<IActionResult> MedicalTestDetails(int id)
         {

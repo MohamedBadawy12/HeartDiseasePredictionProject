@@ -12,7 +12,7 @@
 <section class="card card-body bg-light " style="margin:25px 60px">
 	<div class="container mt-4">
 		<div class="row">
-			<div class="col-md-14 offset-md-0">
+			<div class="col-md-10 offset-md-1">
 				<div class="main-body">
 					<nav aria-label="breadcrumb" class="main-breadcrumb ">
 						<ol class="breadcrumb">
@@ -22,23 +22,17 @@
 						</ol>
 					</nav>
 				</div>
-				
 				@if (!Model.Any())
 				{
 					<div class="alert alert-warning" role="alert">
-						<h5>No Medical Tests Found, Please Make An Appointment For Lab To Get Medical Test</h5>
-						<div class="text-center" style="margin-top:20px">
-							<a class="btn btn-primary" asp-controller="Lab" asp-action="GetAllLabs">
-								Book Lab Now
-							</a>
-						</div>
+						No Medical Tests Found
 					</div>
 				}
 				else
 				{
 					<div class="form-inline justify-content-end my-2 my-lg-1 d-flex">
 						<div>
-							@using (Html.BeginForm("GetMedicalTests", "MedicalTests", FormMethod.Post))
+							@using (Html.BeginForm("GetPatientTests", "MedicalTests", FormMethod.Post))
 							{
 								@Html.TextBox("date",null,new{@class="form-control",type="date",style="margin:5px 0px 5px 5px"})
 								<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> </button>
@@ -50,11 +44,13 @@
 							<tr class="text-center bg-dark text-light">
 								<th>Id</th>
 								<th>Date</th>
-								<th>SSN</th>
-								<th>Age</th>
-								<th>Gender</th>
-								<th>MedicalAnalyst Name</th>
-								@*<th>Tests</th>*@
+								@if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
+								{
+									<th>Patient</th>
+								}
+								<th>Patient SSN</th>
+								@*<th>MedicalAnalyst Name</th>*@
+								<th>Tests</th>
 								<th>
 								</th>
 							</tr>
@@ -68,26 +64,28 @@
 									<td class="align-middle text-center">
 										@item.Date.ToString("dd MMM yyyy")
 									</td>
+									@if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
+									{
+										<td class="align-middle text-center">
+											@item.PatientEmail
+										</td>
+									}
 									<td class="align-middle text-center">
 										@item.PatientSSN
 									</td>
 									<td class="align-middle text-center">
-										@item.Age
-									</td>
-									<td class="align-middle text-center">
-										@item.Gender
-									</td>
-									<td class="align-middle text-center">
-										@item.MedicalAnalystName
-									</td>
-								@*	<td class="align-middle text-center">
 										more....
-									</td>*@
+									</td>
+									@if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
+									{
+										<td class="align-middle text-center" style="padding-left:20px">
+											<a class="btn btn-outline-info" asp-controller="MedicalTests" asp-action="MedicalTestDetails" asp-route-id="@item.Id"><i class="fa fa-eye"></i> Details</a> 
+										</td>
+									}
 									@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
 									{
 										<td class="align-middle text-center">
-											<a class="btn btn-outline-info" asp-controller="MedicalTests" asp-action="MedicalTestDetails" asp-route-id="@item.Id"><i class="fa fa-eye"></i> Details</a> |
-											<a class="btn btn-outline-success" asp-controller="MedicalTests" asp-action="Prediction" asp-route-id="@item.Id"><i class="fa fa-eye"></i> Prediction</a>
+											<a class="btn btn-outline-info" asp-controller="MedicalTests" asp-action="MedicalTestDetails" asp-route-id="@item.Id"><i class="fa fa-eye"></i> Details</a>
 										</td>
 									}
 								</tr>
@@ -103,7 +101,7 @@
 							@if (ViewBag.HasPrevious)
 							{
 								<li class="page-item">
-									<a class="page-link" href="/MedicalTests/GetMedicalTests?currentPage=@(ViewBag.CurrentPage - 1)" aria-label="Previous">
+									<a class="page-link" href="/MedicalTests/GetPatientTests?currentPage=@(ViewBag.CurrentPage - 1)" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>
@@ -112,14 +110,14 @@
 							@for (int i = 1; i <= ViewBag.TotalPages; i++)
 							{
 								<li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
-									<a class="page-link" href="/MedicalTests/GetMedicalTests?currentPage=@i">@i</a>
+									<a class="page-link" href="/MedicalTests/GetPatientTests?currentPage=@i">@i</a>
 								</li>
 							}
 
 							@if (ViewBag.HasNext)
 							{
 								<li class="page-item">
-									<a class="page-link" href="/MedicalTests/GetMedicalTests?currentPage=@(ViewBag.CurrentPage + 1)" aria-label="Next">
+									<a class="page-link" href="/MedicalTests/GetPatientTests?currentPage=@(ViewBag.CurrentPage + 1)" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
 								</li>
@@ -137,6 +135,53 @@
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
 	<script>
+		$(document).ready(function () {
+			$('.js-delete').on('click', function () {
+				var btn = $(this);
+
+				const swal = Swal.mixin({
+					customClass: {
+						confirmButton: 'btn btn-danger mx-2',
+						cancelButton: 'btn btn-light'
+					},
+					buttonsStyling: false
+				});
+
+				swal.fire({
+					title: 'Are you sure that you need to delete this Medical Test?',
+					text: "You won't be able to revert this!",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Yes, delete it!',
+					cancelButtonText: 'No, cancel!',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.isConfirmed) {
+						$.ajax({
+							url: `/MedicalTests/Delete/${btn.data('id')}`,
+							method: 'DELETE',
+							success: function () {
+								swal.fire(
+									'Deleted!',
+									'Medical Test has been deleted.',
+									'success'
+								);
+
+								btn.parents('tr').fadeOut();
+							},
+							error: function () {
+								swal.fire(
+									'Oooops...',
+									'Something went wrong.',
+									'error'
+								);
+							}
+						});
+					}
+				});
+			});
+		});
+
 		document.addEventListener("DOMContentLoaded", function () {
 			var counterCells = document.querySelectorAll(".counterColumn");
 			var counter = 1;

@@ -31,6 +31,10 @@ namespace HearPrediction.Api.DTO
         public string? Name { get; set; }
         [Display(Name = "About")]
         public string? About { get; set; }
+        [Display(Name = "Start Time")]
+        public string? StartTime { get; set; }
+        [Display(Name = "End Time")]
+        public string? EndTime { get; set; }
         [Display(Name = "Price")]
         public string? Price { get; set; }
         [Display(Name = "Email"), StringLength(200)]

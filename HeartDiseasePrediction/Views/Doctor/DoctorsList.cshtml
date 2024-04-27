@@ -273,18 +273,7 @@
                                             }
                                         </div>
                                         <div class="job-content">
-                                            <h5 class="text-center text-md-left">@item.Name
-                                              @*  @{
-                                                    if (item.IsAvailable == true)
-                                                    {
-                                                        <li class="mr-md-4 badge text-white" href="#" style="padding: 10px; background-color:green " readonly><i class="zmdi zmdi-time mr-2"></i> <strong>Avaliable</strong></li>
-                                                    }
-                                                    else
-                                                    {
-                                                        <li class="mr-md-4 badge text-white" href="#" style="padding: 10px; background-color:greenyellow" readonly><i class="zmdi zmdi-time mr-2"></i> <strong>Pending</strong></li>
-                                                    }
-                                                }*@
-                                            </h5>
+                                            <h5 class="text-center text-md-left">@item.Name</h5>
                                             <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
                                                 <li class="mr-md-4">
                                                     <i class="fa fa-user-md"></i> Cardiologist
@@ -292,9 +281,9 @@
                                                 <li class="mr-md-4">
                                                     <i class="zmdi zmdi-pin mr-2"></i> @item.User.Zone, @item.User.Location
                                                 </li>
-                                                <li class="mr-md-4">
+                                              @*  <li class="mr-md-4">
                                                     <i class="fa fa-money" aria-hidden="true"></i> @item.User.Price EGP
-                                                </li>
+                                                </li>*@
                                                 @* <li class="mr-md-4">
                                         <i class="zmdi zmdi-pin mr-2"></i>  @item.User.Zone
                                         </li>*@
@@ -308,6 +297,17 @@
                                                         <li class="mr-md-4 badge text-white" href="#" style="padding: 10px; background-color:greenyellow" readonly><i class="zmdi zmdi-time mr-2"></i> <strong>Pending</strong></li>
                                                     }
                                                 }
+                                            </ul>
+                                        </div>
+                                        <div class="job-content">
+
+                                            <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans" style="margin-left:105px">
+                                                <li class="mr-md-4">
+                                                    <i class="fa fa-phone" aria-hidden="true"></i> @item.User.PhoneNumber
+                                                </li>
+                                                <li class="mr-md-4">
+                                                    <i class="fa fa-money" aria-hidden="true"></i> @item.User.Price EGP
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>

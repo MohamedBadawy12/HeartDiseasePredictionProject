@@ -54,6 +54,102 @@
         color: #155724;
         border: 1px solid #c3e6cb;
     }
+
+    .circle-wrap {
+        margin: 50px auto;
+        width: 150px;
+        height: 150px;
+        background: #e6e2e7;
+      /*  background: #9e00b1;*/
+        border-radius: 50%;
+    }
+
+    .circle-wrapp {
+        margin: 50px auto;
+        width: 150px;
+        height: 150px;
+     /*   background: #e6e2e7;*/
+          background: #9e00b1;
+        border-radius: 50%;
+    }
+
+    .circle-wrapp .circle .mask,
+    .circle-wrapp .circle .fill {
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        border-radius: 50%;
+    }
+
+    .circle-wrapp .circle .mask {
+        clip: rect(0px, 150px, 150px, 75px);
+    }
+
+    .circle-wrapp .circle .mask .fill {
+        clip: rect(0px, 75px, 150px, 0px);
+         background-color: #e6e2e7;
+        /*background-color: green;*/
+    }
+
+    .circle-wrapp .circle .mask.full,
+    .circle-wrapp .circle .fill {
+        animation: fill ease-in-out 3s;
+        transform: rotate(180deg);
+    }
+
+    .circle-wrapp .inside-circle {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background: #fff;
+        line-height: 130px;
+        text-align: center;
+        margin-top: 10px;
+        margin-left: 10px;
+        position: absolute;
+        z-index: 100;
+        font-weight: 700;
+        font-size: 2em;
+    }
+
+        .circle-wrap .circle .mask,
+        .circle-wrap .circle .fill {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .circle-wrap .circle .mask {
+            clip: rect(0px, 150px, 150px, 75px);
+        }
+
+        .circle-wrap .circle .mask .fill {
+            clip: rect(0px, 75px, 150px, 0px);
+        /*    background-color: #9e00b1;*/
+            background-color: green;
+        }
+
+            .circle-wrap .circle .mask.full,
+            .circle-wrap .circle .fill {
+                animation: fill ease-in-out 3s;
+                transform: rotate(180deg);
+            }
+
+        .circle-wrap .inside-circle {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: #fff;
+            line-height: 130px;
+            text-align: center;
+            margin-top: 10px;
+            margin-left: 10px;
+            position: absolute;
+            z-index: 100;
+            font-weight: 700;
+            font-size: 2em;
+        }
 </style>
 
 <div class="containerr">
@@ -63,8 +159,22 @@
         {
             <div class="alert alert-danger">
                 <h2><strong>Heart Disease Prediction Result</strong></h2>
-                <img src="~/images/sadheart.jpg" alt="Sad Heart Image" class="result-image">
-                <h5>You may have heart disease with (@ViewBag.Probability %). Please consult a doctor for further evaluation.</h5>
+                <div class="circle-wrapp">
+                    <div class="circle">
+
+                        <div class="mask full" id="fillMask">
+                            <div class="fill" id="fillValue"></div>
+                        </div>
+
+                        <div class="inside-circle">
+                            <span id="probabilityValue"></span> %
+                        </div>
+
+                    </div>
+                </div>
+               @* <img src="~/images/sadheart.jpg" alt="Sad Heart Image" class="result-image">*@
+                <h4>You may have heart disease.</h4>
+                <h5>Your heart health is our priority. Seek medical advice immediately.</h5>
                 <a asp-action="DoctorsList" asp-controller="Doctor" class="button">Find Doctors</a>
             </div>
         }
@@ -72,9 +182,39 @@
         {
             <div class="alert alert-success">
                 <h2><strong>Heart Disease Prediction Result</strong></h2>
-                <img src="~/images/smileheart.png" alt="Happy Doctors Image" class="result-image">
-                <h5>Congratulations! You do not have heart disease (@ViewBag.Probability %).</h5>
+                <div class="circle-wrap">
+                    <div class="circle">
+
+                        <div class="mask full" id="fillMask">
+                            <div class="fill" id="fillValue"></div>
+                        </div>
+
+                        <div class="inside-circle">
+                            <span id="probabilityValue"></span> %
+                        </div>
+
+                    </div>
+                </div>
+               @* <img src="~/images/smileheart.png" alt="Happy Doctors Image" class="result-image">*@
+                <h4>Great news!</h4>
+                <h5> Your heart is in excellent condition. No evidence of heart disease.</h5>
             </div>
         }
     }
 </div>
+<script>
+    // Get the value of ViewBag.Probability
+    var probability = @ViewBag.Probability;
+
+    // Set the probability value inside the circle
+    document.getElementById('probabilityValue').innerText = probability;
+
+    // Calculate the fill degree based on probability (assuming 180 degrees for 100%)
+    var fillDegree = probability / 100 * 360;
+
+    // Set the fill degree dynamically
+    var fillMask = document.getElementById('fillMask');
+    var fillValue = document.getElementById('fillValue');
+    fillMask.style.transform = 'rotate(' + fillDegree + 'deg)';
+    fillValue.style.transform = 'rotate(' + (fillDegree + 360) + 'deg)';
+</script>

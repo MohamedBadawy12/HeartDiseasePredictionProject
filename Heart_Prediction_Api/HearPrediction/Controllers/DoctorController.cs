@@ -52,6 +52,8 @@ namespace HearPrediction.Api.Controllers
                 Email = doctor.User.Email,
                 Gender = doctor.User.Gender,
                 About = doctor.User.About,
+                StartTime = doctor.User.StartTime,
+                EndTime = doctor.User.EndTime,
                 PhoneNumber = doctor.User.PhoneNumber,
                 ProfileImg = doctor.User.ProfileImg,
             };
@@ -105,6 +107,8 @@ namespace HearPrediction.Api.Controllers
             doctor.User.About = model.About;
             doctor.User.Gender = model.Gender;
             doctor.User.Zone = model.Zone;
+            doctor.User.StartTime = model.StartTime;
+            doctor.User.EndTime = model.EndTime;
             doctor.User.ProfileImg = model.ProfileImg;
             doctor.Zone = model.Zone;
             doctor.Location = model.Location;

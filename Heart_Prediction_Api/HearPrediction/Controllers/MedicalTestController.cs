@@ -32,7 +32,7 @@ namespace HearPrediction.Api.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var medicalTests = await _unitOfWork.medicalTest.GetMedicalTestsByMedicalId(userId, userRole);
+            var medicalTests = await _unitOfWork.medicalTest.GetMedicalTestsByUserId(userId, userRole);
             return Ok(medicalTests);
         }
 
@@ -42,7 +42,7 @@ namespace HearPrediction.Api.Controllers
         {
             string PatientEmail = User.FindFirstValue(ClaimTypes.Email);
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-            var medicalTests = await _unitOfWork.medicalTest.GetMedicalTestsByPatientEmail(PatientEmail, userRole);
+            var medicalTests = await _unitOfWork.medicalTest.GetMedicalTestsByEmail(PatientEmail, userRole);
             return Ok(medicalTests);
         }
 
@@ -173,12 +173,14 @@ namespace HearPrediction.Api.Controllers
                 SysBP = (float)medicalTest.SystolicBloodPressure,
                 HeartRate = (int)medicalTest.HeartRate,
                 PrevalentStroke = (int)medicalTest.PrevalentStroke,
+                prediction = (int)medicalTest.Prediction,
+                probability = (int)medicalTest.Probability,
             };
             return Ok(medicalTestView);
         }
 
         [Authorize(Roles = "User")]
-        [HttpPost("MakePrediction")]
+        [HttpPut("MakePrediction")]
         public async Task<IActionResult> Prediction(int id, PredictionDetailsDTO model)
         {
             var medicalTest = await _unitOfWork.medicalTest.GetMedicalTest(id);

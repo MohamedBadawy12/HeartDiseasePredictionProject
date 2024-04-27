@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group col-lg-3">
                             <label asp-for="@Model.Sex"></label>
-                            <select asp-for="@Model.Sex" class="form-control wide" readonly id="inputGender" asp-items="Html.GetEnumSelectList<Gender>()">
+                            <select asp-for="@Model.Sex" class="form-control wide" id="inputGender" asp-items="Html.GetEnumSelectList<Gender>()" readonly>
                                 <option value="">--Select Gender-- </option>
                             </select>
                             <span asp-validation-for="@Model.Sex" class="text-danger"></span>
@@ -46,7 +46,7 @@
                             <span asp-validation-for="@Model.Diabetes" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="form-row " disabled>
+                    <div class="form-row">
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.Glucose"></label>
                             <input asp-for="@Model.Glucose" type="number" class="form-control" id="inputGlucoseLevel" placeholder="Enter Glucose Level" readonly>
@@ -59,14 +59,14 @@
                         </div>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.Cholesterol"></label>
-                            <input asp-for="@Model.Cholesterol" type="number" class="form-control" disabled id="CholesterolLevel" placeholder="Enter Cholesterol Level" readonly>
+                            <input asp-for="@Model.Cholesterol" type="number" class="form-control"  id="CholesterolLevel" placeholder="Enter Cholesterol Level" readonly>
                             <span asp-validation-for="@Model.Cholesterol" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="form-row" disabled>
+                    <div class="form-row">
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.BPMeds"></label>
-                            <select asp-for="@Model.BPMeds" class="form-control wide" disabled id="inputBloodPressureMedicine" readonly>
+                            <select asp-for="@Model.BPMeds" class="form-control wide"  id="inputBloodPressureMedicine" readonly>
                                 <option value="">--Select Blood Pressure Medicine-- </option>
                                 <option value="1"> Yes </option>
                                 <option value="0"> No </option>
@@ -75,19 +75,29 @@
                         </div>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.PrevalentStroke"></label>
-                            <input asp-for="@Model.PrevalentStroke" type="number" class="form-control" disabled id="PrevalentStroke" placeholder="Enter Prevalent Stroke" readonly>
+                            <select asp-for="@Model.PrevalentStroke" class="form-control wide" id="inputPrevalentStroke" readonly>
+                                <option value="">--Select PrevalentStroke-- </option>
+                                <option value="1"> Yes </option>
+                                <option value="0"> No </option>
+                            </select>
+        @*                    <input asp-for="@Model.PrevalentStroke" type="number" class="form-control"  id="PrevalentStroke" placeholder="Enter Prevalent Stroke" readonly>*@
                             <span asp-validation-for="@Model.PrevalentStroke" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.PrevalentHyp"></label>
-                            <input asp-for="@Model.PrevalentHyp" type="number" class="form-control" disabled id="Prevalenthypertension" placeholder="Enter Prevalent hypertension" readonly>
+                            <select asp-for="@Model.PrevalentHyp" class="form-control wide" id="inputPrevalenthypertension" readonly>
+                                <option value="">--Select PrevalentHyp-- </option>
+                                <option value="1"> Yes </option>
+                                <option value="0"> No </option>
+                            </select>
+             @*               <input asp-for="@Model.PrevalentHyp" type="number" class="form-control"  id="Prevalenthypertension" placeholder="Enter Prevalent hypertension" readonly>*@
                             <span asp-validation-for="@Model.PrevalentHyp" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="form-row" disabled>
+                    <div class="form-row">
                         <div class="form-group col-lg-2">
                             <label asp-for="@Model.BMI"></label>
-                            <input asp-for="@Model.BMI" type="number" class="form-control" id="BMI" disabled placeholder="Enter BMI" readonly>
+                            <input asp-for="@Model.BMI" type="number" class="form-control" id="BMI" placeholder="Enter BMI" readonly>
                             <span asp-validation-for="@Model.BMI" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-2">
@@ -117,4 +127,37 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Prevent user interaction with the select element
+        document.getElementById("inputGender").addEventListener("mousedown", function (event) {
+            event.preventDefault();
+            this.blur();
+            return false;
+        });
+        document.getElementById("inputSmoking").addEventListener("mousedown", function (event) {
+            event.preventDefault();
+            this.blur();
+            return false;
+        });
+        document.getElementById("inputDiabetes").addEventListener("mousedown", function (event) {
+            event.preventDefault();
+            this.blur();
+            return false;
+        });
+        document.getElementById("inputBloodPressureMedicine").addEventListener("mousedown", function (event) {
+            event.preventDefault();
+            this.blur();
+            return false;
+        });
+        document.getElementById("inputPrevalentStroke").addEventListener("mousedown", function (event) {
+            event.preventDefault();
+            this.blur();
+            return false;
+        });
+        document.getElementById("inputPrevalenthypertension").addEventListener("mousedown", function (event) {
+            event.preventDefault();
+            this.blur();
+            return false;
+        });
+    </script>
 }

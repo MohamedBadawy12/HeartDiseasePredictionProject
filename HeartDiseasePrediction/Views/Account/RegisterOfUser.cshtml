@@ -34,19 +34,19 @@
                         </div>
                         <div class="form-group col-lg-3">
                             <label asp-for="@Model.Insurance_No">Insurance Number</label>
-                            <input asp-for="@Model.Insurance_No" type="number" class="form-control" id="inputInsuranceNo" placeholder="Enter Insurance Number">
+                            <input asp-for="@Model.Insurance_No" type="number" class="form-control" id="inputInsuranceNo" placeholder="Enter Insurance Number" maxlength="5">
                             <span asp-validation-for="@Model.Insurance_No" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.PhoneNumber"></label>
-                            <input asp-for="@Model.PhoneNumber" type="number" class="form-control" id="inputPhone" placeholder="Enter Phone Number">
+                            <input asp-for="@Model.PhoneNumber" type="text" class="form-control" id="inputPhone" placeholder="Enter Phone Number" maxlength="12">
                             <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.SSN">National Id</label>
-                            <input asp-for="@Model.SSN" type="number" class="form-control" id="inputSSN" placeholder="Enter National Id">
+                            <input asp-for="@Model.SSN" type="number" class="form-control" id="inputSSN" placeholder="Enter National Id" maxlength="15">
                             <span asp-validation-for="@Model.SSN" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">

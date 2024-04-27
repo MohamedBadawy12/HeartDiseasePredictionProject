@@ -85,12 +85,22 @@
                         </div>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.PrevalentStroke"></label>
-                            <input asp-for="@Model.PrevalentStroke" type="number" class="form-control" id="PrevalentStroke" placeholder="Enter Prevalent Stroke">
+                            <select asp-for="@Model.PrevalentStroke" class="form-control wide" id="inputPrevalentStroke">
+                                <option value="">--Select PrevalentStroke-- </option>
+                                <option value="1"> Yes </option>
+                                <option value="0"> No </option>
+                            </select>
+               @*             <input asp-for="@Model.PrevalentStroke" type="number" class="form-control" id="PrevalentStroke" placeholder="Enter Prevalent Stroke">*@
                             <span asp-validation-for="@Model.PrevalentStroke" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-4">
                             <label asp-for="@Model.Prevalenthypertension"></label>
-                            <input asp-for="@Model.Prevalenthypertension" type="number" class="form-control" id="Prevalenthypertension" placeholder="Enter Prevalent hypertension">
+                            <select asp-for="@Model.Prevalenthypertension" class="form-control wide" id="inputPrevalenthypertension">
+                                <option value="">--Select Prevalenthypertension-- </option>
+                                <option value="1"> Yes </option>
+                                <option value="0"> No </option>
+                            </select>
+               @*             <input asp-for="@Model.Prevalenthypertension" type="number" class="form-control" id="Prevalenthypertension" placeholder="Enter Prevalent hypertension">*@
                             <span asp-validation-for="@Model.Prevalenthypertension" class="text-danger"></span>
                         </div>                   
                     </div>
