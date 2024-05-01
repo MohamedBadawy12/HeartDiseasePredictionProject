@@ -49,26 +49,32 @@
         <table>
             <tr>
                 <th>Test Name</th>
+                <th>Normal</th>
                 <th>Result</th>
             </tr>
             <tr>
                 <td>Gender</td>
+                <td></td>
                 <td>@Model.Gender</td>
             </tr>
             <tr>
                 <td>Age</td>
+                <td></td>
                 <td>@Model.Age years</td>
             </tr>
             <tr>
                 <td>Diastolic Blood Pressure</td>
-                <td>@Model.DiastolicBloodPressure</td>
+                <td>80 mmHg</td>
+                <td>@Model.DiastolicBloodPressure mmHg</td>
             </tr>
             <tr>
                 <td>Systolic Blood Pressure</td>
-                <td>@Model.SystolicBloodPressure</td>
+                <td>120 mmHg</td>
+                <td>@Model.SystolicBloodPressure mmHg</td>
             </tr>
             <tr>
                 <td>Blood Pressure Medicine</td>
+                <td></td>
                 @if (Model.BloodPressureMedicine == 1)
                 {
                     <td>yes</td>
@@ -80,6 +86,7 @@
             </tr>
             <tr>
                 <td>Diabetes</td>
+                <td></td>
                 @if (Model.Diabetes == 1)
                 {
                     <td>yes</td>
@@ -91,18 +98,22 @@
             </tr>
             <tr>
                 <td>BMI</td>
-                <td>@Model.BMI</td>
+                <td>18.5 kg/m² and 24.9 kg/m²</td>
+                <td>@Model.BMI kg/m²</td>
             </tr>
             <tr>
                 <td>Cholesterol Level</td>
-                <td>@Model.CholesterolLevel</td>
+                <td>Less than 200 mg/dL</td>
+                <td>@Model.CholesterolLevel mg/dL</td>
             </tr>
             <tr>
                 <td>Glucose Level</td>
-                <td>@Model.GlucoseLevel</td>
+                <td>Less than or equal to 100 mg/dL</td>
+                <td>@Model.GlucoseLevel mg/dL</td>
             </tr>
             <tr>
                 <td>Smoking</td>
+                <td></td>
                 @if (Model.Smoking == 1)
                 {
                     <td>yes</td>
@@ -114,22 +125,40 @@
             </tr>
             <tr>
                 <td>Number Of Cigarettes</td>
+                <td></td>
                 <td>@Model.NumberOfCigarettes per day</td>
             </tr>
             <tr>
                 <td>Prevalent hypertension</td>
-                <td>@Model.Prevalenthypertension</td>
+                <td></td>
+                @if(Model.Prevalenthypertension == 1)
+                {
+                    <td>yes</td>
+                }
+                else
+                {
+                    <td>No</td>
+                }
             </tr>
             <tr>
                 <td>Prevalent Stroke</td>
-                <td>@Model.PrevalentStroke</td>
+                <td></td>
+                @if (Model.PrevalentStroke == 1)
+                {
+                    <td>yes</td>
+                }
+                else
+                {
+                    <td>No</td>
+                }
             </tr>
             <tr>
                 <td><strong>Prediction</strong></td>
+                <td></td>
                 @if (Model.Prediction == 1)
                 {
-                    <td>Has Heart Disease</td>
-                }
+                    <td>High Heart Disease</td>
+                } 
                 else if (Model.Prediction == 0)
                 {
                     <td>No Heart Disease</td>
@@ -141,6 +170,7 @@
             </tr>
             <tr>
                 <td><strong>Probability</strong></td>
+                <td></td>
                 <td>@Model.Probability %</td>
             </tr>
         </table>
