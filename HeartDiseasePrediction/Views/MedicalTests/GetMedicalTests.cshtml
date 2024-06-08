@@ -65,11 +65,13 @@
 
 @if (!Model.Any())
 {
-	<div class="alert alert-warning" role="alert">
-		<h5>No Medical Tests Found, Please Make An Appointment For Lab To Get Medical Test</h5>
+	<div class="alert alert-warning" role="alert" style="margin:15px 150px">
+		@*<h5>No Medical Tests Found, Please Make An Appointment For Lab To Get Medical Test</h5>*@
+		<h5>No Medical Tests Found, Please if you want to predict your heart condition, You must provide your medical test 
+			keep to do, So you must book on appointment. </h5>
 		<div class="text-center" style="margin-top:20px">
 			<a class="btn btn-primary" asp-controller="Lab" asp-action="GetAllLabs">
-				Book Lab Now
+				Book Diagnostic Appointment
 			</a>
 		</div>
 	</div>
@@ -79,7 +81,7 @@ else
 	<div class="form-inline justify-content-between my-2 my-lg-1 d-flex breadcrumb" style="margin:180px">
 		<div>
 			<a class="btn btn-success" asp-controller="Lab" asp-action="GetAllLabs">
-				Book Lab Now
+				Book Diagnostic Appointment
 			</a>
 		</div>
 		<div>

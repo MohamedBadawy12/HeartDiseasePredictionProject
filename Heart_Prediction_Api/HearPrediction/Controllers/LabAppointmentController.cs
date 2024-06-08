@@ -313,7 +313,8 @@ namespace HearPrediction.Api.Controllers
 
                 var message = new Message
                 {
-                    Messages = $"Sorry,Your Appointment with date {appointment.date.ToString("dd MMMM yyyy")} and time {appointment.Time} is Canceled because Doctor is busy in this time",
+                    Messages = $"Sorry,Your Appointment with date {appointment.date.ToString("dd MMMM yyyy")} and time {appointment.Time}" +
+                    $" is Canceled because Doctor is busy in this time",
                     Date = DateTime.Now,
                     PatientEmail = appointment.PatientEmail,
                     DoctorEmail = labEmail,

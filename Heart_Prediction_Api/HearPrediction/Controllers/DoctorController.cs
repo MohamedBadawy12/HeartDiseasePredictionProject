@@ -14,7 +14,6 @@ namespace HearPrediction.Api.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
-
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileService _fileRepository;
         public DoctorController(IUnitOfWork unitOfWork, IFileService fileRepository)

@@ -205,7 +205,7 @@ namespace HeartDiseasePrediction.Controllers
                 await _context.Patients.AddAsync(patient);
                 await _context.SaveChangesAsync();
                 _toastNotification.AddSuccessToastMessage("Register User successfully.");
-                return View("CompletedSuccessfully");
+                return View("Login");
             }
             _toastNotification.AddErrorToastMessage("Register User Failed");
             return View(model);

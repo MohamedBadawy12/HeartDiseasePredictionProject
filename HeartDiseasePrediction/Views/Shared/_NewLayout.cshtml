@@ -174,12 +174,12 @@
                                 Address
                             </h5>
                             <div class="info_contact">
-                                <a href="">
+                            @*    <a href="">
                                     <i class="fa fa-map-marker" aria-hidden="true"></i>
                                     <span>
                                         Location
                                     </span>
-                                </a>
+                                </a>*@
                                 <a href="">
                                     <i class="fa fa-phone" aria-hidden="true"></i>
                                     <span>
@@ -220,14 +220,8 @@
                                     <a asp-controller="Home" asp-action="AboutUs">
                                         About
                                     </a>
-                                    <a href="treatment.html">
-                                        Treatment
-                                    </a>
-                                    <a asp-controller="Doctor" asp-action="DoctorsList">
-                                        Doctors
-                                    </a>
-                                    <a asp-controller="Lab" asp-action="GetAllLabs">
-                                        Labs
+                                    <a asp-action="Update" asp-controller="Account">
+                                        Dashboard
                                     </a>
                                     <a asp-controller="Home" asp-action="ContactUs">
                                         Contact us

@@ -109,7 +109,7 @@
             <tr>
                 <td>Glucose Level</td>
                 <td>@Model.GlucoseLevel mg/dL</td>
-                <td>Less than or equal to 100 mg/dL</td>   
+                <td>70 to 100 mg/dL</td>   
             </tr>
             <tr>
                 <td>Smoking</td>
@@ -125,7 +125,8 @@
             </tr>
             <tr>
                 <td>Number Of Cigarettes</td>
-                <td>@Model.NumberOfCigarettes per day</td> 
+                <td>@Model.NumberOfCigarettes per day</td>
+                <td></td>
             </tr>
             <tr>
                 <td>Prevalent hypertension</td>
@@ -152,14 +153,19 @@
                 <td></td>
             </tr>
             <tr>
+                <td>Heart Rate</td>
+                <td>@Model.HeartRate mg/dL</td>
+                <td>60 to 100 mg/dL</td>
+            </tr>
+            <tr>
                 <td><strong>Prediction</strong></td>
                 @if (Model.Prediction == 1)
                 {
-                    <td>High Heart Disease</td>
+                    <td>High Possibility Heart Disease</td>
                 }
                 else if (Model.Prediction == 0)
                 {
-                    <td>No Heart Disease</td>
+                    <td>Don't have Heart Disease</td>
                 }
                 else
                 {
