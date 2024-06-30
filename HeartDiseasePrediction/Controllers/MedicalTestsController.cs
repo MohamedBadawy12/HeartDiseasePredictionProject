@@ -292,7 +292,7 @@ namespace HeartDiseasePrediction.Controllers
                 await _unitOfWork.medicalTest.AddAsync(medicalTest);
                 await _unitOfWork.Complete();
                 _toastNotification.AddSuccessToastMessage("Medical Test Created successfully");
-                return View("CompletedSuccessfully");
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
@@ -480,7 +480,7 @@ namespace HeartDiseasePrediction.Controllers
                 _context.MedicalTests.Update(medicalTests);
                 await _unitOfWork.Complete();
                 _toastNotification.AddSuccessToastMessage("Medical Test Updated successfully");
-                return View("CompletedSuccessfully");
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
