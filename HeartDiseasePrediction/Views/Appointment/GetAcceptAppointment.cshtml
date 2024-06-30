@@ -101,7 +101,7 @@
                             <p class="text-muted font-size-sm">@Model.PatientEmail</p>
                             <a class="btn btn-outline-info" asp-controller="Prescription" asp-action="GetPatientPrescriptions" asp-route-id="@Model.Id"><i class="fa fa-eye"></i> Prescriptions</a>
                             <a class="btn btn-outline-success" asp-controller="Prescription" asp-action="CreatePresciptions" asp-route-id="@Model.Id"><i class="fa fa-plus-circle"></i> Add</a>
-                            <a class="btn btn-outline-primary" style="margin:5px" asp-controller="MedicalTests" asp-action="GetPatientTests" asp-route-id="@Model.Id"><i class="fa fa-plus-circle"></i> MedicalTests</a>
+                            <a class="btn btn-outline-primary" style="margin:5px" asp-controller="MedicalTests" asp-action="GetPatientTests" asp-route-id="@Model.Id"><i class="fa fa-eye"></i> MedicalTests</a>
                         </div>
                     </div>
                 </div>

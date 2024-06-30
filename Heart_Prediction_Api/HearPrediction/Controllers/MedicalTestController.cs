@@ -30,7 +30,11 @@ namespace HearPrediction.Api.Controllers
         [HttpGet("GetMedicalTestsByUserId")]
         public async Task<IActionResult> Index()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userName == null)
+                return BadRequest("Register Or Login Please");
+            var user = await _userManager.FindByNameAsync(userName);
+            string userId = user.Id;
             string userRole = User.FindFirstValue(ClaimTypes.Role);
             var medicalTests = await _unitOfWork.medicalTest.GetMedicalTestsByUserId(userId, userRole);
             return Ok(medicalTests);
@@ -147,6 +151,24 @@ namespace HearPrediction.Api.Controllers
             if (medicalTets == null)
                 return NotFound($"No medical Tets was found with Id: {id}");
             return Ok(medicalTets);
+        }
+
+        [Authorize(Roles = "Doctor")]
+        [HttpGet("GetPatientMedicalTestByDoctor")]
+        public async Task<IActionResult> GetPatientTestsByDoctor(int id)
+        {
+            var appointment = await _unitOfWork.appointments.GetAppointment(id);
+            if (appointment == null)
+                return NotFound("NotFound");
+            string userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userName == null)
+                return BadRequest("Register Or Login Please");
+            var user = await _userManager.FindByNameAsync(userName);
+            string userId = user.Id;
+            string doctorEmail = User.FindFirstValue(ClaimTypes.Email);
+            var medicalTests = await _context.MedicalTests.Where(x => x.PatientSSN == appointment.PatientSSN &&
+            x.PatientEmail == appointment.PatientEmail).ToListAsync();
+            return Ok(medicalTests);
         }
 
         [AllowAnonymous]

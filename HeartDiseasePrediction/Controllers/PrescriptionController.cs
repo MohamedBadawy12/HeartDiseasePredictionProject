@@ -70,7 +70,7 @@ namespace HeartDiseasePrediction.Controllers
             string userRole = User.FindFirstValue(ClaimTypes.Role);
             var prescriptions = await _unitOfWork.prescriptions.GetPrescriptionByEmail(PatientEmail, userRole);
             int totalRecords = prescriptions.Count();
-            int pageSize = 8;
+            int pageSize = 6;
             int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
             prescriptions = prescriptions.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
             ViewBag.CurrentPage = currentPage;
@@ -87,7 +87,7 @@ namespace HeartDiseasePrediction.Controllers
             string userRole = User.FindFirstValue(ClaimTypes.Role);
             var prescriptions = await _unitOfWork.prescriptions.SearchPrescriptionByEmail(PatientEmail, userRole, date, doctorName);
             int totalRecords = prescriptions.Count();
-            int pageSize = 8;
+            int pageSize = 6;
             int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
             prescriptions = prescriptions.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
             ViewBag.CurrentPage = currentPage;
